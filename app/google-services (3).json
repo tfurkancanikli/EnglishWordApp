@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1030405643723",
+    "firebase_url": "https://englishwordapp-7fb3b-default-rtdb.firebaseio.com",
+    "project_id": "englishwordapp-7fb3b",
+    "storage_bucket": "englishwordapp-7fb3b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1030405643723:android:910631744e94a86a42aa4e",
+        "android_client_info": {
+          "package_name": "com.anlarsinsoftware.englishwordsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1030405643723-1sca08d6i9ugpt47ag5os7v2oshi9j8m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.anlarsinsoftware.englishwordsapp",
+            "certificate_hash": "18e72d9fc565fd65de806cbe4c8c8324573a410e"
+          }
+        },
+        {
+          "client_id": "1030405643723-s8rjl0v7km3ngv0escr8fkgomdh3soic.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGax_F23vMpPRQJxiMpm2hGdLo4lPY2Kc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1030405643723-s8rjl0v7km3ngv0escr8fkgomdh3soic.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
