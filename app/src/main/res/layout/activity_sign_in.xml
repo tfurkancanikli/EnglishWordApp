@@ -8,6 +8,15 @@
     android:background="#FFFFFF"
     tools:context=".Entrance.SignInActivity">
 
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/bottom_wave" />
+
     <TextView
         android:id="@+id/newUserText"
         android:layout_width="160dp"
@@ -24,15 +33,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/bottom_wave" />
-
     <EditText
         android:id="@+id/emailText"
         android:layout_width="300dp"
@@ -40,6 +40,8 @@
         android:layout_marginTop="175dp"
         android:background="@drawable/drawbleradius"
         android:ems="10"
+        android:drawableLeft="@drawable/baseline_email_24"
+        android:drawablePadding="8dp"
         android:hint="Email giriniz."
         android:inputType="text"
         android:padding="10sp"
@@ -54,6 +56,8 @@
         android:layout_height="50dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/drawbleradius"
+        android:drawableLeft="@drawable/baseline_lock_24"
+        android:drawablePadding="8dp"
         android:ems="10"
         android:hint="Şifrenizi Giriniz."
         android:inputType="text"

@@ -25,7 +25,7 @@ class SignInActivity : AppCompatActivity() {
 
         val guncelKullanici = auth.currentUser
         if (guncelKullanici!=null){
-            goToHome()
+           bagla(HomePageActivity::class.java)
         }
     }
 
@@ -40,7 +40,7 @@ class SignInActivity : AppCompatActivity() {
                 .addOnCompleteListener{task ->
                     if (task.isSuccessful){
                         Toast.makeText(this,"Giriş Başarılı !",Toast.LENGTH_SHORT).show()
-                        goToHome()
+                        bagla(HomePageActivity::class.java)
                     }
                     else{
                         Toast.makeText(this,"Giriş Başarısız Tekrar Deneyin!",Toast.LENGTH_SHORT).show()
@@ -51,21 +51,13 @@ class SignInActivity : AppCompatActivity() {
             Toast.makeText(this,"Lütfen Boşluk Bırakmayın!",Toast.LENGTH_SHORT).show()
         }
     }
-    fun goToHome(){
-        intent = Intent(this,HomePageActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
+
     fun signUpClick(view : View){
-        intent = Intent(this, RegisterActivity :: class.java)
-        startActivity(intent)
+       bagla(RegisterActivity::class.java)
     }
     fun resetPassword(view:View){
 
         val email = binding.emailText.text.toString().trim()
-
-
-
         if (email.isNotEmpty()) {
             Firebase.auth.sendPasswordResetEmail(email)
                 .addOnCompleteListener { task ->
@@ -85,6 +77,5 @@ class SignInActivity : AppCompatActivity() {
                 Toast.LENGTH_LONG
             ).show()
         }
-
     }
 }

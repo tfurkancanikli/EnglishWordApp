@@ -6,6 +6,7 @@ import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.anlarsinsoftware.englishwordsapp.Entrance.SignInActivity
+import com.anlarsinsoftware.englishwordsapp.Entrance.bagla
 import com.anlarsinsoftware.englishwordsapp.R
 import com.anlarsinsoftware.englishwordsapp.databinding.ActivityHomePageBinding
 import com.anlarsinsoftware.englishwordsapp.databinding.ActivitySignInBinding
@@ -25,8 +26,12 @@ class HomePageActivity : AppCompatActivity() {
     }
     fun exitClick(view: View){
         auth.signOut()
-        intent = Intent(this,SignInActivity::class.java)
-        startActivity(intent)
-        finish()
+       bagla(SignInActivity::class.java)
+    }
+    fun kelimeEklePage(view:View){
+      bagla(WordAddPage::class.java)
+    }
+    fun sozlukButtonClick(view:View){
+        bagla(Sozluk::class.java)
     }
 }

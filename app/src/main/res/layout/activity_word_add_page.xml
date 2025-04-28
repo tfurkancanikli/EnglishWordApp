@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ViewPages.WordAddPage">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/orange"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/back_ico"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:onClick="backToSozluk"
+            android:src="@drawable/baseline_arrow_back_ios_new_24" />
+
+        <TextView
+            android:id="@+id/pageName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@id/back_ico"
+            android:gravity="center"
+            android:text="Sözlük"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+
+    <ImageView
+        android:id="@+id/gorselEkleBtn"
+        android:layout_width="282dp"
+        android:layout_height="253dp"
+        android:onClick="gorselEkle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
+        app:srcCompat="@drawable/gallery_icon" />
+
+    <EditText
+        android:id="@+id/turkceKarsilik"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="Türkçe karşılığını giriniz."
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ingilizceKelime" />
+
+    <EditText
+        android:id="@+id/cumleText2"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="Kelimeyi kullanarak cümle kurunuz"
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cumleText1" />
+
+    <EditText
+        android:id="@+id/ingilizceKelime"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:hint="İngilizce kelime giriniz."
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gorselEkleBtn" />
+
+    <EditText
+        android:id="@+id/cumleText1"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="Kelimeyi kullanarak cümle kurunuz"
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/turkceKarsilik" />
+
+    <TextView
+        android:id="@+id/kelimeEkleBtn"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/radius_mavi"
+        android:gravity="center"
+        android:onClick="KelimeEkleClick"
+        android:text="Kelime Ekle"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cumleText2"
+        app:layout_constraintVertical_bias="0.263" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

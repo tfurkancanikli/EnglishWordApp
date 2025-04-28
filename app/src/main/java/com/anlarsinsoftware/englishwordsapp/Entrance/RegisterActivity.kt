@@ -17,12 +17,8 @@ class RegisterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
         auth = FirebaseAuth.getInstance()
     }
 
@@ -52,9 +48,7 @@ class RegisterActivity : AppCompatActivity() {
                         }
 
                         Toast.makeText(applicationContext, "Kayıt Başarılı!", Toast.LENGTH_SHORT).show()
-                        val intent= Intent(this,HomePageActivity::class.java)
-                        startActivity(intent)
-                        finish()
+                        bagla(HomePageActivity::class.java)
                     } else {
                         Toast.makeText(applicationContext, "Kayıt Başarısız! Lütfen tekrar deneyiniz.", Toast.LENGTH_SHORT).show()
                     }
@@ -68,8 +62,6 @@ class RegisterActivity : AppCompatActivity() {
 
     }
     fun backToSign(view:View){
-        val intent= Intent(this,SignInActivity::class.java)
-        startActivity(intent)
-        finish()
+       bagla(SignInActivity::class.java)
     }
 }
