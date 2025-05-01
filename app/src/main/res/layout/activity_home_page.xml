@@ -5,59 +5,141 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/koyu_mor"
     tools:context=".ViewPages.HomePageActivity">
 
-    <TextView
-        android:id="@+id/textView6"
+    <RelativeLayout
+        android:id="@+id/MenuLayout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="64dp"
+            android:onClick="exitClick"
+            android:src="@drawable/baseline_person_24" />
+
+        <ImageView
+            android:id="@+id/wordleGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_toEndOf="@id/profile"
+            app:srcCompat="@drawable/baseline_menu_book_24" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="32dp"
+
+            android:layout_toLeftOf="@id/imageView8"
+            app:srcCompat="@drawable/baseline_videogame_asset_24" />
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="64dp"
+            app:srcCompat="@drawable/baseline_edit_document_24" />
+
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/MenuLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/add_btn_background" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/orange"
-        android:textColor="@color/orange"
+        android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="ANASAYFA"
+        <ImageView
+            android:id="@+id/back_ico"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:onClick="exitClick"
+            android:src="@drawable/baseline_arrow_back_ios_new_24" />
+
+        <TextView
+            android:id="@+id/pageName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@id/back_ico"
+            android:gravity="center"
+            android:text="Ana Sayfa"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/sozlukBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
+            android:onClick="sozlukButtonClick"
+            app:srcCompat="@drawable/baseline_email_24"
+
+
+            />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="36dp"
+        android:layout_height="38dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:srcCompat="@drawable/baseline_add_circle_white24" />
 
-    <ImageView
-        android:id="@+id/exitButton"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:onClick="exitClick"
-        app:layout_constraintBottom_toBottomOf="@+id/textView6"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardviewHome1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/exit" />
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
 
-    <ImageView
-        android:id="@+id/kelimeEkle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="kelimeEklePage"
-        app:layout_constraintBottom_toBottomOf="@+id/textView6"
-        app:layout_constraintEnd_toEndOf="@+id/textView6"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/social" />
+        <ImageView
+            android:id="@+id/cardviewHome1image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-    <ImageView
-        android:id="@+id/sozlukBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:onClick="sozlukButtonClick"
-        app:layout_constraintBottom_toBottomOf="@+id/textView6"
-        app:layout_constraintEnd_toStartOf="@+id/kelimeEkle"
-        app:layout_constraintTop_toTopOf="@+id/textView6"
-        app:srcCompat="@drawable/baseline_email_24" />
+            ></ImageView>
+    </androidx.cardview.widget.CardView>
+
 
     <Button
         android:id="@+id/bulmacaButon"

@@ -97,26 +97,25 @@ class Sozluk : AppCompatActivity() {
         val inflater = layoutInflater
         val view = inflater.inflate(R.layout.detaylar_dialog, null)
 
-
         val ingilizceKelimeTextView = view.findViewById<TextView>(R.id.ingilizceKelime)
         val turkceKarsilikTextView = view.findViewById<TextView>(R.id.turkceKarsilik)
         val cumleText1TextView = view.findViewById<TextView>(R.id.cumleText1)
         val cumleText2TextView = view.findViewById<TextView>(R.id.cumleText2)
         val kelimeImageView = view.findViewById<ImageView>(R.id.kelimeResim)
 
-
         ingilizceKelimeTextView.text = kelime.kelimeIng
         turkceKarsilikTextView.text = kelime.kelimeTur
         cumleText1TextView.text = kelime.cumle1
         cumleText2TextView.text = kelime.cumle2
-       Picasso.get().load(kelime.gorselUrl).into(kelimeImageView)
+        Picasso.get().load(kelime.gorselUrl).into(kelimeImageView)
 
         val builder = androidx.appcompat.app.AlertDialog.Builder(this)
         builder.setView(view)
-        builder.setPositiveButton("Kapat") { dialog, _ ->
-            dialog.dismiss()
-        }
-        builder.show()
+
+        val dialog = builder.create()
+        dialog.window?.setBackgroundDrawable(android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT))
+        dialog.show()
     }
+
 
 }

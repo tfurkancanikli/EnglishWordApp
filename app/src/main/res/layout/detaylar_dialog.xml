@@ -2,18 +2,25 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dialogBase"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/cardview_copy"
+
     android:textAlignment="center">
 
     <TextView
         android:id="@+id/cumleText2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="73dp"
         android:layout_marginTop="32dp"
+        android:fontFamily="serif"
+        android:paddingLeft="15sp"
+        android:paddingRight="15sp"
         android:text="Cumle 2"
         android:textAlignment="center"
-        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,10 +30,10 @@
         android:id="@+id/kelimeResim"
         android:layout_width="299dp"
         android:layout_height="283dp"
-        android:layout_marginTop="108dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/turkceKarsilik"
         app:srcCompat="@drawable/gallery_icon" />
 
     <TextView
@@ -34,22 +41,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:fontFamily="@font/amarante"
         android:text="Kelime Karsiligi"
         android:textAlignment="center"
-        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/kelimeResim" />
+        app:layout_constraintTop_toBottomOf="@+id/ingilizceKelime" />
 
     <TextView
         android:id="@+id/ingilizceKelime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
+        android:fontFamily="@font/acme"
         android:text="Ingilizce Kelime"
         android:textAlignment="center"
-        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,11 +70,16 @@
         android:id="@+id/cumleText1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="serif"
+        android:paddingLeft="15sp"
+        android:paddingRight="15sp"
         android:text="Cumle 1"
         android:textAlignment="center"
-        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/turkceKarsilik" />
+        app:layout_constraintTop_toBottomOf="@+id/kelimeResim" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,5 +12,9 @@
     <color name="light_blue_A200">#FF40C4FF</color>
     <color name="light_blue_A400">#FF00B0FF</color>
     <color name="black_overlay">#66000000</color>
+    <color name="koyu_mor">#2F1D50</color>
+    <color name="mid_mor">#673AB7</color>
+    <color name="acik_mor">#984AD1</color>
+
 
 </resources>

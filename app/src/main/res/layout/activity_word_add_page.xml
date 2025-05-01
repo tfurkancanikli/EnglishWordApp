@@ -5,7 +5,20 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#2F1D50"
     tools:context=".ViewPages.WordAddPage">
+
+    <TextView
+        android:id="@+id/cardViewTexr"
+        android:layout_width="350dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/cardview_copy"
+        app:layout_constraintBottom_toTopOf="@+id/kelimeEkleBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gorselEkleBtn" />
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
@@ -33,7 +46,8 @@
             android:layout_marginStart="16dp"
             android:layout_toEndOf="@id/back_ico"
             android:gravity="center"
-            android:text="Sözlük"
+            android:text="Kelime Ekleme "
+            android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -44,6 +58,7 @@
         android:id="@+id/gorselEkleBtn"
         android:layout_width="282dp"
         android:layout_height="253dp"
+        android:layout_marginTop="4dp"
         android:onClick="gorselEkle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,11 +68,13 @@
     <EditText
         android:id="@+id/turkceKarsilik"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginTop="16dp"
+        android:background="@drawable/radius_mavi"
         android:ems="10"
         android:hint="Türkçe karşılığını giriniz."
         android:inputType="text"
+        android:paddingLeft="15dp"
         android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -68,11 +85,14 @@
     <EditText
         android:id="@+id/cumleText2"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginTop="16dp"
+        android:background="@drawable/radius_mavi"
         android:ems="10"
         android:hint="Kelimeyi kullanarak cümle kurunuz"
         android:inputType="text"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,27 +102,32 @@
 
     <EditText
         android:id="@+id/ingilizceKelime"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_width="297dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/radius_mavi"
         android:ems="10"
         android:hint="İngilizce kelime giriniz."
         android:inputType="text"
+        android:paddingLeft="15dp"
         android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gorselEkleBtn" />
+        app:layout_constraintTop_toTopOf="@+id/cardViewTexr" />
 
     <EditText
         android:id="@+id/cumleText1"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginTop="16dp"
+        android:background="@drawable/radius_mavi"
         android:ems="10"
         android:hint="Kelimeyi kullanarak cümle kurunuz"
         android:inputType="text"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -113,17 +138,17 @@
     <TextView
         android:id="@+id/kelimeEkleBtn"
         android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/radius_mavi"
+        android:layout_height="40dp"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/textbackground"
         android:gravity="center"
         android:onClick="KelimeEkleClick"
         android:text="Kelime Ekle"
+        android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cumleText2"
-        app:layout_constraintVertical_bias="0.263" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
