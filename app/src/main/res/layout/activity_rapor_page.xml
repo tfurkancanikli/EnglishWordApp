@@ -63,7 +63,7 @@
                 app:cardBackgroundColor="#393E46">
 
                 <TextView
-                    android:id="@+id/tvOran2"
+                    android:id="@+id/dDogru"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="16dp"
@@ -82,7 +82,7 @@
                 app:cardBackgroundColor="#393E46">
 
                 <TextView
-                    android:id="@+id/tvTarih"
+                    android:id="@+id/tTarih"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="16dp"
@@ -101,7 +101,7 @@
                 app:cardBackgroundColor="#393E46">
 
                 <TextView
-                    android:id="@+id/tvOran"
+                    android:id="@+id/oOran"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="16dp"
@@ -120,7 +120,7 @@
                 app:cardBackgroundColor="#393E46">
 
                 <TextView
-                    android:id="@+id/tvYanlis"
+                    android:id="@+id/tTarih"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="16dp"
@@ -139,6 +139,7 @@
         android:layout_marginBottom="20dp"
         android:backgroundTint="#4CAF50"
         android:elevation="4dp"
+        android:onClick="btnPdf"
         android:text="📄 PDF OLUŞTUR"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
@@ -154,6 +155,7 @@
         android:layout_marginBottom="60dp"
         android:backgroundTint="#B84343"
         android:elevation="4dp"
+        android:onClick="btnBack"
         android:text="↩ GERİ GEL"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
@@ -162,3 +164,22 @@
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
