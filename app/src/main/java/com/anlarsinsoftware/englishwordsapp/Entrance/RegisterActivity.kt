@@ -48,7 +48,7 @@ class RegisterActivity : AppCompatActivity() {
                         }
 
                         Toast.makeText(applicationContext, "Kayıt Başarılı!", Toast.LENGTH_SHORT).show()
-                        bagla(HomePageActivity::class.java)
+                        bagla(HomePageActivity::class.java,true)
                     } else {
                         Toast.makeText(applicationContext, "Kayıt Başarısız! Lütfen tekrar deneyiniz.", Toast.LENGTH_SHORT).show()
                     }
@@ -62,6 +62,6 @@ class RegisterActivity : AppCompatActivity() {
 
     }
     fun backToSign(view:View){
-       bagla(SignInActivity::class.java)
+       bagla(SignInActivity::class.java,true)
     }
 }

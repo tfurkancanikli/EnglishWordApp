@@ -25,7 +25,7 @@ class SignInActivity : AppCompatActivity() {
 
         val guncelKullanici = auth.currentUser
         if (guncelKullanici!=null){
-           bagla(HomePageActivity::class.java)
+           bagla(HomePageActivity::class.java,true)
         }
     }
 
@@ -40,7 +40,7 @@ class SignInActivity : AppCompatActivity() {
                 .addOnCompleteListener{task ->
                     if (task.isSuccessful){
                         Toast.makeText(this,"Giriş Başarılı !",Toast.LENGTH_SHORT).show()
-                        bagla(HomePageActivity::class.java)
+                        bagla(HomePageActivity::class.java,true)
                     }
                     else{
                         Toast.makeText(this,"Giriş Başarısız Tekrar Deneyin!",Toast.LENGTH_SHORT).show()
@@ -53,7 +53,7 @@ class SignInActivity : AppCompatActivity() {
     }
 
     fun signUpClick(view : View){
-       bagla(RegisterActivity::class.java)
+       bagla(RegisterActivity::class.java,true)
     }
     fun resetPassword(view:View){
 

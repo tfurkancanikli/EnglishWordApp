@@ -3,18 +3,21 @@ package com.anlarsinsoftware.englishwordsapp.ViewPages
 
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import com.anlarsinsoftware.englishwordsapp.Entrance.BaseCompact
+import com.anlarsinsoftware.englishwordsapp.Entrance.SignInActivity
+import com.anlarsinsoftware.englishwordsapp.Entrance.bagla
 import com.anlarsinsoftware.englishwordsapp.R
-import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.squareup.picasso.Picasso
 
-class ProfileActivity : AppCompatActivity() {
+class ProfileActivity : BaseCompact() {
 
     private lateinit var auth: FirebaseAuth
 
@@ -42,17 +45,37 @@ class ProfileActivity : AppCompatActivity() {
 
 
             it.photoUrl?.let { uri ->
-                Glide.with(this)
+                Picasso.get()
                     .load(uri)
-                    .placeholder(R.drawable.profilIcon)
+                    .placeholder(R.drawable.baseline_person_24)
                     .into(profileImage)
             }
         }
 
 
         btnConnectReport.setOnClickListener {
+            bagla(RaporPage::class.java,false)
             Toast.makeText(this, "Raporlama sistemine bağlanılıyor...", Toast.LENGTH_SHORT).show()
 
         }
     }
+    fun exitClick(view: View) {
+        auth.signOut()
+        val alertDialog = androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle("Uygulamadan Çıkılsın mı?")
+            .setMessage("Çıkış yapmak istediğinize emin misiniz?")
+            .setPositiveButton("Evet") { dialog, _ ->
+                dialog.dismiss()
+                auth.signOut()
+                bagla(SignInActivity::class.java, true)
+                finishAffinity()
+            }
+            .setNegativeButton("Hayır") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+
+        alertDialog.show()
+    }
+
 }

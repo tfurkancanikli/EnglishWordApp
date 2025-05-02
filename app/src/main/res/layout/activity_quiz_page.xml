@@ -2,13 +2,40 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/profileLayout"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/koyu_mor"
-    android:gravity="center"
-    android:orientation="vertical"
-   >
+    tools:context=".ViewPages.QuizPageActivity">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/orange"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+
+        <TextView
+            android:id="@+id/pageName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            android:gravity="center"
+            android:text="QuizPage"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/MenuLayout"
@@ -35,7 +62,7 @@
             android:id="@+id/wordleGame"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_marginLeft="24dp"
+            android:layout_marginLeft="36dp"
             android:layout_toEndOf="@id/profile"
             android:onClick="goToProfileClick"
             app:srcCompat="@drawable/baseline_person_24" />
@@ -68,6 +95,7 @@
         android:layout_width="70dp"
         android:layout_height="60dp"
         android:layout_marginBottom="35dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/MenuLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -80,69 +108,49 @@
         android:layout_height="40dp"
         android:layout_marginBottom="38dp"
         android:onClick="goToWordAddClick"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/baseline_add_circle_white24" />
 
-    <ImageView
-        android:id="@+id/profileImage"
-        android:layout_width="132dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="176dp"
-        android:background="@drawable/radius_mavi"
-        android:contentDescription="Profil Resmi"
-        android:scaleType="centerCrop"
-        android:src="@drawable/baseline_person_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="416dp"
+        android:layout_height="684dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/MenuLayout"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
 
-    <TextView
-        android:id="@+id/textName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Kullanıcı Adı"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileImage" />
+        <ImageView
+            android:id="@+id/kelimeImage"
+            android:layout_width="308dp"
+            android:layout_height="276dp"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter" />
 
-    <TextView
-        android:id="@+id/textEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="email@example.com"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textName" />
+        <EditText
+            android:id="@+id/kullaniciCevap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/drawbleradius"
+            android:hint="İngilizce kelimeyi yazın"
+            android:inputType="text"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:padding="10sp"
+            />
 
-    <Button
-        android:id="@+id/btnConnectReport"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:backgroundTint="@color/black"
-        android:onClick="exitClick"
-        android:text="Raporlanmaya Bağlan"
-        android:textColor="@color/grey"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textEmail" />
+        <Button
+            android:id="@+id/dogrulaButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Doğrula" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="exitClick"
-        app:layout_constraintBottom_toTopOf="@+id/btnConnectReport"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textEmail"
-        app:srcCompat="@drawable/exit" />
+    </LinearLayout>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

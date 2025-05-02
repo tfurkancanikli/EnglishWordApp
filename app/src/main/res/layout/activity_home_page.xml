@@ -6,13 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/koyu_mor"
+    android:onClick="goToQuiz"
     tools:context=".ViewPages.HomePageActivity">
 
     <RelativeLayout
         android:id="@+id/MenuLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@drawable/radius_mavi"
         android:padding="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,47 +21,50 @@
 
         <ImageView
             android:id="@+id/profile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="64dp"
-            android:onClick="exitClick"
-            android:src="@drawable/baseline_person_24" />
+            android:onClick="goToHomeClick"
+            android:src="@drawable/baseline_home_24" />
 
         <ImageView
             android:id="@+id/wordleGame"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="32dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="24dp"
             android:layout_toEndOf="@id/profile"
-            app:srcCompat="@drawable/baseline_menu_book_24" />
+            android:onClick="goToProfileClick"
+            app:srcCompat="@drawable/baseline_person_24" />
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="32dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginRight="24dp"
 
             android:layout_toLeftOf="@id/imageView8"
+            android:onClick="goToGameClick"
             app:srcCompat="@drawable/baseline_videogame_asset_24" />
 
         <ImageView
             android:id="@+id/imageView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="64dp"
-            app:srcCompat="@drawable/baseline_edit_document_24" />
+            android:onClick="goToWordsClick"
+            app:srcCompat="@drawable/baseline_menu_book_24" />
 
 
     </RelativeLayout>
 
     <ImageView
         android:id="@+id/imageView7"
-        android:layout_width="60dp"
+        android:layout_width="70dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toBottomOf="@+id/MenuLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -71,18 +75,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/orange"
+        android:gravity="center"
         android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/back_ico"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:onClick="exitClick"
-            android:src="@drawable/baseline_arrow_back_ios_new_24" />
 
         <TextView
             android:id="@+id/pageName"
@@ -90,66 +88,163 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="16dp"
-            android:layout_toEndOf="@id/back_ico"
             android:gravity="center"
-            android:text="Ana Sayfa"
+            android:text="EnglishWordApp"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/sozlukBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="16dp"
-            android:onClick="sozlukButtonClick"
-            app:srcCompat="@drawable/baseline_email_24"
-
-
-            />
 
     </RelativeLayout>
 
     <ImageView
         android:id="@+id/imageView9"
-        android:layout_width="36dp"
-        android:layout_height="38dp"
-        android:layout_marginBottom="32dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="38dp"
+        android:onClick="goToWordAddClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/baseline_add_circle_white24" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardviewHome1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:id="@+id/LinearLayoutSlider"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="1dp"
+        android:orientation="horizontal"
         android:padding="10dp"
-
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
 
-        <ImageView
-            android:id="@+id/cardviewHome1image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ViewFlipper
+            android:id="@+id/viewFlipper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:autoStart="true"
+            android:flipInterval="4000"
+            android:inAnimation="@android:anim/slide_in_left"
+            android:outAnimation="@android:anim/slide_out_right">
 
-            ></ImageView>
-    </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/firstCard"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardCornerRadius="25dp">
 
+                <ImageView
+                    android:id="@+id/firstCardSliderImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:onClick="firstCardImageClick"></ImageView>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="bottom">
+
+                    <TextView
+                        android:id="@+id/firstCardText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/gecis"
+                        android:fontFamily="@font/acme"
+                        android:text="Görsel Açıklaması"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+
+                        android:textStyle="bold"></TextView>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/secondCard"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardCornerRadius="25dp">
+
+                <ImageView
+                    android:id="@+id/secondCardSliderImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:onClick="secondCardImageClick"></ImageView>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="bottom">
+
+                    <TextView
+                        android:id="@+id/secondCardText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/gecis"
+                        android:fontFamily="@font/acme"
+                        android:text="Görsel Açıklaması"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+
+                        android:textStyle="bold"></TextView>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/thirdCard"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardCornerRadius="25dp">
+
+                <ImageView
+                    android:id="@+id/thirdCardSliderImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:onClick="thirdCardImageClick"></ImageView>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="bottom">
+
+                    <TextView
+                        android:id="@+id/thirdCardText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/gecis"
+                        android:fontFamily="@font/acme"
+                        android:text="Görsel Açıklaması"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+
+                        ></TextView>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </ViewFlipper>
+    </LinearLayout>
 
     <Button
-        android:id="@+id/bulmacaButon"
-        android:layout_width="330dp"
-        android:layout_height="42dp"
-        android:layout_marginBottom="350dp"
-        android:background="@color/orange"
-        android:text="BULMACA OYNA"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="32dp"
+        android:drawableLeft="@drawable/baseline_edit_document_24"
+        android:onClick="goToQuiz"
+        android:text="Quize Başla"
+        android:textAlignment="center"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LinearLayoutSlider" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

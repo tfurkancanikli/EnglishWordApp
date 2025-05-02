@@ -14,9 +14,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.anlarsinsoftware.englishwordsapp.Entrance.BaseCompact
 import com.anlarsinsoftware.englishwordsapp.Entrance.bagla
 import com.anlarsinsoftware.englishwordsapp.databinding.ActivityWordAddPageBinding
 import com.google.firebase.Timestamp
@@ -26,7 +25,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import java.util.UUID
 
-class WordAddPage : AppCompatActivity() {
+class WordAddPage : BaseCompact() {
 
     private lateinit var binding: ActivityWordAddPageBinding
     private lateinit var galeriLauncher: ActivityResultLauncher<Intent>
@@ -43,6 +42,8 @@ class WordAddPage : AppCompatActivity() {
         setContentView(binding.root)
 
         auth = FirebaseAuth.getInstance()
+
+
 
 
 
@@ -97,6 +98,7 @@ class WordAddPage : AppCompatActivity() {
                     val cumle2 = binding.cumleText2.text.toString()
                     val kullanici = auth.currentUser?.displayName.orEmpty()
 
+
                     val tarih = Timestamp.now()
 
                     if (kelimeIng.isNotEmpty() && kelimeTur.isNotEmpty() && cumle1.isNotEmpty()) {
@@ -114,7 +116,7 @@ class WordAddPage : AppCompatActivity() {
                             .addOnCompleteListener { task ->
                                 if (task.isSuccessful) {
                                     Toast.makeText(this, "Kelime Başarıyla Sözlüğe eklendi.", Toast.LENGTH_SHORT).show()
-                                    bagla(Sozluk::class.java)
+                                    bagla(Sozluk::class.java,false)
                                 }
                             }
                             .addOnFailureListener { e ->
@@ -131,10 +133,6 @@ class WordAddPage : AppCompatActivity() {
         }
 
 
-    }
-
-    fun backToSozluk(view: View) {
-        bagla(Sozluk::class.java)
     }
 
     fun gorselEkle(view: View) {

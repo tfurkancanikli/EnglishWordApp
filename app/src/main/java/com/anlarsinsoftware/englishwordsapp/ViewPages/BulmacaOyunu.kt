@@ -1,5 +1,4 @@
 package com.anlarsinsoftware.englishwordsapp.ViewPages
-import android.content.Intent
 import com.google.firebase.database.*
 import android.graphics.Color
 import android.os.Bundle
@@ -7,10 +6,11 @@ import android.text.InputFilter
 import android.text.InputType
 import android.view.Gravity
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
+import com.anlarsinsoftware.englishwordsapp.Entrance.BaseCompact
+import com.anlarsinsoftware.englishwordsapp.Entrance.bagla
 import com.anlarsinsoftware.englishwordsapp.R
 
-class BulmacaOyunu : AppCompatActivity() {
+class BulmacaOyunu : BaseCompact() {
 
     lateinit var database: DatabaseReference
 
@@ -34,9 +34,10 @@ class BulmacaOyunu : AppCompatActivity() {
 
         val bulmacaGeri = findViewById<Button>(R.id.geriButon)
         bulmacaGeri.setOnClickListener {
-            val intent = Intent(this, HomePageActivity::class.java)
-            startActivity(intent)
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+         bagla(HomePageActivity::class.java,false)
+
+
+
         }
 
 

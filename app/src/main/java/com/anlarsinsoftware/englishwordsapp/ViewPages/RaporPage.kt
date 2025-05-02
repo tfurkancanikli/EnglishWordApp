@@ -1,17 +1,8 @@
 package com.anlarsinsoftware.englishwordsapp.ViewPages
 
 import android.os.Bundle
-import android.os.Environment
 import android.view.View
 import android.widget.LinearLayout
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.anlarsinsoftware.englishwordsapp.Entrance.bagla
-import com.anlarsinsoftware.englishwordsapp.Entrance.bagla
-import com.anlarsinsoftware.englishwordsapp.R
 import com.anlarsinsoftware.englishwordsapp.databinding.ActivityRaporPageBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -21,11 +12,11 @@ import android.content.Intent
 import android.graphics.pdf.PdfDocument
 import android.widget.Toast
 import androidx.core.content.FileProvider
-import com.anlarsinsoftware.englishwordsapp.Entrance.SignInActivity
+import com.anlarsinsoftware.englishwordsapp.Entrance.BaseCompact
 import java.io.File
 import java.io.FileOutputStream
 
-class RaporPage : AppCompatActivity() {
+class RaporPage : BaseCompact() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var binding : ActivityRaporPageBinding
@@ -83,10 +74,6 @@ class RaporPage : AppCompatActivity() {
             Toast.makeText(this, "PDF oluşturulamadı: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
         }
     }
-    fun btnBack(view:View){
-        bagla(ProfileActivity::class.java)
-    }
-
 }
 
 

@@ -1,32 +1,24 @@
 package com.anlarsinsoftware.englishwordsapp.ViewPages
 
-import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anlarsinsoftware.englishwordsapp.Adapter.SozlukAdapter
+import com.anlarsinsoftware.englishwordsapp.Entrance.BaseCompact
 import com.anlarsinsoftware.englishwordsapp.Entrance.bagla
 import com.anlarsinsoftware.englishwordsapp.Model.Kelime
 import com.anlarsinsoftware.englishwordsapp.R
 import com.anlarsinsoftware.englishwordsapp.databinding.ActivitySozluk2Binding
-import com.anlarsinsoftware.englishwordsapp.databinding.ActivityWordAddPageBinding
-import com.google.api.Context
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
 
-class Sozluk : AppCompatActivity() {
+class Sozluk : BaseCompact() {
 
     val db = Firebase.firestore
     var kelimelerListesi = ArrayList<Kelime>()
@@ -88,11 +80,12 @@ class Sozluk : AppCompatActivity() {
 
 
     fun kelimeEkleSayfa(view : View){
-        bagla(WordAddPage::class.java)
+        bagla(WordAddPage::class.java,false)
     }
     fun backToHome(view:View){
-        bagla(HomePageActivity::class.java)
+       // bagla(HomePageActivity::class.java)
     }
+
     fun kelimeDetaylari(kelime: Kelime) {
         val inflater = layoutInflater
         val view = inflater.inflate(R.layout.detaylar_dialog, null)
