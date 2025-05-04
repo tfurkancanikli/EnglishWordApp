@@ -21,6 +21,8 @@ class BulmacaOyunu : BaseCompact() {
     private var gizliKelime = ""
     private var gecerliSatir = 0
 
+    private lateinit var yeniOyunButonu: Button
+
     private lateinit var izgara: GridLayout
     private lateinit var hucreMatrisi: Array<Array<EditText>>
     private lateinit var gonderButonu: Button
@@ -35,14 +37,24 @@ class BulmacaOyunu : BaseCompact() {
         gonderButonu = findViewById(R.id.guessBtn)
         geriBildirim = findViewById(R.id.feedback)
         yuklemeProgress = findViewById(R.id.progress)
-
+        yeniOyunButonu = findViewById(R.id.yeniOyunBtn)
         buildGrid()
 
         kelimeleriYukle()
 
+
+
         gonderButonu.setOnClickListener {
             tahminYap()
         }
+
+        yeniOyunButonu.setOnClickListener {
+            yeniOyunBaslat()
+
+        }
+
+
+
     }
 
     private fun kelimeleriYukle() {
@@ -92,6 +104,32 @@ class BulmacaOyunu : BaseCompact() {
                 ).show()
             }
     }
+
+    private fun yeniOyunBaslat() {
+        // Mevcut oyun durumunu sıfırla
+        gecerliSatir = 0
+        geriBildirim.text = ""
+        gonderButonu.isEnabled = true
+
+        // Tüm hücreleri temizle ve resetle
+        for (row in 0 until 6) {
+            for (col in 0 until 5) {
+                hucreMatrisi[row][col].apply {
+                    setText("")
+                    setBackgroundResource(R.color.white)
+                    isEnabled = row == 0 // Sadece ilk satır aktif
+                    setTextColor(Color.BLACK) // Yazı rengi siyah
+                }
+            }
+        }
+
+
+        hucreMatrisi[0][0].requestFocus()
+
+
+        kelimeleriYukle()
+    }
+
 
     private fun buildGrid() {
         hucreMatrisi = Array(6) { row ->
