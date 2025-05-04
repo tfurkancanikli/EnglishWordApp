@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/koyu_mor"
-    android:fillViewport="true">
+    android:background="#FAFAFA"
+    android:fillViewport="true"
+    >
 
     <LinearLayout
+        android:background="@color/koyu_mor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical">
 
 
         <RelativeLayout
@@ -45,23 +43,24 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:orientation="vertical"
+            android:gravity="center_horizontal"
             android:padding="24dp">
 
 
-            <TextView
+            <ProgressBar
                 android:id="@+id/progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
                 android:text="BULMACA OYUNU"
-                android:textColor="@color/white"
+                android:textColor="#333333"
                 android:textSize="24sp"
                 android:textStyle="bold" />
+
+
             <GridLayout
                 android:id="@+id/letterGrid"
-                android:background="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
@@ -90,80 +89,26 @@
                 android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>
-
-    <RelativeLayout
-        android:id="@+id/MenuLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/radius_mavi"
-        android:padding="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <ImageView
-            android:id="@+id/profile"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="64dp"
-            android:onClick="goToHomeClick"
-            android:src="@drawable/baseline_home_24" />
-
-        <ImageView
-            android:id="@+id/wordleGame"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginLeft="24dp"
-            android:layout_toEndOf="@id/profile"
-            android:onClick="goToProfileClick"
-            app:srcCompat="@drawable/baseline_person_24" />
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginRight="24dp"
-
-            android:layout_toLeftOf="@id/imageView8"
-            android:onClick="goToGameClick"
-            app:srcCompat="@drawable/baseline_videogame_asset_24" />
-
-        <ImageView
-            android:id="@+id/imageView8"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="64dp"
-            android:onClick="goToWordsClick"
-            app:srcCompat="@drawable/baseline_menu_book_24" />
+</ScrollView>
 
 
-    </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="70dp"
-        android:layout_height="60dp"
-        android:layout_marginBottom="30dp"
-        app:layout_constraintBottom_toBottomOf="@+id/MenuLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/add_btn_background" />
 
-    <ImageView
-        android:id="@+id/imageView9"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="38dp"
-        android:onClick="goToWordAddClick"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/baseline_add_circle_white24" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

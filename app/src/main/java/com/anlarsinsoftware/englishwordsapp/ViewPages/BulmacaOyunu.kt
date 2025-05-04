@@ -1,70 +1,96 @@
 package com.anlarsinsoftware.englishwordsapp.ViewPages
-import com.google.firebase.database.*
+import com.anlarsinsoftware.englishwordsapp.ViewPages.BulmacaOyunu
 import android.graphics.Color
 import android.os.Bundle
 import android.text.InputFilter
 import android.text.InputType
+import android.util.Log
 import android.view.Gravity
+import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import com.anlarsinsoftware.englishwordsapp.Entrance.BaseCompact
-import com.anlarsinsoftware.englishwordsapp.Entrance.bagla
 import com.anlarsinsoftware.englishwordsapp.R
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class BulmacaOyunu : BaseCompact() {
 
-    lateinit var database: DatabaseReference
+    private val db = Firebase.firestore
+    private var kelimeListesi: MutableList<String> = mutableListOf()
+    private var gizliKelime = ""
+    private var gecerliSatir = 0
 
-    var kelimeListesi: List<String> = listOf()
-    var gizliKelime = ""
-    var gecerliSatir = 0
-
-    lateinit var izgara: GridLayout
-    lateinit var hucreMatrisi: Array<Array<EditText>>
-    lateinit var gonderButonu: Button
-    lateinit var geriBildirim: TextView
-    lateinit var ilerlemeGosterimi: TextView
+    private lateinit var izgara: GridLayout
+    private lateinit var hucreMatrisi: Array<Array<EditText>>
+    private lateinit var gonderButonu: Button
+    private lateinit var geriBildirim: TextView
+    private lateinit var yuklemeProgress: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bulmaca_oyunu)
+
         izgara = findViewById(R.id.letterGrid)
         gonderButonu = findViewById(R.id.guessBtn)
         geriBildirim = findViewById(R.id.feedback)
-        ilerlemeGosterimi = findViewById(R.id.progress)
-
-        val bulmacaGeri = findViewById<Button>(R.id.geriButon)
-        bulmacaGeri.setOnClickListener {
-         bagla(HomePageActivity::class.java,false)
-
-
-
-        }
-
-
+        yuklemeProgress = findViewById(R.id.progress)
 
         buildGrid()
+
+        kelimeleriYukle()
+
         gonderButonu.setOnClickListener {
-            if (gecerliSatir >= 6) return@setOnClickListener
+            tahminYap()
+        }
+    }
 
-            val guess = getGuessFromRow(gecerliSatir)
+    private fun kelimeleriYukle() {
+        yuklemeProgress.visibility = View.VISIBLE
+        geriBildirim.text = "Kelimeler yükleniyor"
+        gonderButonu.isEnabled = false
 
-            if (guess.length != 5 || !kelimeListesi.contains(guess.lowercase())) {
-                geriBildirim.text = "Geçersiz kelime!"
-                return@setOnClickListener
-            }
+        db.collection("kelimeler")
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                kelimeListesi.clear()
 
-            setFeedbackForRow(gecerliSatir, guess, gizliKelime)
+                try {
 
-            if (guess == gizliKelime.uppercase()) {
-                geriBildirim.text = "Kazandın!"
-                gonderButonu.isEnabled = false
-            } else {
-                gecerliSatir++
-                if (gecerliSatir == 6) {
-                    geriBildirim.text = "Kaybettin! Doğru kelime: $gizliKelime"
+                    for (document in querySnapshot.documents) {
+                        val kelimeIng = document.getString("ingilizceKelime")?.trim()?.uppercase()
+                        if (kelimeIng != null && kelimeIng.length == 5) {
+                            kelimeListesi.add(kelimeIng)
+                        }
+                    }
+
+                    if (kelimeListesi.isNotEmpty()) {
+                        gizliKelime = kelimeListesi.random()
+                        Log.d("Wordle", "Gizli kelime: $gizliKelime")
+                        geriBildirim.text = "Hazır! tahminini yap"
+                        gonderButonu.isEnabled = true
+                    } else {
+                        geriBildirim.text = "Veritabanında uygun kelime bulunamadı!"
+                    }
+                } catch (e: Exception) {
+                    Log.e("Wordle", "Kelime yükleme hatası", e)
+                    geriBildirim.text = "Kelime yükleme hatası: ${e.localizedMessage}"
+                } finally {
+                    yuklemeProgress.visibility = View.GONE
                 }
             }
-        }
+            .addOnFailureListener { exception ->
+                Log.e("Wordle", "Veritabanı hatası", exception)
+                yuklemeProgress.visibility = View.GONE
+                geriBildirim.text = "Veritabanı hatası: ${exception.localizedMessage}"
+
+
+                Toast.makeText(
+                    this@BulmacaOyunu,
+                    " Lütfen internet bağlantınızı kontrol edin.",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
     }
 
     private fun buildGrid() {
@@ -72,8 +98,8 @@ class BulmacaOyunu : BaseCompact() {
             Array(5) { col ->
                 EditText(this).apply {
                     layoutParams = GridLayout.LayoutParams().apply {
-                        width = 120
-                        height = 120
+                        width = 60.dpToPx()
+                        height = 60.dpToPx()
                         rowSpec = GridLayout.spec(row)
                         columnSpec = GridLayout.spec(col)
                         setMargins(4, 4, 4, 4)
@@ -82,9 +108,8 @@ class BulmacaOyunu : BaseCompact() {
                     textSize = 24f
                     filters = arrayOf(InputFilter.LengthFilter(1))
                     inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
-                    setBackgroundColor(Color.LTGRAY)
+                    setBackgroundResource(R.color.white)
                     isSingleLine = true
-
 
                     addTextChangedListener(object : android.text.TextWatcher {
                         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -95,7 +120,6 @@ class BulmacaOyunu : BaseCompact() {
                             }
                         }
                     })
-
 
                     setOnKeyListener { _, keyCode, event ->
                         if (event.action == android.view.KeyEvent.ACTION_DOWN) {
@@ -110,12 +134,7 @@ class BulmacaOyunu : BaseCompact() {
                                 }
                                 android.view.KeyEvent.KEYCODE_ENTER -> {
                                     if (row == gecerliSatir) {
-                                        gonderButonu.performClick()
-
-                                        // Tahmin başarılı değilse ve 6. satır değilse, sonraki satırın ilk kutusuna odaklan
-                                        if (gecerliSatir < 6) {
-                                            hucreMatrisi[gecerliSatir][0].requestFocus()
-                                        }
+                                        tahminYap()
                                         return@setOnKeyListener true
                                     }
                                 }
@@ -123,53 +142,87 @@ class BulmacaOyunu : BaseCompact() {
                         }
                         false
                     }
-
                 }.also { izgara.addView(it) }
             }
         }
-
-
         hucreMatrisi[0][0].requestFocus()
     }
 
+    private fun tahminYap() {
+        if (gecerliSatir >= 6) return
 
+        val guess = getGuessFromRow(gecerliSatir)
 
+        if (guess.length != 5) {
+            geriBildirim.text = "5 harfli bir kelime girin!"
+            return
+        }
 
+        if (!kelimeListesi.contains(guess)) {
+            geriBildirim.text = "Geçersiz kelime!"
+            return
+        }
+
+        setFeedbackForRow(gecerliSatir, guess, gizliKelime)
+
+        if (guess == gizliKelime) {
+            geriBildirim.text = "Tebrikler! Kazandınız!"
+            gonderButonu.isEnabled = false
+            hucreMatrisi[gecerliSatir].forEach { it.isEnabled = false }
+        } else {
+            gecerliSatir++
+            if (gecerliSatir == 6) {
+                geriBildirim.text = "Kaybettiniz! Doğru kelime: $gizliKelime"
+                gonderButonu.isEnabled = false
+            } else {
+                hucreMatrisi[gecerliSatir][0].requestFocus()
+            }
+        }
+    }
 
     private fun getGuessFromRow(row: Int): String {
         return hucreMatrisi[row].joinToString("") { it.text.toString().uppercase() }
     }
 
     private fun setFeedbackForRow(row: Int, guess: String, secret: String) {
+        val secretChars = secret.toCharArray()
         val guessChars = guess.toCharArray()
-        val secretChars = secret.uppercase().toCharArray()
+        val feedback = IntArray(5) { 0 }
+
+
+        for (i in 0..4) {
+            if (guessChars[i] == secretChars[i]) {
+                feedback[i] = 2
+                secretChars[i] = ' '
+            }
+        }
+
+
+        for (i in 0..4) {
+            if (feedback[i] != 0) continue
+
+            val index = secretChars.indexOf(guessChars[i])
+            if (index != -1) {
+                feedback[i] = 1
+                secretChars[index] = ' '
+            }
+        }
+
 
         for (i in 0..4) {
             val cell = hucreMatrisi[row][i]
-            val letter = guessChars[i]
+            cell.isEnabled = false
 
-            if (letter == secretChars[i]) {
-                cell.setBackgroundColor(Color.GREEN)
-            } else if (secretChars.contains(letter)) {
-                cell.setBackgroundColor(Color.YELLOW)
-            } else {
-                cell.setBackgroundColor(Color.DKGRAY)
+            when (feedback[i]) {
+                2 -> cell.setBackgroundColor(Color.GREEN)
+                1 -> cell.setBackgroundColor(Color.YELLOW)
+                else -> cell.setBackgroundColor(Color.DKGRAY)
             }
         }
     }
 
-
-
-
+    private fun Int.dpToPx(): Int {
+        val density = resources.displayMetrics.density
+        return (this * density).toInt()
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
