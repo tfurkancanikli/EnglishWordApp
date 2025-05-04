@@ -1,5 +1,4 @@
 package com.anlarsinsoftware.englishwordsapp.ViewPages
-import com.anlarsinsoftware.englishwordsapp.ViewPages.BulmacaOyunu
 import android.graphics.Color
 import android.os.Bundle
 import android.text.InputFilter
@@ -7,8 +6,12 @@ import android.text.InputType
 import android.util.Log
 import android.view.Gravity
 import android.view.View
-import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.Button
+import android.widget.EditText
+import android.widget.GridLayout
+import android.widget.ProgressBar
+import android.widget.TextView
+import android.widget.Toast
 import com.anlarsinsoftware.englishwordsapp.Entrance.BaseCompact
 import com.anlarsinsoftware.englishwordsapp.R
 import com.google.firebase.firestore.ktx.firestore
