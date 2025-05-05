@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#2F1D50"
-    tools:context=".ViewPages.WordAddPage">
+    tools:context=".ViewPages.WordAddPage"
+    android:backgroundTint="@color/acik_mor2">
 
     <RelativeLayout
         android:id="@+id/MenuLayout"
@@ -25,26 +26,28 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="64dp"
             android:onClick="goToHomeClick"
-            android:src="@drawable/baseline_home_24" />
+            android:src="@drawable/baseline_home_24"
+            app:tint="@color/white" />
 
         <ImageView
             android:id="@+id/wordleGame"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_marginLeft="36dp"
+            android:layout_marginLeft="24dp"
             android:layout_toEndOf="@id/profile"
             android:onClick="goToProfileClick"
-            app:srcCompat="@drawable/baseline_person_24" />
+            app:srcCompat="@drawable/baseline_person_24"
+            app:tint="@color/white" />
 
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_marginRight="36dp"
-
+            android:layout_marginRight="24dp"
             android:layout_toLeftOf="@id/imageView8"
             android:onClick="goToGameClick"
-            app:srcCompat="@drawable/baseline_videogame_asset_24" />
+            app:srcCompat="@drawable/baseline_videogame_asset_24"
+            app:tint="@color/white" />
 
         <ImageView
             android:id="@+id/imageView8"
@@ -54,10 +57,11 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="64dp"
             android:onClick="goToWordsClick"
-            app:srcCompat="@drawable/baseline_menu_book_24" />
-
-
+            app:srcCompat="@drawable/baseline_menu_book_24"
+            app:tint="@color/white" />
     </RelativeLayout>
+
+
 
     <ImageView
         android:id="@+id/imageView7"
@@ -209,7 +213,7 @@
         android:layout_width="150dp"
         android:layout_height="40dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/textbackground"
+        android:background="@color/teal_700"
         android:gravity="center"
         android:onClick="KelimeEkleClick"
         android:text="Kelime Ekle"

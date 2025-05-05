@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/koyu_mor"
+    android:background="@color/acik_mor2"
     android:onClick="goToQuiz"
     tools:context=".ViewPages.HomePageActivity">
 
@@ -26,7 +26,8 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="64dp"
             android:onClick="goToHomeClick"
-            android:src="@drawable/baseline_home_24" />
+            android:src="@drawable/baseline_home_24"
+            app:tint="@color/white" />
 
         <ImageView
             android:id="@+id/wordleGame"
@@ -35,17 +36,18 @@
             android:layout_marginLeft="24dp"
             android:layout_toEndOf="@id/profile"
             android:onClick="goToProfileClick"
-            app:srcCompat="@drawable/baseline_person_24" />
+            app:srcCompat="@drawable/baseline_person_24"
+            app:tint="@color/white" />
 
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginRight="24dp"
-
             android:layout_toLeftOf="@id/imageView8"
             android:onClick="goToGameClick"
-            app:srcCompat="@drawable/baseline_videogame_asset_24" />
+            app:srcCompat="@drawable/baseline_videogame_asset_24"
+            app:tint="@color/white" />
 
         <ImageView
             android:id="@+id/imageView8"
@@ -55,9 +57,8 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="64dp"
             android:onClick="goToWordsClick"
-            app:srcCompat="@drawable/baseline_menu_book_24" />
-
-
+            app:srcCompat="@drawable/baseline_menu_book_24"
+            app:tint="@color/white" />
     </RelativeLayout>
 
     <ImageView
@@ -68,19 +69,20 @@
         app:layout_constraintBottom_toBottomOf="@+id/MenuLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:tint="@color/indigo_500"
         app:srcCompat="@drawable/add_btn_background" />
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/orange"
+        android:background="@color/teal_700"
         android:gravity="center"
         android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
 
         <TextView
             android:id="@+id/pageName"
@@ -90,11 +92,9 @@
             android:layout_marginStart="16dp"
             android:gravity="center"
             android:text="EnglishWordApp"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
-
-
     </RelativeLayout>
 
     <ImageView
@@ -106,7 +106,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/baseline_add_circle_white24" />
+        app:srcCompat="@drawable/baseline_add_circle_white24"
+        app:tint="@color/white" />
 
     <LinearLayout
         android:id="@+id/LinearLayoutSlider"
@@ -131,14 +132,15 @@
                 android:id="@+id/firstCard"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="25dp">
 
                 <ImageView
                     android:id="@+id/firstCardSliderImage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:onClick="firstCardImageClick"></ImageView>
+                    android:scaleType="centerCrop"
+                    android:onClick="firstCardImageClick"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -155,8 +157,7 @@
                         android:text="Görsel Açıklaması"
                         android:textColor="@color/black"
                         android:textSize="15sp"
-
-                        android:textStyle="bold"></TextView>
+                        android:textStyle="bold"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -164,14 +165,15 @@
                 android:id="@+id/secondCard"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="25dp">
 
                 <ImageView
                     android:id="@+id/secondCardSliderImage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:onClick="secondCardImageClick"></ImageView>
+                    android:scaleType="centerCrop"
+                    android:onClick="secondCardImageClick"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -188,8 +190,7 @@
                         android:text="Görsel Açıklaması"
                         android:textColor="@color/black"
                         android:textSize="15sp"
-
-                        android:textStyle="bold"></TextView>
+                        android:textStyle="bold"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -197,14 +198,15 @@
                 android:id="@+id/thirdCard"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="25dp">
 
                 <ImageView
                     android:id="@+id/thirdCardSliderImage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:onClick="thirdCardImageClick"></ImageView>
+                    android:scaleType="centerCrop"
+                    android:onClick="thirdCardImageClick"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -221,12 +223,9 @@
                         android:text="Görsel Açıklaması"
                         android:textColor="@color/black"
                         android:textSize="15sp"
-                        android:textStyle="bold"
-
-                        ></TextView>
+                        android:textStyle="bold"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-
         </ViewFlipper>
     </LinearLayout>
 
@@ -238,13 +237,14 @@
         android:layout_marginTop="100dp"
         android:layout_marginEnd="32dp"
         android:drawableLeft="@drawable/baseline_edit_document_24"
+        android:drawableTint="@color/white"
+        android:backgroundTint="@color/teal_700"
         android:onClick="goToQuiz"
         android:text="Quize Başla"
+        android:textColor="@color/white"
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/LinearLayoutSlider" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

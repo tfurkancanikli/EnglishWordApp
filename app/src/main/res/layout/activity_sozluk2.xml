@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/koyu_mor"
+    android:background="@color/acik_mor2"
     tools:context=".ViewPages.Sozluk">
 
     <RelativeLayout
@@ -25,7 +25,8 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="64dp"
             android:onClick="goToHomeClick"
-            android:src="@drawable/baseline_home_24" />
+            android:src="@drawable/baseline_home_24"
+            app:tint="@color/white" />
 
         <ImageView
             android:id="@+id/wordleGame"
@@ -34,17 +35,18 @@
             android:layout_marginLeft="24dp"
             android:layout_toEndOf="@id/profile"
             android:onClick="goToProfileClick"
-            app:srcCompat="@drawable/baseline_person_24" />
+            app:srcCompat="@drawable/baseline_person_24"
+            app:tint="@color/white" />
 
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginRight="24dp"
-
             android:layout_toLeftOf="@id/imageView8"
             android:onClick="goToGameClick"
-            app:srcCompat="@drawable/baseline_videogame_asset_24" />
+            app:srcCompat="@drawable/baseline_videogame_asset_24"
+            app:tint="@color/white" />
 
         <ImageView
             android:id="@+id/imageView8"
@@ -54,12 +56,9 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="64dp"
             android:onClick="goToWordsClick"
-            app:srcCompat="@drawable/baseline_menu_book_24" />
-
-
-
+            app:srcCompat="@drawable/baseline_menu_book_24"
+            app:tint="@color/white" />
     </RelativeLayout>
-
 
     <ImageView
         android:id="@+id/imageView7"
@@ -69,8 +68,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/MenuLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:tint="@color/indigo_500"
         app:srcCompat="@drawable/add_btn_background" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
@@ -81,13 +80,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
+        app:layout_constraintVertical_bias="0.0" />
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/orange"
+        android:background="@color/teal_700"
         android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
