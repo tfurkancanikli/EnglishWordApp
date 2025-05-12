@@ -1,7 +1,16 @@
 package com.anlarsinsoftware.englishwordsapp.Model
 
-import com.google.firebase.Timestamp
+data class Kelime(
+    val kelimeId: String = "",
+    val kullaniciAdi: String = "",
+    val kelimeIng: String = "",
+    val kelimeTur: String = "",
+    val birinciCumle: String = "",
+    val ikinciCumle: String = "",
+    val gorselUrl: String = ""
+) {
 
-class Kelime(var kullaniciAdi : String, var kelimeIng : String, var kelimeTur : String,var cumle1 :String,var cumle2 : String? ,var gorselUrl : String) {
-
+    var docId: String = ""
+    var dogruSayisi: Int = 0
+    var sonDogruMs: Long = 0L
 }

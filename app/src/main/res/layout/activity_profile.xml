@@ -67,10 +67,10 @@
         android:layout_width="70dp"
         android:layout_height="60dp"
         android:layout_marginBottom="30dp"
+        android:tint="@color/indigo_500"
         app:layout_constraintBottom_toBottomOf="@+id/MenuLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:tint="@color/indigo_500"
         app:srcCompat="@drawable/add_btn_background" />
 
 
@@ -105,6 +105,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="Kullanıcı Adı"
+        android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -117,6 +118,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="email@example.com"
+        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

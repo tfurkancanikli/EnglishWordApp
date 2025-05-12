@@ -99,8 +99,8 @@ class Sozluk : BaseCompact() {
 
         ingilizceKelimeTextView.text = kelime.kelimeIng
         turkceKarsilikTextView.text = kelime.kelimeTur
-        cumleText1TextView.text = kelime.cumle1
-        cumleText2TextView.text = kelime.cumle2
+        cumleText1TextView.text = kelime.birinciCumle
+        cumleText2TextView.text = kelime.ikinciCumle
         val radius=50
         val margin=0
         Picasso.get().load(kelime.gorselUrl)
