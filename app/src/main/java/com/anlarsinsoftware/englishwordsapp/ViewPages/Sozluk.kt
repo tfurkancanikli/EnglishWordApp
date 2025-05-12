@@ -17,6 +17,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
 
 class Sozluk : BaseCompact() {
 
@@ -100,8 +101,11 @@ class Sozluk : BaseCompact() {
         turkceKarsilikTextView.text = kelime.kelimeTur
         cumleText1TextView.text = kelime.cumle1
         cumleText2TextView.text = kelime.cumle2
-        Picasso.get().load(kelime.gorselUrl).into(kelimeImageView)
-
+        val radius=50
+        val margin=0
+        Picasso.get().load(kelime.gorselUrl)
+            .transform(RoundedCornersTransformation(radius, margin))
+            .into(kelimeImageView)
         val builder = androidx.appcompat.app.AlertDialog.Builder(this)
         builder.setView(view)
 

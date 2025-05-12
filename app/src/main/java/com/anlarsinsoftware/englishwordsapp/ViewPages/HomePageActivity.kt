@@ -14,6 +14,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.squareup.picasso.Picasso
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
 
 
 class HomePageActivity : BaseCompact() {
@@ -30,7 +31,12 @@ class HomePageActivity : BaseCompact() {
 
 
     fun picassoFun(url:String,imageView:ImageView){
-        Picasso.get().load(url).placeholder(R.drawable.gallery_icon).into(imageView)
+        val radius=50
+        val margin=0
+        Picasso.get().load(url)
+            .transform(RoundedCornersTransformation(radius, margin))
+            .placeholder(R.drawable.gallery_icon).into(imageView)
+
     }
     fun slideFun(){
         val firstFlipImageUrl ="https://firebasestorage.googleapis.com/v0/b/englishwordapp-7fb3b.firebasestorage.app/o/homeScrolPhotos%2FkelimeEkleyin.png?alt=media&token=e8d54213-41cc-44ec-86f8-efe206144133"

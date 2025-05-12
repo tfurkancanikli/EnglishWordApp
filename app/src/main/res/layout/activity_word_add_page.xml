@@ -131,6 +131,8 @@
         android:id="@+id/gorselEkleBtn"
         android:layout_width="282dp"
         android:layout_height="253dp"
+        android:background="@drawable/radius_mavi"
+        android:padding="10dp"
         android:layout_marginTop="4dp"
         android:onClick="gorselEkle"
         app:layout_constraintEnd_toEndOf="parent"

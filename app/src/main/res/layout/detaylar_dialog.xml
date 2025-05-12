@@ -31,6 +31,8 @@
         android:layout_width="299dp"
         android:layout_height="283dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/radius_mavi"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/turkceKarsilik"
