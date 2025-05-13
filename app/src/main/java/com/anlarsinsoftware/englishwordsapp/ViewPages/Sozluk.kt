@@ -81,7 +81,6 @@ class Sozluk : BaseCompact() {
         }
 
 
-
     fun kelimeDetaylari(kelime: Kelime) {
         val inflater = layoutInflater
         val view = inflater.inflate(R.layout.detaylar_dialog, null)
