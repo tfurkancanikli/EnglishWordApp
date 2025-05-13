@@ -25,6 +25,7 @@ class SozlukAdapter(
 
         holder.itemView.setOnClickListener {
             onItemClickListener(kelime)
+
         }
     }
 
