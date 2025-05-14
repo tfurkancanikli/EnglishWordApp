@@ -54,7 +54,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="16dp"
-                    android:text="Doğru Sayısı: "
+                    android:text="Doğru Sayısı: 0"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp" />
             </androidx.cardview.widget.CardView>
@@ -73,7 +73,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="16dp"
-                    android:text="Yanlış Sayısı:"
+                    android:text=" Yanlış Sayısı: 0"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp" />
             </androidx.cardview.widget.CardView>
@@ -92,7 +92,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="16dp"
-                    android:text="Başarı Oranı:"
+                    android:text="Başarı Oranı: 0%"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp" />
             </androidx.cardview.widget.CardView>
@@ -111,7 +111,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="16dp"
-                    android:text="En Son Yanlış Yapılan Tarih:"
+                    android:text="En Son Yanlış Yapılan Tarih: Bilinmiyor"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp" />
             </androidx.cardview.widget.CardView>
@@ -126,7 +126,7 @@
         android:layout_marginHorizontal="16dp"
         android:backgroundTint="#4CAF50"
         android:elevation="4dp"
-        android:onClick="btnPdf"
+        android:onClick="pdfOlustur"
         android:text="📄 PDF OLUŞTUR"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
