@@ -14,6 +14,7 @@ import com.anlarsinsoftware.englishwordsapp.R
 import com.anlarsinsoftware.englishwordsapp.databinding.ActivitySozluk2Binding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
@@ -60,12 +61,15 @@ class Sozluk : BaseCompact() {
                             val kelimeIng= document.get("ingilizceKelime")as? String?:"bilinmeyen ingilizce kelime"
                             val kelimeTur=document.get("turkceKarsiligi")as? String?:"bilinmeyen turkce kelime"
                             val tarih = document.get("tarih")as? String?:"bilinmeyen tarih"
-                            val gorselUrl=document.get("gorselUrl")as? String?:"bilinmeyen resim"
+                            val gorselUrl = document.get("gorselUrl") as? String
 
+                            if (gorselUrl!=null){
 
-                            var indirilenKelime= Kelime(kullaniciAdi,kelimeIng,kelimeTur,cumle1,cumle2,gorselUrl)
-                            kelimelerListesi.add(indirilenKelime)
-
+                                var indirilenKelime= Kelime("ıd",kullaniciAdi,kelimeIng,kelimeTur,cumle1,cumle2, gorselUrl)
+                                kelimelerListesi.add(indirilenKelime)
+                            }else{
+                                Toast.makeText(this,"Kelime yüklenirken hata oluştu",Toast.LENGTH_LONG).show()
+                            }
 
                         }
                         kelimelerListesi.sortBy { it.kelimeIng?.lowercase() }
@@ -76,16 +80,6 @@ class Sozluk : BaseCompact() {
         }
         }
 
-
-
-
-
-    fun kelimeEkleSayfa(view : View){
-        bagla(WordAddPage::class.java,false)
-    }
-    fun backToHome(view:View){
-       // bagla(HomePageActivity::class.java)
-    }
 
     fun kelimeDetaylari(kelime: Kelime) {
         val inflater = layoutInflater
@@ -103,9 +97,17 @@ class Sozluk : BaseCompact() {
         cumleText2TextView.text = kelime.ikinciCumle
         val radius=50
         val margin=0
-        Picasso.get().load(kelime.gorselUrl)
-            .transform(RoundedCornersTransformation(radius, margin))
-            .into(kelimeImageView)
+
+        if (!kelime.gorselUrl.isNullOrEmpty()) {
+            Picasso.get()
+                .load(kelime.gorselUrl)
+                .placeholder(R.drawable.gallery_icon)
+                .error(R.drawable.false_ico)
+                .transform(RoundedCornersTransformation(radius, margin))
+                .into(kelimeImageView)
+        } else {
+            kelimeImageView.setImageResource(R.drawable.add_circle)
+        }
         val builder = androidx.appcompat.app.AlertDialog.Builder(this)
         builder.setView(view)
 

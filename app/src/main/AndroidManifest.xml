@@ -25,6 +25,9 @@
                 android:resource="@xml/file_paths" />
         </provider>
         <activity
+            android:name=".ViewPages.PromptPage"
+            android:exported="false" />
+        <activity
             android:name=".ViewPages.QuizPageActivity"
             android:exported="false" />
         <activity

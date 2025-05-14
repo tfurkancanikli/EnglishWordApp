@@ -39,6 +39,7 @@ class HomePageActivity : BaseCompact() {
 
     }
     fun slideFun(){
+
         val firstFlipImageUrl ="https://firebasestorage.googleapis.com/v0/b/englishwordapp-7fb3b.firebasestorage.app/o/homeScrolPhotos%2FkelimeEkleyin.png?alt=media&token=e8d54213-41cc-44ec-86f8-efe206144133"
         picassoFun(firstFlipImageUrl,binding.firstCardSliderImage)
 
@@ -48,18 +49,20 @@ class HomePageActivity : BaseCompact() {
         val thirdFlipImageUrl="https://firebasestorage.googleapis.com/v0/b/englishwordapp-7fb3b.firebasestorage.app/o/homeScrolPhotos%2FFeedback.png?alt=media&token=ad003234-c474-4cde-bd66-c0af584c8c54"
         picassoFun(thirdFlipImageUrl,binding.thirdCardSliderImage)
 
+        val fourFlipImageUrl="https://firebasestorage.googleapis.com/v0/b/englishwordapp-7fb3b.firebasestorage.app/o/homeScrolPhotos%2Fyapay.png?alt=media&token=922d8a96-cdeb-4e77-ab3a-950049d72c94"
+            picassoFun(fourFlipImageUrl,binding.fourCardSliderImage)
+
 
 
 
         var vFlipper=binding.viewFlipper
-
         vFlipper.setAutoStart(true)
         vFlipper.setFlipInterval(3500)
         vFlipper.startFlipping()
-
         binding.firstCardText.text="YENİ KELİMELER EKLEMEK İSTERMİSİN?"
         binding.secondCardText.text="QUİZ İLE KENDİNİ TEST ETMEYE HAZIRMISIN?"
         binding.thirdCardText.text="BİZE GERİ BİLDİRİM GÖNDERİN"
+        binding.fourCardText.text="Yapay Zrkayı Kullan"
 
 
     }
@@ -82,6 +85,9 @@ class HomePageActivity : BaseCompact() {
             Toast.makeText(this, "Mail uygulaması bulunamadı", Toast.LENGTH_SHORT).show()
         }
 
+    }
+    fun fourCardImageClick(view : View){
+        bagla(PromptPage::class.java,false)
     }
     fun goToQuiz(view:View){
         bagla(QuizPageActivity::class.java,false)

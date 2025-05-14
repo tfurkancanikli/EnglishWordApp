@@ -28,7 +28,6 @@ class QuizPageActivity : AppCompatActivity() {
     private var hak = 3
     private var dogruSayisi = 0
     private var yanlisSayisi = 0
-
     private val zamanAraliklari = listOf(1, 7, 30, 90, 180, 365)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,8 +37,6 @@ class QuizPageActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         getKullaniciyaOzelKelimeler()
-
-
         binding.dogrulaButton.setOnClickListener {
             dogrulaCevap()
         }
@@ -56,24 +53,20 @@ class QuizPageActivity : AppCompatActivity() {
             .collection("kelimeler")
             .get()
             .addOnSuccessListener { snapshot ->
+                val now = Date().time
+
                 for (doc in snapshot.documents) {
-                    val asama = doc.getLong("asama") ?: 1
+                    val asama = (doc.getLong("asama") ?: 1).toInt()
                     val sonTarih = doc.getTimestamp("sonDogruTarih")?.toDate() ?: continue
                     val kelimeId = doc.id
 
-                    val fark = (Date().time - sonTarih.time) / (1000 * 60 * 60 * 24)  // Gün farkı
+                    if (asama >= 6) continue // 🔒 6. aşamaya ulaşmış kelimeyi tamamen dışla
 
-                    val gerekenGun = when (asama.toInt()) {
-                        1 -> 1
-                        2 -> 7
-                        3 -> 30
-                        4 -> 90
-                        5 -> 180
-                        6 -> 365
-                        else -> 999
-                    }
+                    val gerekenGun = zamanAraliklari.getOrNull(asama - 1) ?: 999
+                    val gerekenMs = TimeUnit.DAYS.toMillis(gerekenGun.toLong())
+                    val farkMs = now - sonTarih.time
 
-                    if (fark >= gerekenGun) {
+                    if (farkMs >= gerekenMs) {
                         ozelKelimeler.add(kelimeId)
                     }
                 }
@@ -81,6 +74,7 @@ class QuizPageActivity : AppCompatActivity() {
                 getQuizWords(ozelKelimeler)
             }
     }
+
 
 
     private fun gorselVeSoruGoster() {
@@ -174,8 +168,8 @@ class QuizPageActivity : AppCompatActivity() {
 
         return kelime
     }
-    private fun updateKelimeDurumu(kelimeId: String, dogruBildi: Boolean,kelime: Kelime) {
-        val kelimeIng= kelime.kelimeIng
+    private fun updateKelimeDurumu(kelimeId: String, dogruBildi: Boolean, kelime: Kelime) {
+        val kelimeIng = kelime.kelimeIng
         val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
         val kelimeRef = Firebase.firestore
             .collection("kullaniciKelimeleri")
@@ -185,24 +179,35 @@ class QuizPageActivity : AppCompatActivity() {
 
         kelimeRef.get().addOnSuccessListener { doc ->
             val oncekiSayac = doc.getLong("dogruSayac") ?: 0
-            val oncekiAsama = doc.getLong("asama") ?: 1
-
-            val name = auth.currentUser!!.displayName
-
+            val oncekiAsama = (doc.getLong("asama") ?: 1).toInt()
+            val name = auth.currentUser?.displayName ?: ""
 
             if (dogruBildi) {
                 val yeniSayac = oncekiSayac + 1
 
-                val yeniAsama = if (yeniSayac >= 6) 6 else oncekiAsama + 1
-                kelimeRef.set(
-                    mapOf(
-                        "dogruSayac" to yeniSayac,
-                        "asama" to yeniAsama,
-                        "sonDogruTarih" to Timestamp.now(),
-                        "kullaniciAdi" to name,
-                        "Kelime" to kelimeIng
+                if (yeniSayac >= 6) {
+                    val yeniAsama = if (oncekiAsama < 6) oncekiAsama + 1 else 6
+
+                    kelimeRef.set(
+                        mapOf(
+                            "dogruSayac" to 0,
+                            "asama" to yeniAsama,
+                            "sonDogruTarih" to Timestamp.now(),
+                            "kullaniciAdi" to name,
+                            "Kelime" to kelimeIng
+                        )
                     )
-                )
+                } else {
+                    kelimeRef.set(
+                        mapOf(
+                            "dogruSayac" to yeniSayac,
+                            "asama" to oncekiAsama,
+                            "sonDogruTarih" to Timestamp.now(),
+                            "kullaniciAdi" to name,
+                            "Kelime" to kelimeIng
+                        )
+                    )
+                }
             } else {
                 kelimeRef.set(
                     mapOf(
@@ -217,6 +222,7 @@ class QuizPageActivity : AppCompatActivity() {
         }
     }
 
+
     private fun getQuizWords(kelimeIdListesi: List<String>) {
         val db = Firebase.firestore
         val quizKelimeListesi = mutableListOf<Kelime>()
@@ -226,9 +232,6 @@ class QuizPageActivity : AppCompatActivity() {
 
             val kelimeListesi = mutableListOf<Kelime>()
 
-
-
-            // Öncelikli kelimeler
             kelimeIdListesi.forEach { id ->
                 val doc = tumKelimeler.find { it.id == id }
                 doc?.let {
@@ -236,7 +239,8 @@ class QuizPageActivity : AppCompatActivity() {
                 }
             }
 
-            // Geri kalanını rastgele tamamla
+            //yeni kelime çıkma sayısı burada ayarlanacak
+
             val rastgeleKelimeler = tumKelimeler
                 .filterNot { kelimeIdListesi.contains(it.id) }
                 .shuffled()
