@@ -126,7 +126,7 @@
         android:layout_marginHorizontal="16dp"
         android:backgroundTint="#4CAF50"
         android:elevation="4dp"
-        android:onClick="btnPdf"
+        android:onClick="pdfOlustur"
         android:text="📄 PDF OLUŞTUR"
         android:textColor="#FFFFFF"
         android:textStyle="bold"

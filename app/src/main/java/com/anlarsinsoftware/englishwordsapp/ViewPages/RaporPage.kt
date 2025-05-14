@@ -3,91 +3,170 @@ package com.anlarsinsoftware.englishwordsapp.ViewPages
 import android.content.Intent
 import android.graphics.pdf.PdfDocument
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import com.anlarsinsoftware.englishwordsapp.Entrance.BaseCompact
 import com.anlarsinsoftware.englishwordsapp.databinding.ActivityRaporPageBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import java.io.File
 import java.io.FileOutputStream
+import java.text.SimpleDateFormat
+import java.util.*
 
 class RaporPage : BaseCompact() {
 
     private lateinit var binding: ActivityRaporPageBinding
+    private lateinit var kimlikDogrulama: FirebaseAuth
+    private lateinit var veritabani: FirebaseFirestore
+    private var kullaniciAdi: String = ""
+    private var dogruSayisi: Int = 0
+    private var yanlisSayisi: Int = 0
+    private var basariOrani: String = "0%"
+    private var sonDogruTarihi: String = "Henüz kayıt yok"
+    private var toplamKelimeSayisi: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRaporPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        kimlikDogrulama = FirebaseAuth.getInstance()
+        veritabani = FirebaseFirestore.getInstance()
+        val mevcutKullanici = kimlikDogrulama.currentUser
+
+        if (mevcutKullanici != null) {
+            kullaniciAdi = mevcutKullanici.email ?: "Misafir Kullanıcı"
+            kullaniciVerileriniYukle(mevcutKullanici.uid)
+        } else {
+            Toast.makeText(this, "Kullanıcı girişi yapılmamış", Toast.LENGTH_SHORT).show()
+            finish()
+        }
+    }
+    //Giriş yapan kullanıcı verilerini alır
+    private fun kullaniciVerileriniYukle(kullaniciId: String) {
+        veritabani.collection("kullaniciKelimeleri")
+            .document(kullaniciId)
+            .collection("kelimeler")
+            .get()
+            .addOnSuccessListener { belgeler ->
+                toplamKelimeSayisi = belgeler.size()
+                istatistikleriHesapla(belgeler)
+                arayuzuGuncelle()
+                Log.d("RaporSayfasi", "Toplam $toplamKelimeSayisi kelime bulundu")
+            }
+            .addOnFailureListener { hata ->
+                Toast.makeText(this, "Kelime listesi alınamadı", Toast.LENGTH_SHORT).show()
+                Log.e("RaporSayfasi", "Kelime listesi alınamadı", hata)
+            }
+    }
+    //Verileri hesaplar
+    private fun istatistikleriHesapla(belgeler: QuerySnapshot) {
+        var toplamDogruSayisi = 0
+        var enSonDogruTarih: Date? = null
+
+        for (belge in belgeler) {
+            toplamDogruSayisi += belge.getLong("dogruSayac")?.toInt() ?: 0
+
+            val dogruTarih = belge.getTimestamp("sonDogruTarih")?.toDate()
+            if (dogruTarih != null && (enSonDogruTarih == null || dogruTarih.after(enSonDogruTarih))) {
+                enSonDogruTarih = dogruTarih
+            }
+        }
+
+        dogruSayisi = toplamDogruSayisi
+        //Yanlış sayısı daha az veri açısından toplamdan doğru sayısının çıkarılmasıyla bulunur.
+        yanlisSayisi = toplamKelimeSayisi - dogruSayisi
+
+        basariOrani = if (toplamKelimeSayisi > 0) {
+            val oran = (dogruSayisi * 100) / toplamKelimeSayisi
+            "%$oran"
+        } else {
+            "0%"
+        }
+
+        sonDogruTarihi = enSonDogruTarih?.let {
+            SimpleDateFormat("dd MMMM yyyy HH:mm", Locale("tr")).format(it)
+        } ?: "Henüz kayıt yok"
     }
 
-    fun btnPdf(view: View) {
-        val dogruSayisi = "0"
-        val yanlisSayisi = "0"
-        val basariOrani = "0%"
-        val enSonYanlisTarih = "Bilinmiyor"
-
-        //PDF GÖRÜNÜMÜ
-        val pdfDocument = PdfDocument()
-        val pageInfo = PdfDocument.PageInfo.Builder(595, 842, 1).create()
-        val page = pdfDocument.startPage(pageInfo)
-        val canvas = page.canvas
-        val paint = android.graphics.Paint()
-
-        paint.textSize = 24f
-        paint.isFakeBoldText = true
-        paint.textAlign = android.graphics.Paint.Align.CENTER
-        canvas.drawText("RAPOR SONUÇLARI", 297.5f, 60f, paint)
-        paint.strokeWidth = 2f
-        canvas.drawLine(50f, 70f, 545f, 70f, paint)
-        paint.textSize = 16f
-        paint.isFakeBoldText = false
-        paint.textAlign = android.graphics.Paint.Align.LEFT
-
-        // VERİLERİ EKLEDİM
-        val bilgiler = listOf(
-            "Doğru Sayısı: $dogruSayisi",
-            "Yanlış Sayısı: $yanlisSayisi",
-            "Başarı Oranı: $basariOrani",
-            "En Son Yanlış Yapılan Tarih: $enSonYanlisTarih"
-        )
-        // VERİYİ YAZDIR
-        var yOffset = 120f
-        bilgiler.forEach {
-            canvas.drawText(it, 60f, yOffset, paint)
-            yOffset += 30f
+    private fun arayuzuGuncelle() {
+        binding.apply {
+            dDogru.text = "Doğru Sayısı: $dogruSayisi"
+            yYanlis.text = "Yanlış Sayısı: $yanlisSayisi"
+            oOran.text = "Başarı Oranı: $basariOrani"
+            tTarih.text = "Son Doğru Tarihi: $sonDogruTarihi"
         }
-        paint.textSize = 18f
-        paint.isFakeBoldText = true
-        paint.textAlign = android.graphics.Paint.Align.CENTER
-        canvas.drawText("ENGLISH WORDS APP", 297.5f, 800f, paint)
-        pdfDocument.finishPage(page)
+    }
 
-        val file = File(getExternalFilesDir(null), "rapor.pdf")
+    fun pdfOlustur(view: View) {
+        val pdfDokumani = PdfDocument()
+        val sayfaBilgisi = PdfDocument.PageInfo.Builder(595, 842, 1).create()
+        val sayfa = pdfDokumani.startPage(sayfaBilgisi)
+        val cerceve = sayfa.canvas
+        val cizim = android.graphics.Paint()
 
+        cizim.textSize = 24f
+        cizim.isFakeBoldText = true
+        cizim.textAlign = android.graphics.Paint.Align.CENTER
+        cerceve.drawText("İNGİLİZCE KELİME RAPORU", 297.5f, 60f, cizim)
+
+        cizim.strokeWidth = 2f
+        cerceve.drawLine(50f, 80f, 545f, 80f, cizim)
+
+        cizim.textSize = 16f
+        cizim.isFakeBoldText = false
+        cizim.textAlign = android.graphics.Paint.Align.LEFT
+        //Görüntülenecek verilerin listelenmesi.
+        val bilgiler = listOf(
+            "Kullanıcı: $kullaniciAdi",
+            "Toplam Kelime: $toplamKelimeSayisi",
+            "Toplam Doğru: $dogruSayisi",
+            "Toplam Yanlış: $yanlisSayisi",
+            "Başarı Oranı: $basariOrani",
+            "Son Doğru Tarihi: $sonDogruTarihi"
+        )
+        var yKonumu = 120f
+        bilgiler.forEach { bilgi ->
+            cerceve.drawText(bilgi, 60f, yKonumu, cizim)
+            yKonumu += 30f
+        }
+        cizim.textSize = 14f
+        cizim.isFakeBoldText = true
+        cizim.textAlign = android.graphics.Paint.Align.CENTER
+
+        val tarih = SimpleDateFormat("dd/MM/yyyy HH:mm").format(Date())
+        cerceve.drawText("English Words App - $tarih", 297.5f, 800f, cizim)
+
+        pdfDokumani.finishPage(sayfa)
+
+        val dosyaAdi = "Ingilizce_Kelime_Raporu_${SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())}.pdf"
+        val dosya = File(getExternalFilesDir(null), dosyaAdi)
+       // Try-catch ile hata yakalama algoritmasının kurulması.
         try {
-            FileOutputStream(file).use { output ->
-                pdfDocument.writeTo(output)
+            FileOutputStream(dosya).use { cikti ->
+                pdfDokumani.writeTo(cikti)
+                Toast.makeText(this, "PDF oluşturuldu", Toast.LENGTH_SHORT).show()
             }
-            pdfDocument.close()
-
+            pdfDokumani.close()
 
             val uri = FileProvider.getUriForFile(
                 this,
-                applicationContext.packageName + ".provider",
-                file
+                "${applicationContext.packageName}.provider",
+                dosya
             )
             val intent = Intent(Intent.ACTION_VIEW).apply {
                 setDataAndType(uri, "application/pdf")
-                flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             }
             startActivity(intent)
 
         } catch (e: Exception) {
-            e.printStackTrace()
-            Toast.makeText(this, "PDF oluşturulamadı: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "PDF oluşturulamadı", Toast.LENGTH_LONG).show()
+            Log.e("RaporSayfasi", "PDF oluşturma hatası", e)
         }
     }
 }
-//ŞİMDİLİK 0 DEĞERİ ATADIM.FİREBASTEN ALINACAĞIMIZ  ZAMAN FARKLI YAZILACAK
-
