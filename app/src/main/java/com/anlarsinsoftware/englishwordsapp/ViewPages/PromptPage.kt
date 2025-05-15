@@ -8,6 +8,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.anlarsinsoftware.englishwordsapp.Model.Kelime
+import com.anlarsinsoftware.englishwordsapp.Prompt.OPEN_ROUTER_API_KEY
+import com.anlarsinsoftware.englishwordsapp.Prompt.replicateAPI_KEY
 import com.anlarsinsoftware.englishwordsapp.databinding.ActivityPromptPageBinding
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
@@ -117,7 +119,7 @@ class PromptPage : AppCompatActivity() {
         onResult: (String) -> Unit,
         onError: (String) -> Unit
     ) {
-        val apiKey = "Bearer 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"
+        val apiKey = "Bearer ${OPEN_ROUTER_API_KEY}"
         val url = "https://openrouter.ai/api/v1/chat/completions"
         val prompt = "$words kelimeleri kullanarak bir paragraf yaz mümkün olduğunca bu kelimelerden başka kelimeleri sık kullanma. " +
                 "maksimum 150 karakterden oluşsun ve ingilizce bir paragraf olsun" +
@@ -202,7 +204,7 @@ class PromptPage : AppCompatActivity() {
 
         val request = Request.Builder()
             .url("https://api.replicate.com/v1/predictions")
-            .addHeader("Authorization", "Token YOUR_API_TOKEN") // Buraya kendi token'ınızı koyun
+            .addHeader("Authorization", "Token  ${replicateAPI_KEY}") // Buraya kendi token'ınızı koyun
             .addHeader("Content-Type", "application/json")
             .post(requestBody)
             .build()
@@ -238,7 +240,7 @@ class PromptPage : AppCompatActivity() {
             override fun run() {
                 val request = Request.Builder()
                     .url("https://api.replicate.com/v1/predictions/$predictionId")
-                    .addHeader("Authorization", "Token r8_BfZLsGt7B17MpybK9hslBkRXNxu6Uj036jpxT") // Token buraya
+                    .addHeader("Authorization", "Token ${replicateAPI_KEY}") // Token buraya
                     .build()
 
                 client.newCall(request).enqueue(object : Callback {
