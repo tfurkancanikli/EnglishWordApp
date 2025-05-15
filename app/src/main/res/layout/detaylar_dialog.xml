@@ -5,7 +5,7 @@
     android:id="@+id/dialogBase"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/acik_mor2"
+    android:background="@drawable/textbackground"
 
     android:textAlignment="center">
 

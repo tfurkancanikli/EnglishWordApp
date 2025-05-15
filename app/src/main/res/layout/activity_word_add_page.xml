@@ -5,9 +5,9 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2F1D50"
-    tools:context=".ViewPages.WordAddPage"
-    android:backgroundTint="@color/acik_mor2">
+    android:background="#818181"
+    android:backgroundTint="#DADADA"
+    tools:context=".ViewPages.WordAddPage">
 
     <RelativeLayout
         android:id="@+id/MenuLayout"
@@ -62,7 +62,6 @@
     </RelativeLayout>
 
 
-
     <ImageView
         android:id="@+id/imageView7"
         android:layout_width="70dp"
@@ -86,129 +85,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/baseline_add_circle_white24" />
 
-    <TextView
-        android:id="@+id/cardViewTexr"
-        android:layout_width="350dp"
-        android:layout_height="300dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/cardview_copy"
-        app:layout_constraintBottom_toTopOf="@+id/kelimeEkleBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gorselEkleBtn" />
-
-    <RelativeLayout
-        android:id="@+id/relativeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/orange"
-        android:padding="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent">
-
-
-
-        <TextView
-            android:id="@+id/pageName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="16dp"
-
-            android:gravity="center"
-            android:text="Kelime Ekleme "
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-    </RelativeLayout>
-
-
-    <ImageView
-        android:id="@+id/gorselEkleBtn"
-        android:layout_width="282dp"
-        android:layout_height="253dp"
-        android:background="@drawable/radius_mavi"
-        android:padding="10dp"
-        android:layout_marginTop="4dp"
-        android:onClick="gorselEkle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
-        app:srcCompat="@drawable/gallery_icon" />
-
-    <EditText
-        android:id="@+id/turkceKarsilik"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/radius_mavi"
-        android:ems="10"
-        android:hint="Türkçe karşılığını giriniz."
-        android:inputType="text"
-        android:paddingLeft="15dp"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ingilizceKelime" />
-
-    <EditText
-        android:id="@+id/cumleText2"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/radius_mavi"
-        android:ems="10"
-        android:hint="Kelimeyi kullanarak cümle kurunuz"
-        android:inputType="text"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cumleText1" />
-
-    <EditText
-        android:id="@+id/ingilizceKelime"
-        android:layout_width="297dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/radius_mavi"
-        android:ems="10"
-        android:hint="İngilizce kelime giriniz."
-        android:inputType="text"
-        android:paddingLeft="15dp"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/cardViewTexr" />
-
-    <EditText
-        android:id="@+id/cumleText1"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/radius_mavi"
-        android:ems="10"
-        android:hint="Kelimeyi kullanarak cümle kurunuz"
-        android:inputType="text"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/turkceKarsilik" />
 
     <TextView
         android:id="@+id/kelimeEkleBtn"
@@ -225,5 +101,101 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.cardview.widget.CardView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:cardCornerRadius="25dp"
+        app:layout_constraintBottom_toTopOf="@+id/kelimeEkleBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="15dp">
+
+            <EditText
+                android:id="@+id/turkceKarsilik"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/radius_mavi"
+                android:ems="10"
+                android:hint="Türkçe karşılığını giriniz."
+                android:inputType="text"
+                android:paddingLeft="15dp"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ingilizceKelime" />
+
+            <EditText
+                android:id="@+id/cumleText2"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/radius_mavi"
+                android:ems="10"
+                android:hint="Kelimeyi kullanarak cümle kurunuz"
+                android:inputType="text"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cumleText1" />
+
+            <EditText
+                android:id="@+id/ingilizceKelime"
+                android:layout_width="297dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/radius_mavi"
+                android:ems="10"
+                android:hint="İngilizce kelime giriniz."
+                android:inputType="text"
+                android:paddingLeft="15dp"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/gorselEkleBtn" />
+
+            <EditText
+                android:id="@+id/cumleText1"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/radius_mavi"
+                android:ems="10"
+                android:hint="Kelimeyi kullanarak cümle kurunuz"
+                android:inputType="text"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/turkceKarsilik" />
+
+            <ImageView
+                android:id="@+id/gorselEkleBtn"
+                android:layout_width="282dp"
+                android:layout_height="253dp"
+                android:background="@drawable/radius_mavi"
+                android:onClick="gorselEkle"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/gallery_icon" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

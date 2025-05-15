@@ -53,8 +53,6 @@ class HomePageActivity : BaseCompact() {
             picassoFun(fourFlipImageUrl,binding.fourCardSliderImage)
 
 
-
-
         var vFlipper=binding.viewFlipper
         vFlipper.setAutoStart(true)
         vFlipper.setFlipInterval(3500)

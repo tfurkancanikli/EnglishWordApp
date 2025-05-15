@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android") version "2.1.0"
     id("com.google.gms.google-services")
+    id ("kotlin-kapt")
 }
 
 
@@ -65,4 +66,16 @@ dependencies {
     implementation("com.google.firebase:firebase-storage")
     implementation ("com.squareup.picasso:picasso:2.8")
     implementation ("jp.wasabeef:picasso-transformations:2.4.0")
+
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
+   // val body = requestBody.toRequestBody("application/json".toMediaType())
+    implementation ("com.google.code.gson:gson:2.8.9")
+
+    val retrofitVersion = "2.3.0"
+//retrofit
+    implementation ("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation ("com.squareup.retrofit2:converter-gson:$retrofitVersion")
+//glide
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    kapt("com.github.bumptech.glide:compiler:4.16.0")
 }
