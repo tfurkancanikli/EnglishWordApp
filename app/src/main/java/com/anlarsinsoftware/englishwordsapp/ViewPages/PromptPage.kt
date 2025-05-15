@@ -58,7 +58,7 @@ class PromptPage : AppCompatActivity() {
                     onResult = { story ->
                         binding.storyText.visibility = View.VISIBLE
                         binding.storyText.text = story
-                       // binding.selectedWordsText.text = story
+                        // binding.selectedWordsText.text = story
                         generateImageFromStory(story)
                         binding.progressBar.visibility = View.GONE
                     },
