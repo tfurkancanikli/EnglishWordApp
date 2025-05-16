@@ -29,6 +29,7 @@ class PromptPage : AppCompatActivity() {
     private lateinit var selectedWords: List<Kelime>
     private lateinit var secilenIngilizceKelimeler: List<String>
     private lateinit var promptKelimeleri: String
+    private lateinit var promptImageCreate :String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,8 +59,8 @@ class PromptPage : AppCompatActivity() {
                     onResult = { story ->
                         binding.storyText.visibility = View.VISIBLE
                         binding.storyText.text = story
-                        // binding.selectedWordsText.text = story
-                        generateImageFromStory(story)
+                        promptImageCreate = "Create a meaningful image inspired by these words $story"
+                        generateImageFromStory("dog")
                         binding.progressBar.visibility = View.GONE
                     },
                     onError = {
@@ -121,9 +122,7 @@ class PromptPage : AppCompatActivity() {
     ) {
         val apiKey = "Bearer ${OPEN_ROUTER_API_KEY}"
         val url = "https://openrouter.ai/api/v1/chat/completions"
-        val prompt = "$words kelimeleri kullanarak bir paragraf yaz mümkün olduğunca bu kelimelerden başka kelimeleri sık kullanma. " +
-                "maksimum 150 karakterden oluşsun ve ingilizce bir paragraf olsun" +
-                "ve lütfen bu paragraf ingilizceyi yeni öğrenen birinin anlayabileceği düzeyde olsun"
+        val prompt = " Write a short children's story using these English words : $words"
 
 
 
@@ -168,21 +167,36 @@ class PromptPage : AppCompatActivity() {
                 }
 
                 try {
-                    val content = JSONObject(jsonStr)
-                        .getJSONArray("choices")
-                        .getJSONObject(0)
-                        .getJSONObject("message")
-                        .getString("content")
+                    val json = JSONObject(jsonStr)
+                    if (!json.has("choices")) {
+                        onError("Yanıtta 'choices' alanı yok.")
+                        return
+                    }
+
+                    val choices = json.getJSONArray("choices")
+                    if (choices.length() == 0) {
+                        onError("Yanıtta hiç seçenek yok.")
+                        return
+                    }
+
+                    val firstChoice = choices.getJSONObject(0)
+                    if (!firstChoice.has("message")) {
+                        onError("Yanıtta 'message' alanı yok.")
+                        return
+                    }
+
+                    val message = firstChoice.getJSONObject("message")
+                    val content = message.getString("content")
 
                     runOnUiThread {
                         onResult(content.trim())
                     }
-
                 } catch (e: Exception) {
                     runOnUiThread {
                         onError("Cevap çözümlenemedi: ${e.message}")
                     }
                 }
+
             }
         })
     }
@@ -190,21 +204,30 @@ class PromptPage : AppCompatActivity() {
     private fun generateImageFromStory(story: String) {
         val client = OkHttpClient()
 
+        val promptText = if (story.length > 300) story.take(300) else story
+
         val jsonBody = JSONObject().apply {
-            put("version", "a9758cb3ec675e942a7a0bcd8d20925d99d8c94d164d9c85c0e464301d71b189") // SDXL versiyonu
+            put("version", "ac732df83cea7fff18b8472768c88ad041fa750ff7682a21affe81863cbe77e4") // güncel versiyon ID
             put("input", JSONObject().apply {
-                put("prompt", story)
+                put("prompt", promptImageCreate)
+                put("width", 512)
+                put("height", 512)
+                put("num_outputs", 1)
+                put("guidance_scale", 7.5)
+                put("num_inference_steps", 50)
+                put("negative_prompt","soft, blurry, ugly")
+                put("prompt_strength",0.8)
+                put("high_noise_frac",0.8)
+                put("scheduler","DPMSolverMultistep")
+                put("refine","expert_ensemble_refiner")
             })
         }
 
-        val requestBody = RequestBody.create(
-            "application/json".toMediaTypeOrNull(),
-            jsonBody.toString()
-        )
+        val requestBody = jsonBody.toString().toRequestBody("application/json".toMediaType())
 
         val request = Request.Builder()
             .url("https://api.replicate.com/v1/predictions")
-            .addHeader("Authorization", "Token  ${replicateAPI_KEY}") // Buraya kendi token'ınızı koyun
+            .addHeader("Authorization", "Token $replicateAPI_KEY") // Token buraya dikkat
             .addHeader("Content-Type", "application/json")
             .post(requestBody)
             .build()
@@ -218,6 +241,7 @@ class PromptPage : AppCompatActivity() {
 
             override fun onResponse(call: Call, response: Response) {
                 val responseStr = response.body?.string() ?: return
+                Log.e("REPLICATE_RESPONSE", responseStr)
                 val predictionId = JSONObject(responseStr).optString("id", null)
 
                 if (predictionId != null) {
@@ -230,7 +254,6 @@ class PromptPage : AppCompatActivity() {
             }
         })
     }
-
     private fun checkPredictionStatus(predictionId: String) {
         val client = OkHttpClient()
         val handler = Handler(mainLooper)

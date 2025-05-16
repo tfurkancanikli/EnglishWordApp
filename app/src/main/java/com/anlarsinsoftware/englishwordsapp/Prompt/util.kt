@@ -1,4 +1,4 @@
 package com.anlarsinsoftware.englishwordsapp.Prompt
 
-val replicateAPI_KEY = "r8_BfZLsGt7B17MpybK9hslBkRXNxu6Uj036jpxT"
-val OPEN_ROUTER_API_KEY = "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"
+val replicateAPI_KEY = ""
+val OPEN_ROUTER_API_KEY = ""

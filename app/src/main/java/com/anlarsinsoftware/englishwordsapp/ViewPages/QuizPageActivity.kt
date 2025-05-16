@@ -1,13 +1,19 @@
 package com.anlarsinsoftware.englishwordsapp.ViewPages
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.anlarsinsoftware.englishwordsapp.Entrance.bagla
 import com.anlarsinsoftware.englishwordsapp.Model.Kelime
+import com.anlarsinsoftware.englishwordsapp.R
 import com.anlarsinsoftware.englishwordsapp.databinding.ActivityQuizPageBinding
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -25,7 +31,6 @@ class QuizPageActivity : AppCompatActivity() {
 
     private lateinit var quizKelimeListesi: List<Kelime>
     private var currentIndex = 0
-    private var hak = 3
     private var dogruSayisi = 0
     private var yanlisSayisi = 0
     private val zamanAraliklari = listOf(1, 7, 30, 90, 180, 365)
@@ -35,6 +40,8 @@ class QuizPageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityQuizPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.hakText.text = "1 / 10"
+
 
         getKullaniciyaOzelKelimeler()
         binding.dogrulaButton.setOnClickListener {
@@ -70,7 +77,6 @@ class QuizPageActivity : AppCompatActivity() {
                         ozelKelimeler.add(kelimeId)
                     }
                 }
-
                 getQuizWords(ozelKelimeler)
             }
     }
@@ -88,18 +94,43 @@ class QuizPageActivity : AppCompatActivity() {
         val radius = 50
         val margin = 0
 
-        Picasso.get().load(kelime.gorselUrl)
-            .transform(RoundedCornersTransformation(radius, margin))
-            .into(binding.kelimeImage)
+        val gorselUrl = kelime.gorselUrl
+        if (!gorselUrl.isNullOrEmpty()) {
+            Picasso.get().load(kelime.gorselUrl)
+                .resize(1024,1024)
+                .transform(RoundedCornersTransformation(radius, margin))
+                .into(binding.kelimeImage, object : com.squareup.picasso.Callback {
+                    override fun onSuccess() {
+                        // Fotoğraf başarıyla yüklendi
+                        binding.progressBar2.visibility = View.GONE
+                        binding.quizTurkce.visibility=View.VISIBLE
+                        binding.hakText.visibility=View.VISIBLE
+                        binding.cardViewFlase.visibility=View.VISIBLE
+                        binding.cardViewTrue.visibility=View.VISIBLE
+                        binding.quizTurkce.visibility=View.VISIBLE
+                        binding.kelimeImage.visibility = View.VISIBLE
+                    }
+
+                    override fun onError(e: Exception?) {
+                        // Yükleme hatası
+                        binding.progressBar2.visibility = View.GONE
+                        Toast.makeText(this@QuizPageActivity, "Yükleme başarısız", Toast.LENGTH_SHORT).show()
+                    }
+                })
+        } else {
+
+            binding.kelimeImage.setImageResource(R.drawable.gallery_icon)
+        }
 
         binding.quizTurkce.setText(kelime.kelimeTur)
         binding.kullaniciCevap.setText("")
 
-        hak = 3
-        binding.hakText.setText(hak.toString())
-        binding.hakText.setTextColor(Color.GREEN)
+        binding.hakText.text = "${currentIndex + 1} / ${quizKelimeListesi.size}"
+        binding.hakText.setTextColor(Color.BLACK)
     }
 
+
+    @SuppressLint("MissingInflatedId")
     private fun dogrulaCevap() {
         val cevap = binding.kullaniciCevap.text.toString().trim().lowercase()
         val kelime = quizKelimeListesi[currentIndex]
@@ -110,45 +141,48 @@ class QuizPageActivity : AppCompatActivity() {
             dogruSayisi++
             binding.dogruSayisiTv.text = dogruSayisi.toString()
             Toast.makeText(this, "Tebrikler! Doğru cevap.", Toast.LENGTH_SHORT).show()
-
-            val yeniDogruSayisi = kelime.dogruSayisi + 1
-            val docRef = Firebase.firestore.collection("kelimeler").document(kelime.docId)
-            docRef.update(
-                mapOf(
-                    "dogruCevapSayisi" to yeniDogruSayisi,
-                    "sonDogruCevapZamani" to Timestamp.now()
-                )
-            )
         } else {
-            hak--
-            if (hak > 0) {
-                Toast.makeText(this, "Yanlış cevap", Toast.LENGTH_SHORT).show()
-            } else {
-                yanlisSayisi++
-                binding.yanlisSayisiTv.text = yanlisSayisi.toString()
-                Toast.makeText(this, "Bilemediniz. Doğru cevap: $dogruCevap", Toast.LENGTH_LONG).show()
-            }
+            yanlisSayisi++
+            binding.yanlisSayisiTv.text = yanlisSayisi.toString()
+            Toast.makeText(this, "Bilemediniz. Doğru cevap: $dogruCevap", Toast.LENGTH_LONG).show()
         }
 
-        binding.hakText.text = hak.toString()
-        when (hak) {
-            1 -> binding.hakText.setTextColor(Color.RED)
-            2 -> binding.hakText.setTextColor(Color.YELLOW)
-            3 -> binding.hakText.setTextColor(Color.GREEN)
-        }
+        updateKelimeDurumu(kelime.kelimeId, dogruMu, kelime)
 
-        updateKelimeDurumu(kelime.kelimeId, dogruMu,kelime)
+        currentIndex++
+        if (currentIndex < quizKelimeListesi.size) {
+            gorselVeSoruGoster()
+        } else {
+            val inflater = layoutInflater
+            val view = inflater.inflate(R.layout.quiz_end_dialog, null)
+            val dogruSayisiTV = view.findViewById<TextView>(R.id.dogruSayisi_tv)
+            val yanlisSayisiTV = view.findViewById<TextView>(R.id.yanlisSayisi_tv)
+            val soruSayisi = view.findViewById<TextView>(R.id.cozulenSoruSayisi_tv)
+            val aciklama = view.findViewById<TextView>(R.id.aciklama_tv)
+            val button = view.findViewById<Button>(R.id.quizDialogButton)
+            val soruS=quizKelimeListesi.size
+            val kullanici =auth.currentUser!!.displayName
 
-        if (dogruMu || hak == 0) {
-            currentIndex++
-            if (currentIndex < quizKelimeListesi.size) {
-                hak = 3
-                gorselVeSoruGoster()
-            } else {
-                Toast.makeText(this, "Quiz tamamlandı!", Toast.LENGTH_LONG).show()
+            dogruSayisiTV.text="Doğru Sayısı : $dogruSayisi"
+            yanlisSayisiTV.text="Yanlış Sayısı : $yanlisSayisi"
+            soruSayisi.text="Soru Sayısı : $soruS"
+            aciklama.text="$kullanici Bir sonraki quiz de görüşmek üzere😊"
+            button.setOnClickListener{
                 bagla(HomePageActivity::class.java,true)
             }
+
+            val builder = AlertDialog.Builder(this)
+            builder.setView(view)
+
+            val dialog = builder.create()
+            dialog.window?.setBackgroundDrawable(android.graphics.drawable.ColorDrawable(Color.TRANSPARENT))
+            dialog.show()
+
+
+            Toast.makeText(this, "Quiz tamamlandı!", Toast.LENGTH_LONG).show()
+
         }
+
     }
 
     private fun DocumentSnapshot.toKelime(id: String): Kelime {
@@ -162,14 +196,13 @@ class QuizPageActivity : AppCompatActivity() {
             gorselUrl = getString("gorselUrl") ?: ""
         )
 
-        kelime.docId = id // 🔑 Firestore belgesinin ID'si
+        kelime.docId = id
         kelime.dogruSayisi = getLong("dogruCevapSayisi")?.toInt() ?: 0
         kelime.sonDogruMs = getTimestamp("sonDogruCevapZamani")?.toDate()?.time ?: 0L
 
         return kelime
     }
     private fun updateKelimeDurumu(kelimeId: String, dogruBildi: Boolean, kelime: Kelime) {
-        val kelimeIng = kelime.kelimeIng
         val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
         val kelimeRef = Firebase.firestore
             .collection("kullaniciKelimeleri")
@@ -178,30 +211,36 @@ class QuizPageActivity : AppCompatActivity() {
             .document(kelimeId)
 
         kelimeRef.get().addOnSuccessListener { doc ->
-            val oncekiSayac = doc.getLong("dogruSayac") ?: 0
             val oncekiAsama = (doc.getLong("asama") ?: 1).toInt()
+            val sonDogruTarih = doc.getTimestamp("sonDogruTarih")?.toDate() ?: Date(0)
+            val farkMs = Date().time - sonDogruTarih.time
+            val gerekenGun = zamanAraliklari.getOrNull(oncekiAsama - 1) ?: 999
+            val gerekenMs = TimeUnit.DAYS.toMillis(gerekenGun.toLong())
+
             val name = auth.currentUser?.displayName ?: ""
+            val kelimeIng = kelime.kelimeIng
 
             if (dogruBildi) {
-                val yeniSayac = oncekiSayac + 1
-
-                if (yeniSayac >= 6) {
+                if (farkMs >= gerekenMs) {
+                    // Süresi dolmuş, seviye atla
                     val yeniAsama = if (oncekiAsama < 6) oncekiAsama + 1 else 6
-
                     kelimeRef.set(
                         mapOf(
-                            "dogruSayac" to 0,
                             "asama" to yeniAsama,
+                            "dogruSayac" to (doc.getLong("dogruSayac") ?: 0) + 1,
+                            "yanlisSayac" to (doc.getLong("yanlisSayac") ?: 0),
                             "sonDogruTarih" to Timestamp.now(),
                             "kullaniciAdi" to name,
                             "Kelime" to kelimeIng
                         )
                     )
                 } else {
+                    // Süresi dolmamışsa sayaç artsın ama seviye sabit
                     kelimeRef.set(
                         mapOf(
-                            "dogruSayac" to yeniSayac,
                             "asama" to oncekiAsama,
+                            "dogruSayac" to (doc.getLong("dogruSayac") ?: 0) +1,
+                            "yanlisSayac" to (doc.getLong("yanlisSayac") ?: 0),
                             "sonDogruTarih" to Timestamp.now(),
                             "kullaniciAdi" to name,
                             "Kelime" to kelimeIng
@@ -209,10 +248,12 @@ class QuizPageActivity : AppCompatActivity() {
                     )
                 }
             } else {
+                // Yanlışsa tamamen sıfırla
                 kelimeRef.set(
                     mapOf(
-                        "dogruSayac" to 0,
                         "asama" to 1,
+                        "dogruSayac" to (doc.getLong("dogruSayac") ?: 0),
+                        "yanlisSayac" to (doc.getLong("yanlisSayac") ?: 0) + 1,
                         "sonDogruTarih" to Timestamp.now(),
                         "kullaniciAdi" to name,
                         "Kelime" to kelimeIng
@@ -223,37 +264,57 @@ class QuizPageActivity : AppCompatActivity() {
     }
 
 
-    private fun getQuizWords(kelimeIdListesi: List<String>) {
+
+
+    private fun getQuizWords(suresiDolanKelimeler: List<String>) {
         val db = Firebase.firestore
-        val quizKelimeListesi = mutableListOf<Kelime>()
+        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
         db.collection("kelimeler").get().addOnSuccessListener { snapshot ->
             val tumKelimeler = snapshot.documents
+            val quizKelimeListesi = mutableListOf<Kelime>()
 
-            val kelimeListesi = mutableListOf<Kelime>()
-
-            kelimeIdListesi.forEach { id ->
+            // Süresi dolan kelimeleri maksimum 10 al
+            val secilenSuresiDolanlar = suresiDolanKelimeler.take(10).mapNotNull { id ->
                 val doc = tumKelimeler.find { it.id == id }
-                doc?.let {
-                    quizKelimeListesi.add(doc.toKelime(it.id))
+                doc?.toKelime(doc.id)
+            }.toMutableList()
+
+            quizKelimeListesi.addAll(secilenSuresiDolanlar)
+
+            // Kullanıcının daha önce gördüğü kelime ID'lerini al
+            db.collection("kullaniciKelimeleri")
+                .document(uid)
+                .collection("kelimeler")
+                .get()
+                .addOnSuccessListener { kullaniciSnapshot ->
+                    val kullaniciKelimeIdSet = kullaniciSnapshot.documents.map { it.id }.toSet()
+
+                    // Yeni kelimeler: kullanıcının daha önce görmedikleri
+                    val yeniKelimeler = tumKelimeler.filter { it.id !in kullaniciKelimeIdSet }
+                        .shuffled()
+                        .take(10 - secilenSuresiDolanlar.size)
+                        .map { it.toKelime(it.id) }
+
+                    quizKelimeListesi.addAll(yeniKelimeler)
+
+                    if (secilenSuresiDolanlar.isEmpty()) {
+                        // Kullanıcıya SnackBar ile sor
+                        Snackbar.make(binding.root, "Bugün süresi dolmuş kelimeniz yok. Tamamen yeni kelimelerle devam etmek istiyor musunuz?", Snackbar.LENGTH_INDEFINITE)
+                            .setAction("EVET") {
+                                this.quizKelimeListesi = yeniKelimeler
+                                gorselVeSoruGoster()
+                            }
+                            .show()
+                    } else {
+                        this.quizKelimeListesi = quizKelimeListesi
+                        gorselVeSoruGoster()
+                    }
                 }
-            }
-
-            //yeni kelime çıkma sayısı burada ayarlanacak
-
-            val rastgeleKelimeler = tumKelimeler
-                .filterNot { kelimeIdListesi.contains(it.id) }
-                .shuffled()
-                .take(15 - quizKelimeListesi.size)
-
-            rastgeleKelimeler.forEach {
-                quizKelimeListesi.add(it.toKelime(it.id))
-            }
-
-            this.quizKelimeListesi = quizKelimeListesi
-            gorselVeSoruGoster()
         }
     }
+
+
 
 
 
