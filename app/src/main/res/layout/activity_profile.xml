@@ -50,6 +50,9 @@
             app:srcCompat="@drawable/baseline_videogame_asset_24"
             app:tint="@color/white" />
 
+
+
+
         <ImageView
             android:id="@+id/imageView8"
             android:layout_width="35dp"
@@ -144,7 +147,21 @@
         android:onClick="exitClick"
         app:layout_constraintBottom_toTopOf="@+id/btnConnectReport"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.402"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textEmail"
+        app:layout_constraintVertical_bias="0.491"
         app:srcCompat="@drawable/exit" />
+
+    <ImageView
+        android:id="@+id/imageSettings"
+        android:layout_width="58dp"
+        android:layout_height="52dp"
+        android:layout_gravity="end"
+        android:contentDescription="Ayarlar"
+        android:padding="8dp"
+        android:src="@drawable/ic_settings"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-5dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
