@@ -13,13 +13,17 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="RAPORLARIM"
-        android:textColor="#B84343"
-        android:textSize="32sp"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/x1"
+        android:text="-RAPORLARIM-"
+        android:textColor="#FFFFFFFF"
+        android:textSize="70dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -28,10 +32,12 @@
         android:fillViewport="true"
         app:layout_constraintBottom_toTopOf="@id/btnPdf"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView3">
+        app:layout_constraintTop_toBottomOf="@id/textView3"
+        app:layout_constraintVertical_bias="0.0">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/reportLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,83 +47,141 @@
             android:padding="16dp">
 
 
-            <androidx.cardview.widget.CardView
+            <TextView
+                android:id="@+id/textName2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kullanıcı Adı"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/dDogru"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/textView6"
+                app:layout_constraintTop_toBottomOf="@+id/profileImage2"
+                app:layout_constraintVertical_bias="0.215" />
+
+            <ImageView
+                android:id="@+id/profileImage2"
+                android:layout_width="132dp"
+                android:layout_height="120dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/radius_mavi"
+                android:contentDescription="Profil Resmi"
+                android:scaleType="centerCrop"
+                android:src="@drawable/baseline_person_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tTarih"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                app:cardBackgroundColor="#393E46"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="6dp">
+                android:layout_marginTop="8dp"
+                android:background="@drawable/radius_mavi"
+                android:padding="16dp"
+                android:text="En Son Yanlış Yapılan Tarih: Bilinmiyor"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/oOran" />
 
-                <TextView
-                    android:id="@+id/dDogru"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:text="Doğru Sayısı: 0"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" />
-            </androidx.cardview.widget.CardView>
-
-
-            <androidx.cardview.widget.CardView
+            <TextView
+                android:id="@+id/oOran"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                app:cardBackgroundColor="#393E46"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="6dp">
+                android:layout_marginTop="8dp"
+                android:background="@drawable/radius_mavi"
+                android:padding="16dp"
+                android:text="Başarı Oranı: 0%"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/yYanlis" />
 
-                <TextView
-                    android:id="@+id/yYanlis"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:text=" Yanlış Sayısı: 0"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" />
-            </androidx.cardview.widget.CardView>
-
-
-            <androidx.cardview.widget.CardView
+            <TextView
+                android:id="@+id/yYanlis"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                app:cardBackgroundColor="#393E46"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="6dp">
+                android:layout_marginTop="8dp"
+                android:background="@drawable/radius_mavi"
+                android:padding="16dp"
+                android:text=" Yanlış Sayısı: 0"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dDogru" />
 
-                <TextView
-                    android:id="@+id/oOran"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:text="Başarı Oranı: 0%"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" />
-            </androidx.cardview.widget.CardView>
-
-
-            <androidx.cardview.widget.CardView
+            <TextView
+                android:id="@+id/dDogru"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                app:cardBackgroundColor="#393E46"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="6dp">
+                android:layout_marginTop="288dp"
+                android:background="@drawable/radius_mavi"
+                android:padding="16dp"
+                android:text="Doğru Sayısı: 0"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/tTarih"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:text="En Son Yanlış Yapılan Tarih: Bilinmiyor"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" />
-            </androidx.cardview.widget.CardView>
-        </LinearLayout>
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="HOŞ GELDİN! "
+                android:textColor="@color/lightGrey"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/dDogru"
+                app:layout_constraintEnd_toStartOf="@+id/textName2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profileImage2"
+                app:layout_constraintVertical_bias="0.243" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="İŞTE ÇÖZMÜŞ OLDUĞUN TESTLER'İN SONUÇLARI "
+                android:textColor="@color/lightGrey"
+                android:textColorLink="#F0F0F0"
+                android:textSize="16sp"
+                android:textStyle="italic"
+                app:layout_constraintBottom_toTopOf="@+id/imageView12"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView6"
+                app:layout_constraintVertical_bias="0.5" />
+
+            <ImageView
+                android:id="@+id/imageView12"
+                android:layout_width="38dp"
+                android:layout_height="35dp"
+                android:background="#FFFFFF"
+                app:layout_constraintBottom_toTopOf="@+id/dDogru"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView4"
+                app:layout_constraintVertical_bias="0.5"
+                app:srcCompat="@drawable/baseline_arrow_drop_down_24" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
 
     <Button
         android:id="@+id/btnPdf"
@@ -129,14 +193,11 @@
         android:onClick="pdfOlustur"
         android:text="📄 PDF OLUŞTUR"
         android:textColor="#FFFFFF"
-        android:textStyle="bold"
 
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/imageView7"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.942"
         app:layout_constraintStart_toStartOf="parent" />
-
-
 
     <RelativeLayout
         android:id="@+id/MenuLayout"
@@ -191,13 +252,12 @@
     </RelativeLayout>
 
 
-
     <ImageView
         android:id="@+id/imageView7"
         android:layout_width="70dp"
         android:layout_height="60dp"
         android:layout_marginBottom="30dp"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/MenuLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -209,29 +269,11 @@
         android:layout_height="40dp"
         android:layout_marginBottom="38dp"
         android:onClick="goToWordAddClick"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/baseline_add_circle_white24" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
