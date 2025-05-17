@@ -1,49 +1,52 @@
 package com.anlarsinsoftware.englishwordsapp.ViewPages
 
+import android.app.AlertDialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.*
-import androidx.appcompat.app.AlertDialog
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import com.anlarsinsoftware.englishwordsapp.Entrance.BaseCompact
 import com.anlarsinsoftware.englishwordsapp.Entrance.SignInActivity
 import com.anlarsinsoftware.englishwordsapp.Entrance.bagla
 import com.anlarsinsoftware.englishwordsapp.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.auth.userProfileChangeRequest
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 
 class ProfileActivity : BaseCompact() {
 
     private lateinit var auth: FirebaseAuth
-
     private lateinit var profileImage: ImageView
     private lateinit var textName: TextView
     private lateinit var textEmail: TextView
     private lateinit var btnConnectReport: Button
-
-    private lateinit var imageSettings: ImageView // ayarlar imageview
-
-    private val admin_kodu = "projeyazilimyapimi"
+    private val storageRef = FirebaseStorage.getInstance().reference
+    private var selectedImageUri: Uri? = null
+    private val PICK_IMAGE_REQUEST = 1000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
         auth = Firebase.auth
-
         profileImage = findViewById(R.id.profileImage)
         textName = findViewById(R.id.textName)
         textEmail = findViewById(R.id.textEmail)
         btnConnectReport = findViewById(R.id.btnConnectReport)
-        imageSettings = findViewById(R.id.imageSettings) // ayarlar iconu bul
 
         val currentUser = auth.currentUser
 
         currentUser?.let {
             textName.text = it.displayName ?: "İsim girilmedi"
             textEmail.text = it.email ?: "E-posta yok"
-
             it.photoUrl?.let { uri ->
                 Picasso.get()
                     .load(uri)
@@ -53,51 +56,10 @@ class ProfileActivity : BaseCompact() {
         }
 
         btnConnectReport.setOnClickListener {
-            bagla(RaporPage::class.java,false)
+            bagla(RaporPage::class.java, false)
             Toast.makeText(this, "Raporlama sistemine bağlanılıyor...", Toast.LENGTH_SHORT).show()
         }
-
-        imageSettings.setOnClickListener {
-            showSettingsDialog()
-        }
     }
-
-    private fun showSettingsDialog() {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Ayarlar")
-        builder.setMessage("Seçenekler")
-        builder.setPositiveButton("Admin Girişi") { dialog, _ ->
-            dialog.dismiss()
-            showAdminLoginDialog()
-        }
-        builder.setNegativeButton("İptal") { dialog, _ ->
-            dialog.dismiss()
-        }
-        builder.create().show()
-    }
-
-    private fun showAdminLoginDialog() {
-        val editText = EditText(this)
-        editText.setText(admin_kodu) // önceden verilen admin kodu otomatik olarak girilir
-
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Admin Girişi")
-        builder.setView(editText)
-        builder.setPositiveButton("Giriş") { dialog, _ ->
-            val enteredCode = editText.text.toString()
-            if (enteredCode == admin_kodu) {
-                Toast.makeText(this, "Hoş geldin admin", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Admin kodu yanlış!", Toast.LENGTH_SHORT).show()
-            }
-            dialog.dismiss()
-        }
-        builder.setNegativeButton("İptal") { dialog, _ ->
-            dialog.dismiss()
-        }
-        builder.create().show()
-    }
-
     fun exitClick(view: View) {
         auth.signOut()
         val alertDialog = androidx.appcompat.app.AlertDialog.Builder(this)
@@ -115,5 +77,85 @@ class ProfileActivity : BaseCompact() {
             .create()
 
         alertDialog.show()
+    }
+
+    fun setting(view: View) {
+        val adminKodu = "projeyazilimyapimi"
+        val alertDialog = AlertDialog.Builder(view.context)
+        val input = EditText(view.context)
+        alertDialog.setTitle("Admin Girişi")
+        alertDialog.setMessage("Lütfen Admin Kodunu Girin:")
+        alertDialog.setView(input)
+        alertDialog.setPositiveButton("Giriş") { dialog, _ ->
+            val girilenKod = input.text.toString()
+            if (girilenKod == adminKodu) {
+                Toast.makeText(view.context, "Hoş geldin admin", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(view.context, "Hatalı kod!", Toast.LENGTH_SHORT).show()
+            }
+            dialog.dismiss()
+        }
+        alertDialog.setNegativeButton("İptal") { dialog, _ ->
+            dialog.dismiss()
+        }
+        alertDialog.show()
+    }
+
+    fun düzen(view: View) {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(Intent.createChooser(intent, "Profil Fotoğrafını Seç"), PICK_IMAGE_REQUEST)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.data != null) {
+            selectedImageUri = data.data
+            profileImage.scaleX = 1.5f
+            profileImage.scaleY = 1.5f
+
+            Picasso.get()
+                .load(selectedImageUri)
+                .placeholder(R.drawable.baseline_person_24)
+                .into(profileImage)
+            val alertDialog = AlertDialog.Builder(this)
+                .setTitle("Profil Fotoğrafı Güncellensin mi?")
+                .setMessage("Bu fotoğrafı profil fotoğrafı olarak ayarlamak istiyor musunuz?")
+                .setPositiveButton("Evet") { _, _ ->
+                    uploadImageToFirebase(selectedImageUri!!)
+                }
+                .setNegativeButton("Hayır") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .create()
+            alertDialog.show()
+        }
+    }
+
+    private fun uploadImageToFirebase(imageUri: Uri) {
+        val fileRef = storageRef.child("profil_fotograflari/${auth.currentUser?.uid}.jpg")
+
+        fileRef.putFile(imageUri)
+            .addOnSuccessListener {
+                fileRef.downloadUrl.addOnSuccessListener { uri ->
+                    val profileUpdates = userProfileChangeRequest {
+                        photoUri = uri
+                    }
+                    auth.currentUser?.updateProfile(profileUpdates)?.addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Toast.makeText(this, "Profil fotoğrafı güncellendi!", Toast.LENGTH_SHORT).show()
+                            Picasso.get()
+                                .load(uri)
+                                .placeholder(R.drawable.baseline_person_24)
+                                .into(profileImage)
+                        }
+                    }
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Yükleme başarısız oldu!", Toast.LENGTH_SHORT).show()
+            }
     }
 }
