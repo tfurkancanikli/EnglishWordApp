@@ -43,6 +43,18 @@ class Sozluk : BaseCompact() {
         }
         binding.recyclerView.adapter=recyclerViewAdapter
 
+        binding.sozlukSearch.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                recyclerViewAdapter.filterList(newText.orEmpty())
+                return true
+            }
+        })
+
+
     }
 
     fun getDataFire(){
@@ -73,7 +85,8 @@ class Sozluk : BaseCompact() {
 
                         }
                         kelimelerListesi.sortBy { it.kelimeIng?.lowercase() }
-                        recyclerViewAdapter.notifyDataSetChanged()
+                        recyclerViewAdapter.updateFullList(kelimelerListesi)
+
                     }
                 }
             }

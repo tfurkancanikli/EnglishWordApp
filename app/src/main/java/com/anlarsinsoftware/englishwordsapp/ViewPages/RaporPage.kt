@@ -40,7 +40,7 @@ class RaporPage : BaseCompact() {
         auth = FirebaseAuth.getInstance()
         binding = ActivityRaporPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        profileImage = findViewById(R.id.profileImage2)
+        profileImage = findViewById(R.id.profileImage)
         textName = binding.textName2
         kimlikDogrulama = FirebaseAuth.getInstance()
         veritabani = FirebaseFirestore.getInstance()
@@ -98,10 +98,11 @@ class RaporPage : BaseCompact() {
         }
 
         dogruSayisi = toplamDogruSayisi
+        //Yanlış sayısı daha az veri açısından toplamdan doğru sayısının çıkarılmasıyla bulunur.
         yanlisSayisi = toplamYanlisSayisi
 
         basariOrani = if (toplamKelimeSayisi > 0) {
-            val oran = (dogruSayisi * 100) / (toplamDogruSayisi+toplamYanlisSayisi)
+            val oran = (dogruSayisi * 100) / toplamKelimeSayisi
             "%$oran"
         } else {
             "0%"

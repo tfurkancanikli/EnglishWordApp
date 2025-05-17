@@ -1,4 +1,5 @@
 package com.anlarsinsoftware.englishwordsapp.ViewPages
+
 import android.graphics.Color
 import android.os.Bundle
 import android.text.InputFilter

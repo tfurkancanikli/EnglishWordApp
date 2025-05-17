@@ -50,7 +50,7 @@ class HomePageActivity : BaseCompact() {
         picassoFun(thirdFlipImageUrl,binding.thirdCardSliderImage)
 
         val fourFlipImageUrl="https://firebasestorage.googleapis.com/v0/b/englishwordapp-7fb3b.firebasestorage.app/o/homeScrolPhotos%2Fyapay.png?alt=media&token=922d8a96-cdeb-4e77-ab3a-950049d72c94"
-            picassoFun(fourFlipImageUrl,binding.fourCardSliderImage)
+        picassoFun(fourFlipImageUrl,binding.fourCardSliderImage)
 
 
         var vFlipper=binding.viewFlipper
@@ -60,8 +60,7 @@ class HomePageActivity : BaseCompact() {
         binding.firstCardText.text="YENİ KELİMELER EKLEMEK İSTERMİSİN?"
         binding.secondCardText.text="QUİZ İLE KENDİNİ TEST ETMEYE HAZIRMISIN?"
         binding.thirdCardText.text="BİZE GERİ BİLDİRİM GÖNDERİN"
-        binding.fourCardText.text="Yapay Zrkayı Kullan"
-
+        binding.fourCardText.text="Yapay Zekayı Kullanın"
 
     }
     fun firstCardImageClick(view: View){
