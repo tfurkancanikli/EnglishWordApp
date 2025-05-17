@@ -5,20 +5,26 @@ import android.graphics.pdf.PdfDocument
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import com.anlarsinsoftware.englishwordsapp.Entrance.BaseCompact
+import com.anlarsinsoftware.englishwordsapp.R
 import com.anlarsinsoftware.englishwordsapp.databinding.ActivityRaporPageBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
+import com.squareup.picasso.Picasso
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
 class RaporPage : BaseCompact() {
-
+    private lateinit var auth: FirebaseAuth
+    private lateinit var profileImage: ImageView
+    private lateinit var textName: TextView
     private lateinit var binding: ActivityRaporPageBinding
     private lateinit var kimlikDogrulama: FirebaseAuth
     private lateinit var veritabani: FirebaseFirestore
@@ -31,9 +37,11 @@ class RaporPage : BaseCompact() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        auth = FirebaseAuth.getInstance()
         binding = ActivityRaporPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        profileImage = findViewById(R.id.profileImage)
+        textName = binding.textName2
         kimlikDogrulama = FirebaseAuth.getInstance()
         veritabani = FirebaseFirestore.getInstance()
         val mevcutKullanici = kimlikDogrulama.currentUser
@@ -44,6 +52,16 @@ class RaporPage : BaseCompact() {
         } else {
             Toast.makeText(this, "Kullanıcı girişi yapılmamış", Toast.LENGTH_SHORT).show()
             finish()
+        }
+        val currentUser = auth.currentUser
+        currentUser?.let {
+            textName.text = it.displayName ?: "İsim girilmedi"
+            it.photoUrl?.let { uri ->
+                Picasso.get()
+                    .load(uri)
+                    .placeholder(R.drawable.baseline_person_24)
+                    .into(profileImage)
+            }
         }
     }
     //Giriş yapan kullanıcı verilerini alır
@@ -66,10 +84,12 @@ class RaporPage : BaseCompact() {
     //Verileri hesaplar
     private fun istatistikleriHesapla(belgeler: QuerySnapshot) {
         var toplamDogruSayisi = 0
+        var toplamYanlisSayisi= 0
         var enSonDogruTarih: Date? = null
 
         for (belge in belgeler) {
             toplamDogruSayisi += belge.getLong("dogruSayac")?.toInt() ?: 0
+            toplamYanlisSayisi += belge.getLong("yanlisSayac")?.toInt() ?: 0
 
             val dogruTarih = belge.getTimestamp("sonDogruTarih")?.toDate()
             if (dogruTarih != null && (enSonDogruTarih == null || dogruTarih.after(enSonDogruTarih))) {
@@ -79,7 +99,7 @@ class RaporPage : BaseCompact() {
 
         dogruSayisi = toplamDogruSayisi
         //Yanlış sayısı daha az veri açısından toplamdan doğru sayısının çıkarılmasıyla bulunur.
-        yanlisSayisi = toplamKelimeSayisi - dogruSayisi
+        yanlisSayisi = toplamYanlisSayisi
 
         basariOrani = if (toplamKelimeSayisi > 0) {
             val oran = (dogruSayisi * 100) / toplamKelimeSayisi
@@ -101,7 +121,6 @@ class RaporPage : BaseCompact() {
             tTarih.text = "Son Doğru Tarihi: $sonDogruTarihi"
         }
     }
-
     fun pdfOlustur(view: View) {
         val pdfDokumani = PdfDocument()
         val sayfaBilgisi = PdfDocument.PageInfo.Builder(595, 842, 1).create()
@@ -145,7 +164,7 @@ class RaporPage : BaseCompact() {
 
         val dosyaAdi = "Ingilizce_Kelime_Raporu_${SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())}.pdf"
         val dosya = File(getExternalFilesDir(null), dosyaAdi)
-       // Try-catch ile hata yakalama algoritmasının kurulması.
+        // Try-catch ile hata yakalama algoritmasının kurulması.
         try {
             FileOutputStream(dosya).use { cikti ->
                 pdfDokumani.writeTo(cikti)
