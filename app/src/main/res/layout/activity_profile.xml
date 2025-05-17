@@ -7,8 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/acik_mor2"
     android:gravity="center"
-    android:orientation="vertical"
-   >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/MenuLayout"
@@ -27,8 +26,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="64dp"
             android:onClick="goToHomeClick"
-            android:src="@drawable/baseline_home_24"
-            app:tint="@color/white" />
+            android:src="@drawable/baseline_home_24" />
 
         <ImageView
             android:id="@+id/wordleGame"
@@ -37,21 +35,17 @@
             android:layout_marginLeft="24dp"
             android:layout_toEndOf="@id/profile"
             android:onClick="goToProfileClick"
-            app:srcCompat="@drawable/baseline_person_24"
-            app:tint="@color/white" />
+            app:srcCompat="@drawable/baseline_person_24" />
 
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginRight="24dp"
+
             android:layout_toLeftOf="@id/imageView8"
             android:onClick="goToGameClick"
-            app:srcCompat="@drawable/baseline_videogame_asset_24"
-            app:tint="@color/white" />
-
-
-
+            app:srcCompat="@drawable/baseline_videogame_asset_24" />
 
         <ImageView
             android:id="@+id/imageView8"
@@ -61,20 +55,22 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="64dp"
             android:onClick="goToWordsClick"
-            app:srcCompat="@drawable/baseline_menu_book_24"
-            app:tint="@color/white" />
+            app:srcCompat="@drawable/baseline_menu_book_24" />
+
+
     </RelativeLayout>
+
 
     <ImageView
         android:id="@+id/imageView7"
         android:layout_width="70dp"
         android:layout_height="60dp"
         android:layout_marginBottom="30dp"
-        android:tint="@color/indigo_500"
         app:layout_constraintBottom_toBottomOf="@+id/MenuLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/add_btn_background" />
+
 
 
     <ImageView
@@ -87,20 +83,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/baseline_add_circle_white24" />
-
     <ImageView
         android:id="@+id/profileImage"
-        android:layout_width="132dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="176dp"
+        android:layout_width="171dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/radius_mavi"
         android:contentDescription="Profil Resmi"
         android:scaleType="centerCrop"
         android:src="@drawable/baseline_person_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView14" />
 
     <TextView
         android:id="@+id/textName"
@@ -109,59 +104,74 @@
         android:layout_marginTop="32dp"
         android:text="Kullanıcı Adı"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileImage" />
+        app:layout_constraintTop_toBottomOf="@+id/textEmail" />
 
     <TextView
         android:id="@+id/textEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="80dp"
         android:text="email@example.com"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textName" />
+        app:layout_constraintTop_toBottomOf="@+id/profileImage" />
 
     <Button
         android:id="@+id/btnConnectReport"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_width="185dp"
+        android:layout_height="61dp"
         android:backgroundTint="@color/teal_700"
         android:onClick="exitClick"
         android:text="Raporlanmaya Bağlan"
         android:textColor="@color/grey"
+        app:layout_constraintBottom_toBottomOf="@+id/düzen"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textEmail" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/düzen" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="86dp"
+        android:layout_height="67dp"
+        android:layout_marginTop="16dp"
         android:onClick="exitClick"
-        app:layout_constraintBottom_toTopOf="@+id/btnConnectReport"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.402"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textEmail"
-        app:layout_constraintVertical_bias="0.491"
-        app:srcCompat="@drawable/exit" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/exit"
+        tools:layout_editor_absoluteX="8dp" />
 
     <ImageView
-        android:id="@+id/imageSettings"
-        android:layout_width="58dp"
-        android:layout_height="52dp"
-        android:layout_gravity="end"
-        android:contentDescription="Ayarlar"
-        android:padding="8dp"
-        android:src="@drawable/ic_settings"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-5dp" />
+        android:id="@+id/imageView14"
+        android:layout_width="86dp"
+        android:layout_height="104dp"
+        android:onClick="setting"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.965"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/settings" />
+
+    <Button
+        android:id="@+id/düzen"
+        android:layout_width="175dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="120dp"
+        android:backgroundTint="#FFFFFF"
+        android:onClick="düzen"
+        android:scrollbarSize="4dp"
+        android:text="Profil Fotoğrafı Güncelle"
+        android:textColor="@color/black"
+        android:textColorLink="#ff67"
+        app:iconSize="18dp"
+        app:layout_constraintEnd_toStartOf="@+id/btnConnectReport"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
