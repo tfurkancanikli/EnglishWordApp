@@ -100,10 +100,11 @@
         android:layout_height="71dp"
         android:layout_marginStart="24dp"
         android:layout_marginBottom="24dp"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="@+id/imageView4"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/google" />
-
     <TextView
         android:id="@+id/sifreReset"
         android:layout_width="wrap_content"
