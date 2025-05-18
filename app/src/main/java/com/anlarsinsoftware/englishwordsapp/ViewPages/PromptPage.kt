@@ -8,8 +8,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.anlarsinsoftware.englishwordsapp.Model.Kelime
-import com.anlarsinsoftware.englishwordsapp.Prompt.OPEN_ROUTER_API_KEY
-import com.anlarsinsoftware.englishwordsapp.Prompt.replicateAPI_KEY
+import com.anlarsinsoftware.englishwordsapp.Util.OPEN_ROUTER_API_KEY
+import com.anlarsinsoftware.englishwordsapp.Util.replicateAPI_KEY
 import com.anlarsinsoftware.englishwordsapp.databinding.ActivityPromptPageBinding
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
@@ -17,7 +17,6 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import java.io.IOException

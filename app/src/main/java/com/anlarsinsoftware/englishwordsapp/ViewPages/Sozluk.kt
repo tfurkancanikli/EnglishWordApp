@@ -1,20 +1,17 @@
 package com.anlarsinsoftware.englishwordsapp.ViewPages
 
 import android.os.Bundle
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anlarsinsoftware.englishwordsapp.Adapter.SozlukAdapter
-import com.anlarsinsoftware.englishwordsapp.Entrance.BaseCompact
-import com.anlarsinsoftware.englishwordsapp.Entrance.bagla
+import com.anlarsinsoftware.englishwordsapp.Util.BaseCompact
 import com.anlarsinsoftware.englishwordsapp.Model.Kelime
 import com.anlarsinsoftware.englishwordsapp.R
 import com.anlarsinsoftware.englishwordsapp.databinding.ActivitySozluk2Binding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
@@ -77,7 +74,7 @@ class Sozluk : BaseCompact() {
 
                             if (gorselUrl!=null){
 
-                                var indirilenKelime= Kelime("ıd",kullaniciAdi,kelimeIng,kelimeTur,cumle1,cumle2, gorselUrl)
+                                var indirilenKelime= Kelime("ıd",kullaniciAdi,kelimeIng.trim(),kelimeTur.trim(),cumle1,cumle2, gorselUrl)
                                 kelimelerListesi.add(indirilenKelime)
                             }else{
                                 Toast.makeText(this,"Kelime yüklenirken hata oluştu",Toast.LENGTH_LONG).show()

@@ -9,7 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.anlarsinsoftware.englishwordsapp.Entrance.bagla
+import com.anlarsinsoftware.englishwordsapp.Util.bagla
 import com.anlarsinsoftware.englishwordsapp.Model.Kelime
 import com.anlarsinsoftware.englishwordsapp.R
 import com.anlarsinsoftware.englishwordsapp.databinding.ActivityQuizPageBinding
@@ -34,7 +34,6 @@ class QuizPageActivity : AppCompatActivity() {
     private var dogruSayisi = 0
     private var yanlisSayisi = 0
     private val zamanAraliklari = listOf(1, 7, 30, 90, 180, 365)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         auth = FirebaseAuth.getInstance()
         super.onCreate(savedInstanceState)
@@ -163,10 +162,10 @@ class QuizPageActivity : AppCompatActivity() {
             val soruS=quizKelimeListesi.size
             val kullanici =auth.currentUser!!.displayName
 
-            dogruSayisiTV.text="Doğru Sayısı : $dogruSayisi"
-            yanlisSayisiTV.text="Yanlış Sayısı : $yanlisSayisi"
-            soruSayisi.text="Soru Sayısı : $soruS"
-            aciklama.text="$kullanici Bir sonraki quiz de görüşmek üzere😊"
+            dogruSayisiTV.text="$dogruSayisi"
+            yanlisSayisiTV.text="$yanlisSayisi"
+            soruSayisi.text="$soruS"
+            aciklama.text="$kullanici bir sonraki quiz'de görüşmek üzere👋"
             button.setOnClickListener{
                 bagla(HomePageActivity::class.java,true)
             }
@@ -234,6 +233,23 @@ class QuizPageActivity : AppCompatActivity() {
                             "Kelime" to kelimeIng
                         )
                     )
+                    if (yeniAsama >= 6 || oncekiAsama >= 6) {
+                        val ogrenilenKelimeRef = Firebase.firestore
+                            .collection("ogrenilmisKelimeler")
+                            .document(uid)
+                            .collection("kelimeler")
+                            .document(kelimeId)
+
+                        ogrenilenKelimeRef.set(
+                            mapOf(
+                                "kelimeId" to kelimeId,
+                                "ingilizceKelime" to kelime.kelimeIng,
+                                "turkceKarsiligi" to kelime.kelimeTur,
+                                "gorselUrl" to kelime.gorselUrl,
+                                "tarih" to Timestamp.now()
+                            )
+                        )
+                    }
                 } else {
                     // Süresi dolmamışsa sayaç artsın ama seviye sabit
                     kelimeRef.set(
@@ -267,6 +283,7 @@ class QuizPageActivity : AppCompatActivity() {
 
 
     private fun getQuizWords(suresiDolanKelimeler: List<String>) {
+        val maksimumSoruSayisi = 10
         val db = Firebase.firestore
         val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
@@ -274,15 +291,14 @@ class QuizPageActivity : AppCompatActivity() {
             val tumKelimeler = snapshot.documents
             val quizKelimeListesi = mutableListOf<Kelime>()
 
-            // Süresi dolan kelimeleri maksimum 10 al
-            val secilenSuresiDolanlar = suresiDolanKelimeler.take(10).mapNotNull { id ->
+            val secilenSuresiDolanlar = suresiDolanKelimeler.take(maksimumSoruSayisi).mapNotNull { id ->
                 val doc = tumKelimeler.find { it.id == id }
                 doc?.toKelime(doc.id)
             }.toMutableList()
 
             quizKelimeListesi.addAll(secilenSuresiDolanlar)
 
-            // Kullanıcının daha önce gördüğü kelime ID'lerini al
+
             db.collection("kullaniciKelimeleri")
                 .document(uid)
                 .collection("kelimeler")
@@ -290,32 +306,23 @@ class QuizPageActivity : AppCompatActivity() {
                 .addOnSuccessListener { kullaniciSnapshot ->
                     val kullaniciKelimeIdSet = kullaniciSnapshot.documents.map { it.id }.toSet()
 
-                    // Yeni kelimeler: kullanıcının daha önce görmedikleri
-                    val yeniKelimeler = tumKelimeler.filter { it.id !in kullaniciKelimeIdSet }
-                        .shuffled()
-                        .take(10 - secilenSuresiDolanlar.size)
-                        .map { it.toKelime(it.id) }
+                    val kalanKadarKelime = maksimumSoruSayisi - quizKelimeListesi.size
+                    if (kalanKadarKelime > 0) {
+                        val secilebilecekYeniKelimeler = tumKelimeler
+                            .filter { it.id !in kullaniciKelimeIdSet }
+                            .shuffled()
+                            .take(kalanKadarKelime)
+                            .mapNotNull { it.toKelime(it.id) }
 
-                    quizKelimeListesi.addAll(yeniKelimeler)
-
-                    if (secilenSuresiDolanlar.isEmpty()) {
-                        // Kullanıcıya SnackBar ile sor
-                        Snackbar.make(binding.root, "Bugün süresi dolmuş kelimeniz yok. Tamamen yeni kelimelerle devam etmek istiyor musunuz?", Snackbar.LENGTH_INDEFINITE)
-                            .setAction("EVET") {
-                                this.quizKelimeListesi = yeniKelimeler
-                                gorselVeSoruGoster()
-                            }
-                            .show()
-                    } else {
-                        this.quizKelimeListesi = quizKelimeListesi
-                        gorselVeSoruGoster()
+                        quizKelimeListesi.addAll(secilebilecekYeniKelimeler)
                     }
+
+                    quizKelimeListesi.shuffle()
+
+                    this.quizKelimeListesi = quizKelimeListesi
+                    gorselVeSoruGoster()
                 }
         }
     }
-
-
-
-
 
 }

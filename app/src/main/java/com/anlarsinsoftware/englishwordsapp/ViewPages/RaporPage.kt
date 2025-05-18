@@ -9,7 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.FileProvider
-import com.anlarsinsoftware.englishwordsapp.Entrance.BaseCompact
+import com.anlarsinsoftware.englishwordsapp.Util.BaseCompact
 import com.anlarsinsoftware.englishwordsapp.R
 import com.anlarsinsoftware.englishwordsapp.databinding.ActivityRaporPageBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -40,7 +40,7 @@ class RaporPage : BaseCompact() {
         auth = FirebaseAuth.getInstance()
         binding = ActivityRaporPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        profileImage = findViewById(R.id.profileImage)
+        profileImage = findViewById(R.id.profileImage2)
         textName = binding.textName2
         kimlikDogrulama = FirebaseAuth.getInstance()
         veritabani = FirebaseFirestore.getInstance()
@@ -102,7 +102,7 @@ class RaporPage : BaseCompact() {
         yanlisSayisi = toplamYanlisSayisi
 
         basariOrani = if (toplamKelimeSayisi > 0) {
-            val oran = (dogruSayisi * 100) / toplamKelimeSayisi
+            val oran = (dogruSayisi * 100) / (dogruSayisi+yanlisSayisi)
             "%$oran"
         } else {
             "0%"

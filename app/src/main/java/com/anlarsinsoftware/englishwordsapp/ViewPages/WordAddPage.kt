@@ -15,8 +15,8 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import com.anlarsinsoftware.englishwordsapp.Entrance.BaseCompact
-import com.anlarsinsoftware.englishwordsapp.Entrance.bagla
+import com.anlarsinsoftware.englishwordsapp.Util.BaseCompact
+import com.anlarsinsoftware.englishwordsapp.Util.bagla
 import com.anlarsinsoftware.englishwordsapp.databinding.ActivityWordAddPageBinding
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth

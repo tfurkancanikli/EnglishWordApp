@@ -67,9 +67,9 @@ dependencies {
     implementation ("com.squareup.picasso:picasso:2.8")
     implementation ("jp.wasabeef:picasso-transformations:2.4.0")
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
-    //val body = requestBody.toRequestBody("application/json".toMediaType())
+    implementation("com.airbnb.android:lottie:6.3.0")
     implementation ("com.google.code.gson:gson:2.8.9")
-
+    implementation ("com.google.android.gms:play-services-auth:21.0.0")
     val retrofitVersion = "2.3.0"
 //retrofit
     implementation ("com.squareup.retrofit2:retrofit:$retrofitVersion")

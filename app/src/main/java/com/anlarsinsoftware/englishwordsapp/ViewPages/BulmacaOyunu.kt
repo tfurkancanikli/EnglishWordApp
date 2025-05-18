@@ -14,9 +14,9 @@ import android.view.animation.BounceInterpolator
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
-import com.anlarsinsoftware.englishwordsapp.Entrance.BaseCompact
-import com.anlarsinsoftware.englishwordsapp.Entrance.bagla
 import com.anlarsinsoftware.englishwordsapp.R
+import com.anlarsinsoftware.englishwordsapp.Util.BaseCompact
+import com.anlarsinsoftware.englishwordsapp.Util.bagla
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.*

@@ -5,9 +5,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
-import com.anlarsinsoftware.englishwordsapp.Entrance.BaseCompact
-import com.anlarsinsoftware.englishwordsapp.Entrance.SignInActivity
-import com.anlarsinsoftware.englishwordsapp.Entrance.bagla
+import com.anlarsinsoftware.englishwordsapp.Util.BaseCompact
+import com.anlarsinsoftware.englishwordsapp.Util.bagla
 import com.anlarsinsoftware.englishwordsapp.R
 import com.anlarsinsoftware.englishwordsapp.databinding.ActivityHomePageBinding
 import com.google.firebase.Firebase
