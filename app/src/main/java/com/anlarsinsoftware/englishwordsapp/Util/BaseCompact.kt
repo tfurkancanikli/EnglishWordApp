@@ -1,4 +1,4 @@
-package com.anlarsinsoftware.englishwordsapp.Entrance
+package com.anlarsinsoftware.englishwordsapp.Util
 
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
