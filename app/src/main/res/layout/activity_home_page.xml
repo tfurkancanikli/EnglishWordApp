@@ -412,84 +412,83 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
     <RelativeLayout
         android:id="@+id/MenuLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/radius_mavi"
-        android:padding="12dp"
+        android:layout_height="64dp"
+        android:background="@color/white"
+        android:elevation="8dp"
+        android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <ImageView
-            android:id="@+id/home"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="64dp"
-            android:onClick="goToHomeClick"
-            android:src="@drawable/baseline_home_24" />
 
-        <ImageView
-            android:id="@+id/profile"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginLeft="24dp"
-            android:layout_toEndOf="@id/home"
-            android:backgroundTint="@color/white"
-            android:onClick="goToProfileClick"
-            android:tint="#FFFFFF"
-            app:srcCompat="@drawable/baseline_person_24" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="4">
 
-        <ImageView
-            android:id="@+id/wordle"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginRight="24dp"
+            <ImageView
+                android:id="@+id/home"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="goToHomeClick"
+                android:padding="8dp"
+                android:src="@drawable/baseline_home_24"
+                app:tint="@color/black"/>
 
-            android:layout_toLeftOf="@id/sozluk"
-            android:onClick="goToGameClick"
-            android:tint="#FBFBFB"
-            app:srcCompat="@drawable/baseline_videogame_asset_24" />
+            <ImageView
+                android:id="@+id/profile"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="goToProfileClick"
+                android:padding="8dp"
+                app:srcCompat="@drawable/baseline_person_24"
+                app:tint="@color/indigo_500"
+                />
 
-        <ImageView
-            android:id="@+id/sozluk"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="64dp"
-            android:backgroundTint="@color/white"
-            android:onClick="goToWordsClick"
-            android:tint="#FFFFFF"
-            app:srcCompat="@drawable/baseline_menu_book_24" />
+            <ImageView
+                android:id="@+id/wordle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="goToGameClick"
+                android:padding="8dp"
+                app:srcCompat="@drawable/baseline_videogame_asset_24"
+                app:tint="@color/indigo_500"
 
+                />
 
+            <ImageView
+                android:id="@+id/sozluk"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="goToWordsClick"
+                android:padding="8dp"
+                app:srcCompat="@drawable/baseline_menu_book_24"
+                app:tint="@color/indigo_500"
+
+                />
+        </LinearLayout>
     </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="70dp"
-        android:layout_height="60dp"
-        android:layout_marginBottom="30dp"
-        android:tint="@color/indigo_500"
-        app:layout_constraintBottom_toBottomOf="@+id/MenuLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/add_btn_background" />
-
-    <ImageView
-        android:id="@+id/imageView9"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="38dp"
+    <!-- Floating Action Button - Daha belirgin hale getirme -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
         android:onClick="goToWordAddClick"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/baseline_add_24"
+        app:backgroundTint="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/MenuLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/baseline_add_circle_white24" />
+        app:elevation="8dp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

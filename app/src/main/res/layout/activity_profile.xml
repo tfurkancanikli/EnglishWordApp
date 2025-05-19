@@ -9,173 +9,218 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/MenuLayout"
+
+
+    <LinearLayout
+        android:id="@+id/titleBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/radius_mavi"
-        android:padding="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <ImageView
-            android:id="@+id/home"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="64dp"
-            android:onClick="goToHomeClick"
-            android:src="@drawable/baseline_home_24"
-            android:tint="#FFFFFF" />
-
-        <ImageView
-            android:id="@+id/profile"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginLeft="24dp"
-            android:layout_toEndOf="@id/home"
-            android:onClick="goToProfileClick"
-            app:srcCompat="@drawable/baseline_person_24" />
-
-        <ImageView
-            android:id="@+id/wordle"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginRight="24dp"
-
-            android:layout_toLeftOf="@id/sozluk"
-            android:onClick="goToGameClick"
-            android:tint="#FFFFFF"
-            app:srcCompat="@drawable/baseline_videogame_asset_24" />
-
-        <ImageView
-            android:id="@+id/sozluk"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="64dp"
-            android:onClick="goToWordsClick"
-            android:tint="#FFFFFF"
-            app:srcCompat="@drawable/baseline_menu_book_24" />
-
-
-    </RelativeLayout>
-
-
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="70dp"
-        android:layout_height="60dp"
-        android:layout_marginBottom="30dp"
-        android:tint="@color/indigo_500"
-        app:layout_constraintBottom_toBottomOf="@+id/MenuLayout"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        android:elevation="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/radius_mavi" />
+        app:layout_constraintTop_toTopOf="parent">
 
 
-    <ImageView
-        android:id="@+id/imageView9"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="38dp"
-        android:onClick="goToWordAddClick"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="61dp"
+            android:layout_height="64dp"
+            android:onClick="exitClick"
+            android:padding="8dp"
+            android:tint="@color/indigo_500"
+            app:srcCompat="@drawable/icon8" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="41dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Profilim"
+            android:textColor="@color/indigo_500"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imageView14"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:onClick="setting"
+            android:padding="8dp"
+            android:tint="@color/indigo_500"
+            app:srcCompat="@drawable/setting" />
+
+    </LinearLayout>
+
+
+
+    <Button
+        android:id="@+id/düzen"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="@color/white"
+        android:onClick="düzen"
+        android:text="Profil Fotoğrafı Güncelle"
+        android:textColor="@color/indigo_500"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/btnConnectReport"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/baseline_add_circle_white24" />
+        app:layout_constraintTop_toBottomOf="@+id/textEmail" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/profileImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/radius_mavi"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="150dp"
         android:contentDescription="Profil Resmi"
         android:scaleType="centerCrop"
         android:src="@drawable/male_user"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.524"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView14" />
+        app:layout_constraintTop_toBottomOf="@+id/titleBar"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Circle"
+        app:strokeColor="@color/white"
+        app:strokeWidth="4dp" />
 
     <TextView
         android:id="@+id/textName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="50dp"
         android:text="Kullanıcı Adı"
-        android:textColor="@color/black"
-        android:textSize="34sp"
+        android:textColor="@color/white"
+        android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.543"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/profileImage" />
 
     <TextView
         android:id="@+id/textEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:text="email@example.com"
-        android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textColor="@color/white"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.561"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileImage" />
+        app:layout_constraintTop_toBottomOf="@+id/textName" />
 
     <Button
         android:id="@+id/btnConnectReport"
-        android:layout_width="185dp"
-        android:layout_height="61dp"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="16dp"
         android:backgroundTint="@color/teal_700"
         android:onClick="exitClick"
         android:text="Raporlanmaya Bağlan"
-        android:textColor="@color/grey"
-        app:layout_constraintBottom_toBottomOf="@+id/düzen"
+        android:textColor="@color/white"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/düzen" />
+        app:layout_constraintStart_toEndOf="@+id/düzen"
+        app:layout_constraintTop_toBottomOf="@+id/textEmail" />
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="86dp"
-        android:layout_height="67dp"
-        android:layout_marginTop="16dp"
-        android:onClick="exitClick"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/exit" />
-
-    <ImageView
-        android:id="@+id/imageView14"
-        android:layout_width="86dp"
-        android:layout_height="104dp"
-        android:onClick="setting"
+        android:id="@+id/imageView7"
+        android:layout_width="70dp"
+        android:layout_height="60dp"
+        android:tint="@color/indigo_500"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.965"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/settings" />
-
-    <Button
-        android:id="@+id/düzen"
-        android:layout_width="175dp"
-        android:layout_height="63dp"
-        android:layout_marginTop="75dp"
-        android:backgroundTint="#FFFFFF"
-        android:onClick="düzen"
-        android:scrollbarSize="4dp"
-        android:text="Profil Fotoğrafı Güncelle"
-        android:textColor="@color/black"
-        android:textColorLink="#ff67"
-        app:iconSize="18dp"
-        app:layout_constraintEnd_toStartOf="@+id/btnConnectReport"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textName" />
+        app:srcCompat="@drawable/radius_mavi"
+        tools:layout_editor_absoluteY="787dp" />
+
+    <RelativeLayout
+        android:id="@+id/MenuLayout"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@color/white"
+        android:elevation="8dp"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <!-- Menü öğeleri için daha dengeli bir dağılım -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <ImageView
+                android:id="@+id/home"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="goToHomeClick"
+                android:padding="8dp"
+                android:src="@drawable/baseline_home_24"
+                app:tint="@color/indigo_500"/>
+
+            <ImageView
+                android:id="@+id/profile"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="goToProfileClick"
+                android:padding="8dp"
+                app:srcCompat="@drawable/baseline_person_24"
+                app:tint="@color/black"
+                />
+
+            <ImageView
+                android:id="@+id/wordle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="goToGameClick"
+                android:padding="8dp"
+                app:srcCompat="@drawable/baseline_videogame_asset_24"
+                app:tint="@color/indigo_500"
+
+                />
+
+            <ImageView
+                android:id="@+id/sozluk"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="goToWordsClick"
+                android:padding="8dp"
+                app:srcCompat="@drawable/baseline_menu_book_24"
+                app:tint="@color/indigo_500"
+
+                />
+        </LinearLayout>
+    </RelativeLayout>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:onClick="goToWordAddClick"
+        android:src="@drawable/baseline_add_24"
+        app:backgroundTint="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/MenuLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:elevation="8dp"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

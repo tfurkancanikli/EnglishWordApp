@@ -4,6 +4,22 @@
         <item name="android:background">@color/black_overlay</item>
         <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
     </style>
+    <style name="ShapeAppearanceOverlay.Circle" parent="">
+        <item name="cornerSize">50%</item>
+    </style>
+    <style name="CustomSearchView" parent="Widget.AppCompat.SearchView">
+
+        <item name="queryBackground">@drawable/search_radius</item>
+
+        <item name="android:textColor">@color/black</item>
+
+        <item name="android:textColorHint">@color/black</item>
+
+        <item name="searchHintIcon">@null</item>
+
+        <item name="closeIcon">@android:drawable/presence_offline</item>
+    </style>
+
 
 
 </resources>

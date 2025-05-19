@@ -5,197 +5,241 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#818181"
-    android:backgroundTint="#DADADA"
+    android:background="@color/indigo_500"
     tools:context=".ViewPages.WordAddPage">
 
-    <RelativeLayout
-        android:id="@+id/MenuLayout"
+
+    <LinearLayout
+        android:id="@+id/titleBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/radius_mavi"
-        android:padding="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <ImageView
-            android:id="@+id/home"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="64dp"
-            android:onClick="goToHomeClick"
-            android:src="@drawable/baseline_home_24"
-            app:tint="@color/white" />
-
-        <ImageView
-            android:id="@+id/profile"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginLeft="24dp"
-            android:layout_toEndOf="@id/home"
-            android:onClick="goToProfileClick"
-            app:srcCompat="@drawable/baseline_person_24"
-            app:tint="@color/white" />
-
-        <ImageView
-            android:id="@+id/wordle"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginRight="24dp"
-            android:layout_toLeftOf="@id/sozluk"
-            android:onClick="goToGameClick"
-            app:srcCompat="@drawable/baseline_videogame_asset_24"
-            app:tint="@color/white" />
-
-        <ImageView
-            android:id="@+id/sozluk"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="64dp"
-            android:onClick="goToWordsClick"
-            app:srcCompat="@drawable/baseline_menu_book_24"
-            app:tint="@color/white" />
-    </RelativeLayout>
-
-
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="70dp"
-        android:layout_height="60dp"
-        android:layout_marginBottom="30dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/MenuLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/add_btn_background" />
-
-    <ImageView
-        android:id="@+id/imageView9"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="38dp"
-        android:onClick="goToWordAddClick"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/baseline_add_circle_white24" />
-
-
-    <TextView
-        android:id="@+id/kelimeEkleBtn"
-        android:layout_width="150dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="8dp"
-        android:background="@color/teal_700"
-        android:gravity="center"
-        android:onClick="KelimeEkleClick"
-        android:text="Kelime Ekle"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.cardview.widget.CardView
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        app:cardCornerRadius="25dp"
-        app:layout_constraintBottom_toTopOf="@+id/kelimeEkleBtn"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        android:elevation="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+
+            android:contentDescription="Geri"
+            android:onClick="backImageClick"
+            android:src="@drawable/back"
+            android:tint="@color/indigo_500" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Kelime Bulmaca"
+            android:textColor="@color/indigo_500"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/kelimeEkleBtn"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="100dp"
+        android:fontFamily="sans-serif-medium"
+        android:letterSpacing="0"
+        android:onClick="KelimeEkleClick"
+        android:text="Kelime Ekle"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+
+        app:backgroundTint="@color/teal_700"
+        app:cornerRadius="12dp"
+        app:elevation="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/MenuLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.8"
+        app:rippleColor="@color/light_blue_900" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="389dp"
+        android:layout_height="533dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="20dp"
+        android:padding="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/kelimeEkleBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/titleBar">
+
+        <EditText
+            android:id="@+id/turkceKarsilik"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/drawbleradius"
+            android:ems="10"
+            android:hint="Türkçe karşılığını giriniz."
+            android:inputType="text"
+            android:paddingLeft="15dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ingilizceKelime" />
+
+        <EditText
+            android:id="@+id/cumleText2"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/drawbleradius"
+            android:ems="10"
+            android:hint="Kelimeyi kullanarak cümle kurunuz"
+            android:inputType="text"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cumleText1" />
+
+        <EditText
+            android:id="@+id/ingilizceKelime"
+            android:layout_width="297dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/drawbleradius"
+            android:ems="10"
+            android:hint="İngilizce kelime giriniz."
+            android:inputType="text"
+            android:paddingLeft="15dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/gorselEkleBtn" />
+
+        <EditText
+            android:id="@+id/cumleText1"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/drawbleradius"
+            android:ems="10"
+            android:hint="Kelimeyi kullanarak cümle kurunuz"
+            android:inputType="text"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/turkceKarsilik" />
+
+        <ImageView
+            android:id="@+id/gorselEkleBtn"
+            android:layout_width="268dp"
+            android:layout_height="219dp"
+            android:background="@drawable/drawbleradius"
+            android:onClick="gorselEkle"
+            android:padding="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/gallery_icon" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <RelativeLayout
+        android:id="@+id/MenuLayout"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@color/white"
+        android:elevation="8dp"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="15dp">
-
-            <EditText
-                android:id="@+id/turkceKarsilik"
-                android:layout_width="300dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/radius_mavi"
-                android:ems="10"
-                android:hint="Türkçe karşılığını giriniz."
-                android:inputType="text"
-                android:paddingLeft="15dp"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ingilizceKelime" />
-
-            <EditText
-                android:id="@+id/cumleText2"
-                android:layout_width="300dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/radius_mavi"
-                android:ems="10"
-                android:hint="Kelimeyi kullanarak cümle kurunuz"
-                android:inputType="text"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cumleText1" />
-
-            <EditText
-                android:id="@+id/ingilizceKelime"
-                android:layout_width="297dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="32dp"
-                android:background="@drawable/radius_mavi"
-                android:ems="10"
-                android:hint="İngilizce kelime giriniz."
-                android:inputType="text"
-                android:paddingLeft="15dp"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/gorselEkleBtn" />
-
-            <EditText
-                android:id="@+id/cumleText1"
-                android:layout_width="300dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/radius_mavi"
-                android:ems="10"
-                android:hint="Kelimeyi kullanarak cümle kurunuz"
-                android:inputType="text"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/turkceKarsilik" />
+            android:orientation="horizontal"
+            android:weightSum="4">
 
             <ImageView
-                android:id="@+id/gorselEkleBtn"
-                android:layout_width="282dp"
-                android:layout_height="253dp"
-                android:background="@drawable/radius_mavi"
-                android:onClick="gorselEkle"
-                android:padding="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/gallery_icon" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+                android:id="@+id/home"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="goToHomeClick"
+                android:padding="8dp"
+                android:src="@drawable/baseline_home_24"
+                app:tint="@color/indigo_500"/>
+
+            <ImageView
+                android:id="@+id/profile"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="goToProfileClick"
+                android:padding="8dp"
+                app:srcCompat="@drawable/baseline_person_24"
+                app:tint="@color/indigo_500"
+                />
+
+            <ImageView
+                android:id="@+id/wordle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="goToGameClick"
+                android:padding="8dp"
+                app:srcCompat="@drawable/baseline_videogame_asset_24"
+                app:tint="@color/indigo_500"
+
+                />
+
+            <ImageView
+                android:id="@+id/sozluk"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="goToWordsClick"
+                android:padding="8dp"
+                app:srcCompat="@drawable/baseline_menu_book_24"
+                app:tint="@color/indigo_500"
+
+                />
+        </LinearLayout>
+    </RelativeLayout>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:onClick="goToWordAddClick"
+        android:src="@drawable/baseline_add_24"
+        app:backgroundTint="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/MenuLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:elevation="8dp"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

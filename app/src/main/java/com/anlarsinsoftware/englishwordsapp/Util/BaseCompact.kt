@@ -2,6 +2,7 @@ package com.anlarsinsoftware.englishwordsapp.Util
 
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.anlarsinsoftware.englishwordsapp.Util.bagla
 import com.anlarsinsoftware.englishwordsapp.ViewPages.BulmacaOyunu
 import com.anlarsinsoftware.englishwordsapp.ViewPages.HomePageActivity
 import com.anlarsinsoftware.englishwordsapp.ViewPages.ProfileActivity
