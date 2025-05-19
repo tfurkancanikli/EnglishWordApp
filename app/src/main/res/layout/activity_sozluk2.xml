@@ -103,7 +103,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <SearchView
+        <android.widget.SearchView
             android:id="@+id/sozlukSearch"
             android:layout_width="0dp"
             android:layout_height="match_parent"

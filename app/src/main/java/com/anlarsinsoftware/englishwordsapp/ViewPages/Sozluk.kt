@@ -1,6 +1,7 @@
 package com.anlarsinsoftware.englishwordsapp.ViewPages
 
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -9,6 +10,7 @@ import com.anlarsinsoftware.englishwordsapp.Adapter.SozlukAdapter
 import com.anlarsinsoftware.englishwordsapp.Util.BaseCompact
 import com.anlarsinsoftware.englishwordsapp.Model.Kelime
 import com.anlarsinsoftware.englishwordsapp.R
+import com.anlarsinsoftware.englishwordsapp.Util.bagla
 import com.anlarsinsoftware.englishwordsapp.databinding.ActivitySozluk2Binding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -36,7 +38,7 @@ class Sozluk : BaseCompact() {
         var layotManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager=layotManager
         recyclerViewAdapter= SozlukAdapter(kelimelerListesi){
-            dinle ->kelimeDetaylari(dinle)
+                dinle ->kelimeDetaylari(dinle)
         }
         binding.recyclerView.adapter=recyclerViewAdapter
 
@@ -51,8 +53,13 @@ class Sozluk : BaseCompact() {
             }
         })
 
+        fun backImageClick2(view: View){
+            bagla(HomePageActivity::class.java,false)
+        }
+
 
     }
+
 
     fun getDataFire(){
         db.collection("kelimeler").addSnapshotListener{snapshot,e->
@@ -88,7 +95,7 @@ class Sozluk : BaseCompact() {
                 }
             }
         }
-        }
+    }
 
 
     fun kelimeDetaylari(kelime: Kelime) {
@@ -124,6 +131,10 @@ class Sozluk : BaseCompact() {
         val dialog = builder.create()
         dialog.window?.setBackgroundDrawable(android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT))
         dialog.show()
+    }
+
+    fun backImageClick2(view: View){
+        bagla(HomePageActivity::class.java,false)
     }
 
 

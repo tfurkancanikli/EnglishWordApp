@@ -15,6 +15,8 @@ import com.anlarsinsoftware.englishwordsapp.databinding.ActivityRaporPageBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
 import java.io.File
 import java.io.FileOutputStream
@@ -74,6 +76,16 @@ class RaporPage : BaseCompact() {
                 toplamKelimeSayisi = belgeler.size()
                 istatistikleriHesapla(belgeler)
                 arayuzuGuncelle()
+
+                updateKullanici(
+                    kullaniciId,
+                    dogruSayisi,
+                    yanlisSayisi,
+                    basariOrani,
+                    sonDogruTarihi,
+                    toplamKelimeSayisi
+                )
+
                 Log.d("RaporSayfasi", "Toplam $toplamKelimeSayisi kelime bulundu")
             }
             .addOnFailureListener { hata ->
@@ -108,6 +120,8 @@ class RaporPage : BaseCompact() {
             "0%"
         }
 
+        //BURAYA
+
         sonDogruTarihi = enSonDogruTarih?.let {
             SimpleDateFormat("dd MMMM yyyy HH:mm", Locale("tr")).format(it)
         } ?: "Henüz kayıt yok"
@@ -121,6 +135,41 @@ class RaporPage : BaseCompact() {
             tTarih.text = "Son Doğru Tarihi: $sonDogruTarihi"
         }
     }
+
+    private fun updateKullanici(
+        kullaniciId: String,
+        dogruSayisi: Int,
+        yanlisSayisi: Int,
+        basariOran: String,
+        sonDogruTarihi: String,
+        toplamKelime: Int
+    ) {
+        val currentUser = FirebaseAuth.getInstance().currentUser ?: return
+        val firestore = Firebase.firestore
+
+        val kullaniciVerisi = hashMapOf(
+            "uid" to kullaniciId,
+            "kullaniciAdi" to (currentUser.displayName ?: "Bilinmiyor"),
+            "email" to (currentUser.email ?: "Email yok"),
+            "dogruSayisi" to dogruSayisi,
+            "yanlisSayisi" to yanlisSayisi,
+            "basariOrani" to basariOran,
+            "sonDogruTarihi" to sonDogruTarihi,
+            "toplamKelimeSayisi" to toplamKelime,
+            "profilFotoUrl" to (currentUser.photoUrl?.toString() ?: "")
+        )
+
+        firestore.collection("kullanicilar")
+            .document(kullaniciId)
+            .set(kullaniciVerisi)
+            .addOnSuccessListener {
+                Log.d("RaporSayfasi", "Kullanıcı verisi başarıyla güncellendi")
+            }
+            .addOnFailureListener { e ->
+                Log.e("RaporSayfasi", "Kullanıcı verisi güncellenemedi", e)
+            }
+    }
+
     fun pdfOlustur(view: View) {
         val pdfDokumani = PdfDocument()
         val sayfaBilgisi = PdfDocument.PageInfo.Builder(595, 842, 1).create()

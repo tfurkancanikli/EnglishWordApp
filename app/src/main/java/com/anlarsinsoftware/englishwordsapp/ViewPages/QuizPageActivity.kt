@@ -324,5 +324,4 @@ class QuizPageActivity : AppCompatActivity() {
                 }
         }
     }
-
 }

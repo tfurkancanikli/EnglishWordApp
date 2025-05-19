@@ -5,6 +5,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.anlarsinsoftware.englishwordsapp.Adapter.UserAdapter
+import com.anlarsinsoftware.englishwordsapp.Model.User
 import com.anlarsinsoftware.englishwordsapp.Util.BaseCompact
 import com.anlarsinsoftware.englishwordsapp.Util.bagla
 import com.anlarsinsoftware.englishwordsapp.R
@@ -12,6 +16,8 @@ import com.anlarsinsoftware.englishwordsapp.databinding.ActivityHomePageBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
 
@@ -19,6 +25,11 @@ import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
 class HomePageActivity : BaseCompact() {
     private lateinit var auth:FirebaseAuth
     private lateinit var binding : ActivityHomePageBinding
+    private lateinit var leaderBoardRecyclerView: RecyclerView
+    private lateinit var userAdapter: UserAdapter
+    private val userList = mutableListOf<User>()
+    private val db = FirebaseFirestore.getInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomePageBinding.inflate(layoutInflater)
@@ -26,6 +37,22 @@ class HomePageActivity : BaseCompact() {
         auth= Firebase.auth
 
        slideFun()
+
+        leaderBoardRecyclerView = findViewById(R.id.leaderBoardRecyclerView)
+        leaderBoardRecyclerView.layoutManager = LinearLayoutManager(this)
+        userAdapter = UserAdapter(userList)
+        leaderBoardRecyclerView.adapter = userAdapter
+
+// Başlangıçta görünmez
+        leaderBoardRecyclerView.visibility = View.GONE
+
+        binding.leaderBoard.setOnClickListener{
+            loadLeaderboard()
+            Toast.makeText(this,"TIKLANDI_BOARD",Toast.LENGTH_SHORT).show()
+        }
+
+
+
     }
 
 
@@ -66,7 +93,7 @@ class HomePageActivity : BaseCompact() {
        bagla(WordAddPage::class.java,false)
     }
     fun secondCardImageClick(view: View){
-        goToQuiz(view)
+        quizPageClick(view)
     }
     fun thirdCardImageClick(view: View){
         val intent = Intent(Intent.ACTION_SEND).apply {
@@ -85,9 +112,19 @@ class HomePageActivity : BaseCompact() {
     fun fourCardImageClick(view : View){
         bagla(PromptPage::class.java,false)
     }
-    fun goToQuiz(view:View){
+    fun quizPageClick(view:View){
         bagla(QuizPageActivity::class.java,false)
     }
+    fun yapayZekaClick(view: View){
+        bagla(PromptPage::class.java,false)
+    }
+    fun leaderBoardClick(view: View){
+      loadLeaderboard()
+    }
+    fun raporPageClick(view: View){
+        bagla(RaporPage::class.java,false)
+    }
+
     @Suppress("MissingSuperCall")
     override fun onBackPressed() {
 
@@ -105,6 +142,32 @@ class HomePageActivity : BaseCompact() {
 
         alertDialog.show()
     }
+
+        private fun loadLeaderboard() {
+            db.collection("kullanicilar")
+                .orderBy("dogruSayisi", Query.Direction.DESCENDING)
+                .get()
+                .addOnSuccessListener { result ->
+                    userList.clear()
+                    for (doc in result) {
+                        val kullanici = User(
+                            ad = doc.getString("kullaniciAdi") ?: "",
+                            dogruSayisi = doc.getLong("dogruSayisi")?.toInt() ?: 0,
+                            oran = doc.getString("basariOrani") ?: "0%",
+                            profilUrl = doc.getString("profilFotoUrl") ?: ""
+                        )
+                        userList.add(kullanici)
+                    }
+                    userAdapter.notifyDataSetChanged()
+                    leaderBoardRecyclerView.visibility = View.VISIBLE
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Liderlik verileri alınamadı", Toast.LENGTH_SHORT).show()
+                }
+        }
+
+
+
 
 
 }

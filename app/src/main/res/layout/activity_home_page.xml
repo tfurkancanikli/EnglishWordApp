@@ -8,6 +8,411 @@
     android:background="@color/indigo_500"
     tools:context=".ViewPages.HomePageActivity">
 
+
+    <LinearLayout
+        android:id="@+id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/logo_eng" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:fontFamily="@font/alex_brush"
+            android:gravity="center"
+            android:text="Penlingu"
+            android:textColor="@color/black"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleBar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <LinearLayout
+                android:id="@+id/LinearLayoutSlider"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ViewFlipper
+                    android:id="@+id/viewFlipper"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:autoStart="true"
+                    android:flipInterval="4000"
+                    android:inAnimation="@android:anim/slide_in_left"
+                    android:outAnimation="@android:anim/slide_out_right">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/firstCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:cardCornerRadius="25dp">
+
+                        <ImageView
+                            android:id="@+id/firstCardSliderImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/white"
+                            android:onClick="firstCardImageClick"></ImageView>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:gravity="bottom">
+
+                            <TextView
+                                android:id="@+id/firstCardText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+
+                                android:background="@drawable/gecis"
+                                android:fontFamily="@font/acme"
+                                android:text="Görsel Açıklaması"
+                                android:textAlignment="center"
+                                android:textColor="@color/black"
+                                android:textSize="15sp"
+                                android:textStyle="bold"></TextView>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/secondCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:cardCornerRadius="25dp">
+
+                        <ImageView
+                            android:id="@+id/secondCardSliderImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/white"
+                            android:onClick="secondCardImageClick"></ImageView>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:gravity="bottom">
+
+                            <TextView
+                                android:id="@+id/secondCardText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/gecis"
+                                android:fontFamily="@font/acme"
+                                android:text="Görsel Açıklaması"
+                                android:textColor="@color/black"
+                                android:textSize="15sp"
+
+                                android:textStyle="bold"></TextView>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/thirdCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:cardCornerRadius="25dp">
+
+                        <ImageView
+                            android:id="@+id/thirdCardSliderImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/white"
+                            android:onClick="thirdCardImageClick"></ImageView>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:gravity="bottom">
+
+                            <TextView
+                                android:id="@+id/thirdCardText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/gecis"
+                                android:fontFamily="@font/acme"
+                                android:text="Görsel Açıklaması"
+                                android:textColor="@color/black"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+
+                                ></TextView>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/fourCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:cardCornerRadius="25dp">
+
+                        <ImageView
+                            android:id="@+id/fourCardSliderImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/white"
+                            android:onClick="fourCardImageClick"></ImageView>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:gravity="bottom">
+
+                            <TextView
+                                android:id="@+id/fourCardText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/gecis"
+                                android:fontFamily="@font/acme"
+                                android:text="Görsel Açıklaması"
+                                android:textColor="@color/black"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+
+                                ></TextView>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+
+                </ViewFlipper>
+            </LinearLayout>
+
+            <HorizontalScrollView
+                android:id="@+id/homeScrollView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginEnd="1dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/LinearLayoutSlider">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:backgroundTint="@color/white"
+                        android:onClick="quizPageClick"
+                        app:cardCornerRadius="15dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/imageView2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:src="@drawable/test100"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingVertical="2dp"
+                                android:text="Quiz"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:backgroundTint="@color/white"
+                        android:onClick="yapayZekaClick"
+                        app:cardCornerRadius="15dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/imageView3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:src="@drawable/ai100"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingHorizontal="4dp"
+                                android:paddingVertical="2dp"
+                                android:text="Yapay Zeka"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.cardview.widget.CardView>
+
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/leaderBoard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:backgroundTint="@color/white"
+                        android:onClick="leaderBoardClick"
+                        app:cardCornerRadius="15dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/imageView4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:paddingHorizontal="2dp"
+                                android:src="@drawable/comp100"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingHorizontal="4dp"
+                                android:paddingVertical="2dp"
+                                android:text="Sıralama"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:backgroundTint="@color/white"
+                        android:onClick="raporPageClick"
+                        app:cardCornerRadius="15dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/imageView5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:src="@drawable/report100"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingHorizontal="4dp"
+                                android:paddingVertical="2dp"
+                                android:text="Raporlarım"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.cardview.widget.CardView>
+
+
+                </LinearLayout>
+
+
+            </HorizontalScrollView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/leaderBoardRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/homeScrollView"></androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/leaderBoardRecyclerView" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
     <RelativeLayout
         android:id="@+id/MenuLayout"
         android:layout_width="match_parent"
@@ -75,7 +480,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/add_btn_background" />
 
-
     <ImageView
         android:id="@+id/imageView9"
         android:layout_width="40dp"
@@ -86,179 +490,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/baseline_add_circle_white24" />
-
-    <LinearLayout
-        android:id="@+id/LinearLayoutSlider"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginTop="1dp"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
-
-        <ViewFlipper
-            android:id="@+id/viewFlipper"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:autoStart="true"
-            android:flipInterval="4000"
-            android:inAnimation="@android:anim/slide_in_left"
-            android:outAnimation="@android:anim/slide_out_right">
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/firstCard"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:cardCornerRadius="25dp">
-
-                <ImageView
-                    android:id="@+id/firstCardSliderImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:onClick="firstCardImageClick"></ImageView>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="bottom">
-
-                    <TextView
-                        android:id="@+id/firstCardText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/gecis"
-                        android:fontFamily="@font/acme"
-                        android:text="Görsel Açıklaması"
-                        android:textColor="@color/black"
-                        android:textSize="15sp"
-
-                        android:textStyle="bold"></TextView>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/secondCard"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:cardCornerRadius="25dp">
-
-                <ImageView
-                    android:id="@+id/secondCardSliderImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:onClick="secondCardImageClick"></ImageView>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="bottom">
-
-                    <TextView
-                        android:id="@+id/secondCardText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/gecis"
-                        android:fontFamily="@font/acme"
-                        android:text="Görsel Açıklaması"
-                        android:textColor="@color/black"
-                        android:textSize="15sp"
-
-                        android:textStyle="bold"></TextView>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/thirdCard"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:cardCornerRadius="25dp">
-
-                <ImageView
-                    android:id="@+id/thirdCardSliderImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:onClick="thirdCardImageClick"></ImageView>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="bottom">
-
-                    <TextView
-                        android:id="@+id/thirdCardText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/gecis"
-                        android:fontFamily="@font/acme"
-                        android:text="Görsel Açıklaması"
-                        android:textColor="@color/black"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-
-                        ></TextView>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/fourCard"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:cardCornerRadius="25dp">
-
-                <ImageView
-                    android:id="@+id/fourCardSliderImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:onClick="fourCardImageClick"></ImageView>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="bottom">
-
-                    <TextView
-                        android:id="@+id/fourCardText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/gecis"
-                        android:fontFamily="@font/acme"
-                        android:text="Görsel Açıklaması"
-                        android:textColor="@color/black"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-
-                        ></TextView>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-
-        </ViewFlipper>
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="32dp"
-        android:drawableLeft="@drawable/baseline_edit_document_24"
-        android:onClick="goToQuiz"
-        android:text="Quize Başla"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LinearLayoutSlider" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
