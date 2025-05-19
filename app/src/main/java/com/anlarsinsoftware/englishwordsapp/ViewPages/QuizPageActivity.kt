@@ -324,4 +324,7 @@ class QuizPageActivity : AppCompatActivity() {
                 }
         }
     }
+    fun goToWordAddClick(view: View) {
+        bagla(WordAddPage::class.java, false)
+    }
 }
