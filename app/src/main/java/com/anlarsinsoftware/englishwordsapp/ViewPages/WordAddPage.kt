@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import com.anlarsinsoftware.englishwordsapp.Model.Kelime
 import com.anlarsinsoftware.englishwordsapp.Util.BaseCompact
 import com.anlarsinsoftware.englishwordsapp.Util.bagla
 import com.anlarsinsoftware.englishwordsapp.databinding.ActivityWordAddPageBinding
@@ -79,60 +80,77 @@ class WordAddPage : BaseCompact() {
     }
 
     fun KelimeEkleClick(view: View) {
+        if (gorsel != null) {
+            binding.kelimeEkleBtn.isEnabled = false // Tek tıklamayı sağlamak için
+            binding.progressBar3.visibility = View.VISIBLE
 
-        if (gorsel!=null){
             val ref = storage.reference
-            val uid=UUID.randomUUID()
-            var imageName="${uid}.jpg"
-            val gorselRef=ref.child("gorsel").child(imageName)
-            gorselRef.putFile(gorsel!!).addOnSuccessListener { task->
+            val uid = UUID.randomUUID()
+            val imageName = "$uid.jpg"
+            val gorselRef = ref.child("gorsel").child(imageName)
 
+            gorselRef.putFile(gorsel!!)
+                .addOnSuccessListener {
+                    val yuklenen = ref.child("gorsel").child(imageName)
+                    yuklenen.downloadUrl.addOnSuccessListener { uri ->
+                        val downloadUrl = uri.toString()
+                        val kelimeIng = binding.ingilizceKelimeEdit.text.toString()
+                        val kelimeTur = binding.turkceKarsilikEdit.text.toString()
+                        val cumle1 = binding.cumle1Edit.text.toString()
+                        val cumle2 = binding.cumleText2.text.toString()
+                        val kullanici = auth.currentUser?.displayName.orEmpty()
+                        val tarih = Timestamp.now()
 
-                val yuklenen=ref.child("gorsel").child(imageName)
-                yuklenen.downloadUrl.addOnSuccessListener {uri->
-                    val downloadUrl=uri.toString()
-                    println(downloadUrl)
-                    val kelimeIng = binding.ingilizceKelime.text.toString()
-                    val kelimeTur = binding.turkceKarsilik.text.toString()
-                    val cumle1 = binding.cumleText1.text.toString()
-                    val cumle2 = binding.cumleText2.text.toString()
-                    val kullanici = auth.currentUser?.displayName.orEmpty()
+                        if (kelimeIng.isNotEmpty() && kelimeTur.isNotEmpty() && cumle1.isNotEmpty()) {
+                            val kelimeMap = hashMapOf<String, Any>(
+                                "ingilizceKelime" to kelimeIng,
+                                "turkceKarsiligi" to kelimeTur,
+                                "birinciCumle" to cumle1,
+                                "ikinciCumle" to cumle2,
+                                "tarih" to tarih,
+                                "kullaniciAdi" to kullanici,
+                                "gorselUrl" to downloadUrl
+                            )
 
+                            dataBase.collection("kelimeler").add(kelimeMap)
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        Toast.makeText(this, "Kelime başarıyla eklendi.", Toast.LENGTH_SHORT).show()
 
-                    val tarih = Timestamp.now()
+                                        // Alanları sıfırla
+                                        binding.ingilizceKelimeEdit.setText("")
+                                        binding.turkceKarsilikEdit.setText("")
+                                        binding.cumle1Edit.setText("")
+                                        binding.cumleText2.setText("")
+                                        binding.gorselEkleBtn.setImageResource(android.R.drawable.ic_menu_gallery)
+                                        gorsel = null
+                                        bitmap = null
 
-                    if (kelimeIng.isNotEmpty() && kelimeTur.isNotEmpty() && cumle1.isNotEmpty()) {
-                        val kelimeMap = hashMapOf<String, Any>(
-                            "ingilizceKelime" to kelimeIng,
-                            "turkceKarsiligi" to kelimeTur,
-                            "birinciCumle" to cumle1,
-                            "ikinciCumle" to cumle2,
-                            "tarih" to tarih,
-                            "kullaniciAdi" to kullanici,
-                            "gorselUrl" to downloadUrl
-                        )
-
-                        dataBase.collection("kelimeler").add(kelimeMap)
-                            .addOnCompleteListener { task ->
-                                if (task.isSuccessful) {
-                                    Toast.makeText(this, "Kelime Başarıyla Sözlüğe eklendi.", Toast.LENGTH_SHORT).show()
-                                    bagla(Sozluk::class.java,false)
+                                        bagla(Sozluk::class.java, false)
+                                    }
+                                    binding.progressBar3.visibility = View.GONE
+                                    binding.kelimeEkleBtn.isEnabled = true
                                 }
-                            }
-                            .addOnFailureListener { e ->
-                                Toast.makeText(this, e.localizedMessage, Toast.LENGTH_LONG).show()
-                            }
-                    } else {
-                        Toast.makeText(this, "Lütfen eksik bilgileri girin.", Toast.LENGTH_SHORT).show()
+                                .addOnFailureListener { e ->
+                                    Toast.makeText(this, e.localizedMessage, Toast.LENGTH_LONG).show()
+                                    binding.progressBar3.visibility = View.GONE
+                                    binding.kelimeEkleBtn.isEnabled = true
+                                }
+
+                        } else {
+                            Toast.makeText(this, "Lütfen eksik bilgileri girin.", Toast.LENGTH_SHORT).show()
+                            binding.progressBar3.visibility = View.GONE
+                            binding.kelimeEkleBtn.isEnabled = true
+                        }
                     }
-
+                }.addOnFailureListener { e ->
+                    Toast.makeText(this, e.localizedMessage, Toast.LENGTH_SHORT).show()
+                    binding.progressBar3.visibility = View.GONE
+                    binding.kelimeEkleBtn.isEnabled = true
                 }
-            }.addOnFailureListener{e->
-                Toast.makeText(this,e.localizedMessage,Toast.LENGTH_SHORT).show()
-            }
+        } else {
+            Toast.makeText(this, "Lütfen görsel seçin.", Toast.LENGTH_SHORT).show()
         }
-
-
     }
 
     fun gorselEkle(view: View) {

@@ -59,6 +59,8 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/textView7"
             app:layout_constraintTop_toTopOf="parent" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -148,7 +150,7 @@
         android:onClick="goToWordAddClick"
         android:src="@drawable/baseline_add_24"
         app:backgroundTint="@color/white"
+        app:elevation="6dp"
         app:layout_constraintBottom_toTopOf="@+id/MenuLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:elevation="6dp"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

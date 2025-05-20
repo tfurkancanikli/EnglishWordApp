@@ -2,6 +2,7 @@ package com.anlarsinsoftware.englishwordsapp.Model
 
 class Kelime {
 
+
     var kelimeId: String = ""
     var kullaniciAdi: String = ""
     var kelimeIng: String = ""
@@ -9,7 +10,6 @@ class Kelime {
     var birinciCumle: String = ""
     var ikinciCumle: String = ""
     var gorselUrl: String? = null
-
     var docId: String = ""
     var dogruSayisi: Int = 0
     var sonDogruMs: Long = 0L

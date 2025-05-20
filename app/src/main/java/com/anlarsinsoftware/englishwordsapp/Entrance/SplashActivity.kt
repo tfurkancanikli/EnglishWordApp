@@ -19,5 +19,7 @@ class SplashActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
         bagla(SignInActivity::class.java,true)},2525)
 
+        cacheDir.deleteRecursively()
+
     }
 }

@@ -57,8 +57,6 @@ class UserAdapter(private val userList: List<User>) : RecyclerView.Adapter<UserA
             }
         }
 
-
-
     }
 
     override fun getItemCount(): Int = userList.size

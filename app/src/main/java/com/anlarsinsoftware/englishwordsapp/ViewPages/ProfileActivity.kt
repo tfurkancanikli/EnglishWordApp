@@ -1,22 +1,30 @@
 package com.anlarsinsoftware.englishwordsapp.ViewPages
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.PopupWindow
 import android.widget.TextView
 import android.widget.Toast
 import com.anlarsinsoftware.englishwordsapp.Util.BaseCompact
 import com.anlarsinsoftware.englishwordsapp.Entrance.SignInActivity
 import com.anlarsinsoftware.englishwordsapp.Util.bagla
 import com.anlarsinsoftware.englishwordsapp.R
+import com.anlarsinsoftware.englishwordsapp.databinding.ActivityProfileBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.userProfileChangeRequest
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
@@ -28,13 +36,15 @@ class ProfileActivity : BaseCompact() {
     private lateinit var textName: TextView
     private lateinit var textEmail: TextView
     private lateinit var btnConnectReport: Button
+    private lateinit var binding: ActivityProfileBinding
     private val storageRef = FirebaseStorage.getInstance().reference
     private var selectedImageUri: Uri? = null
     private val PICK_IMAGE_REQUEST = 1000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile)
+        binding = ActivityProfileBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         auth = Firebase.auth
         profileImage = findViewById(R.id.profileImage)
@@ -59,47 +69,119 @@ class ProfileActivity : BaseCompact() {
             bagla(RaporPage::class.java, false)
             Toast.makeText(this, "Raporlama sistemine bağlanılıyor...", Toast.LENGTH_SHORT).show()
         }
+
     }
     fun exitClick(view: View) {
-        auth.signOut()
-        val alertDialog = androidx.appcompat.app.AlertDialog.Builder(this)
-            .setTitle("Uygulamadan Çıkılsın mı?")
-            .setMessage("Çıkış yapmak istediğinize emin misiniz?")
-            .setPositiveButton("Evet") { dialog, _ ->
-                dialog.dismiss()
-                auth.signOut()
-                bagla(SignInActivity::class.java, true)
-                finishAffinity()
-            }
-            .setNegativeButton("Hayır") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .create()
 
-        alertDialog.show()
     }
 
     fun setting(view: View) {
-        val adminKodu = "projeyazilimyapimi"
-        val alertDialog = AlertDialog.Builder(view.context)
-        val input = EditText(view.context)
-        alertDialog.setTitle("Admin Girişi")
-        alertDialog.setMessage("Lütfen Admin Kodunu Girin:")
-        alertDialog.setView(input)
-        alertDialog.setPositiveButton("Giriş") { dialog, _ ->
-            val girilenKod = input.text.toString()
-            if (girilenKod == adminKodu) {
-                Toast.makeText(view.context, "Hoş geldin admin", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(view.context, "Hatalı kod!", Toast.LENGTH_SHORT).show()
-            }
-            dialog.dismiss()
-        }
-        alertDialog.setNegativeButton("İptal") { dialog, _ ->
-            dialog.dismiss()
-        }
-        alertDialog.show()
+        showSettingsPopup(view,this)
     }
+
+    fun showSettingsPopup(anchor: View, context: Context) {
+        val popupView = LayoutInflater.from(context).inflate(R.layout.profile_settings, null)
+        val popupWindow = PopupWindow(
+            popupView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            true // focusable
+        )
+
+        popupWindow.elevation = 10f
+
+        // Tıklama olayları
+        val adminGirisi = popupView.findViewById<TextView>(R.id.admin_entrance)
+        val profilDuzenle = popupView.findViewById<TextView>(R.id.profil_edit)
+        val cikisYap=popupView.findViewById<TextView>(R.id.exit_btn)
+
+
+        adminGirisi.setOnClickListener {
+
+            val adminKodu = "projeyazilimyapimi"
+            val alertDialog = AlertDialog.Builder(anchor.context)
+            val input = EditText(anchor.context)
+            alertDialog.setTitle("Admin Girişi")
+            alertDialog.setMessage("Lütfen Admin Kodunu Girin:")
+            alertDialog.setView(input)
+            alertDialog.setPositiveButton("Giriş") { dialog, _ ->
+                val girilenKod = input.text.toString()
+                if (girilenKod == adminKodu) {
+                    Toast.makeText(anchor.context, "Hoş geldin admin", Toast.LENGTH_SHORT).show()
+                    val isAdmin: Boolean = true
+                    val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
+
+                    if (currentUserId != null) {
+                        updateKullanici(currentUserId, isAdmin)
+                    } else {
+                        Toast.makeText(anchor.context, "Kullanıcı oturumu bulunamadı!", Toast.LENGTH_SHORT).show()
+                    }
+
+
+
+                } else {
+                    Toast.makeText(anchor.context, "Hatalı kod!", Toast.LENGTH_SHORT).show()
+                }
+                dialog.dismiss()
+            }
+            alertDialog.setNegativeButton("İptal") { dialog, _ ->
+                dialog.dismiss()
+            }
+            alertDialog.show()
+
+            popupWindow.dismiss()
+        }
+
+        profilDuzenle.setOnClickListener {
+            Toast.makeText(context, "Profil edit", Toast.LENGTH_SHORT).show()
+            popupWindow.dismiss()
+        }
+        cikisYap.setOnClickListener{
+            val alertDialog = androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Uygulamadan Çıkılsın mı?")
+                .setMessage("Çıkış yapmak istediğinize emin misiniz?")
+                .setPositiveButton("Evet") { dialog, _ ->
+                    dialog.dismiss()
+                    auth.signOut()
+                    bagla(SignInActivity::class.java, true)
+                    finishAffinity()
+                }
+                .setNegativeButton("Hayır") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .create()
+
+            alertDialog.show()
+            popupWindow.dismiss()
+        }
+
+        popupWindow.showAsDropDown(anchor, -150, 0, Gravity.END)
+    }
+    private fun updateKullanici(
+        kullaniciId: String,
+        isAdmin : Boolean
+    ) {
+        val currentUser = FirebaseAuth.getInstance().currentUser ?: return
+        val firestore = Firebase.firestore
+
+        val kullaniciVerisi = hashMapOf(
+            "uid" to kullaniciId,
+            "kullaniciAdi" to (currentUser.displayName ?: "Bilinmiyor"),
+            "email" to (currentUser.email ?: "Email yok"),
+            "isAdmin" to isAdmin
+        )
+
+        firestore.collection("kullanicilar")
+            .document(kullaniciId)
+            .set(kullaniciVerisi)
+            .addOnSuccessListener {
+                Log.d("RaporSayfasi", "Kullanıcı verisi başarıyla güncellendi")
+            }
+            .addOnFailureListener { e ->
+                Log.e("RaporSayfasi", "Kullanıcı verisi güncellenemedi", e)
+            }
+    }
+
 
     fun düzen(view: View) {
         val intent = Intent()
