@@ -26,15 +26,6 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="61dp"
-            android:layout_height="64dp"
-            android:onClick="exitClick"
-            android:padding="8dp"
-            android:tint="@color/indigo_500"
-            app:srcCompat="@drawable/icon8" />
-
         <TextView
             android:layout_width="0dp"
             android:layout_height="41dp"
