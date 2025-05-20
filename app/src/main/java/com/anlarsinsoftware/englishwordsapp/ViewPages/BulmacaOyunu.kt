@@ -107,7 +107,7 @@ class BulmacaOyunu : BaseCompact() {
             .addOnFailureListener { hata ->
                 Log.e("Bulmaca", "Veritabanı hatası", hata)
                 yuklemeGostergesi.visibility = View.GONE
-                geriBildirimAlani.text = "Veritabanı hatası: ${hata.localizedMessage}"
+                geriBildirimAlani.text = "Veritabanı hatası:Kelimeler çekilmiyor"
 
                 Toast.makeText(
                     this@BulmacaOyunu,

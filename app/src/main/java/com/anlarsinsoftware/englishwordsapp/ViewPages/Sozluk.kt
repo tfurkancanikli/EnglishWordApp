@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anlarsinsoftware.englishwordsapp.Adapter.SozlukAdapter
 import com.anlarsinsoftware.englishwordsapp.Util.BaseCompact
@@ -21,28 +22,41 @@ import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
 
 class Sozluk : BaseCompact() {
 
-    val db = Firebase.firestore
-    var kelimelerListesi = ArrayList<Kelime>()
-    private  lateinit var auth: FirebaseAuth
-    private lateinit var binding : ActivitySozluk2Binding
-    private lateinit var recyclerViewAdapter : SozlukAdapter
+    private val db = Firebase.firestore
+    private var kelimelerListesi = ArrayList<Kelime>()
+    private lateinit var auth: FirebaseAuth
+    private lateinit var binding: ActivitySozluk2Binding
+    private lateinit var recyclerViewAdapter: SozlukAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySozluk2Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        auth= Firebase.auth
+        auth = Firebase.auth
+        setupRecyclerView()
+        setupSearchView()
         getDataFire()
+    }
 
-        var layotManager = LinearLayoutManager(this)
-        binding.recyclerView.layoutManager=layotManager
-        recyclerViewAdapter= SozlukAdapter(kelimelerListesi){
-                dinle ->kelimeDetaylari(dinle)
+    private fun setupRecyclerView() {
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerViewAdapter = SozlukAdapter(kelimelerListesi) { dinle ->
+            kelimeDetaylari(dinle)
         }
-        binding.recyclerView.adapter=recyclerViewAdapter
+        binding.recyclerView.adapter = recyclerViewAdapter
+    }
 
-        binding.sozlukSearch.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
+    private fun setupSearchView() {
+        // Customize SearchView appearance
+        val searchIcon = binding.sozlukSearch.findViewById<ImageView>(androidx.appcompat.R.id.search_mag_icon)
+        searchIcon.setColorFilter(resources.getColor(R.color.indigo_500))
+
+        val searchText = binding.sozlukSearch.findViewById<TextView>(androidx.appcompat.R.id.search_src_text)
+        searchText.setTextColor(resources.getColor(android.R.color.black))
+        searchText.setHintTextColor(resources.getColor(R.color.gray_600))
+
+        binding.sozlukSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
@@ -52,90 +66,81 @@ class Sozluk : BaseCompact() {
                 return true
             }
         })
-
-        fun backImageClick2(view: View){
-            bagla(HomePageActivity::class.java,false)
-        }
-
-
     }
 
+    private fun getDataFire() {
+        db.collection("kelimeler").addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                Toast.makeText(this, e.localizedMessage, Toast.LENGTH_LONG).show()
+                return@addSnapshotListener
+            }
 
-    fun getDataFire(){
-        db.collection("kelimeler").addSnapshotListener{snapshot,e->
-            if(e!=null){
-                Toast.makeText(this,e.localizedMessage,Toast.LENGTH_LONG).show()
-            }else{
-                if (snapshot!=null){
-                    if(!snapshot.isEmpty) {
-                        val doc = snapshot.documents
-                        kelimelerListesi.clear()
-                        for (document in doc){
-                            val kullaniciAdi=document.get("kullaniciAdi")as? String?:"bilinmeyen kullanici"
-                            val cumle1=document.get("birinciCumle")as? String?:"girilmemis birinci cumle"
-                            val cumle2=document.get("ikinciCumle")as? String?:"girilmemis ikinci cumle"
-                            val kelimeIng= document.get("ingilizceKelime")as? String?:"bilinmeyen ingilizce kelime"
-                            val kelimeTur=document.get("turkceKarsiligi")as? String?:"bilinmeyen turkce kelime"
-                            val tarih = document.get("tarih")as? String?:"bilinmeyen tarih"
-                            val gorselUrl = document.get("gorselUrl") as? String
+            if (snapshot != null && !snapshot.isEmpty) {
+                val doc = snapshot.documents
+                kelimelerListesi.clear()
 
-                            if (gorselUrl!=null){
+                for (document in doc) {
+                    try {
+                        val kullaniciAdi = document.getString("kullaniciAdi") ?: "bilinmeyen kullanici"
+                        val cumle1 = document.getString("birinciCumle") ?: "girilmemis birinci cumle"
+                        val cumle2 = document.getString("ikinciCumle") ?: "girilmemis ikinci cumle"
+                        val kelimeIng = document.getString("ingilizceKelime") ?: "bilinmeyen ingilizce kelime"
+                        val kelimeTur = document.getString("turkceKarsiligi") ?: "bilinmeyen turkce kelime"
+                        val gorselUrl = document.getString("gorselUrl")
 
-                                var indirilenKelime= Kelime("ıd",kullaniciAdi,kelimeIng.trim(),kelimeTur.trim(),cumle1,cumle2, gorselUrl)
-                                kelimelerListesi.add(indirilenKelime)
-                            }else{
-                                Toast.makeText(this,"Kelime yüklenirken hata oluştu",Toast.LENGTH_LONG).show()
-                            }
-
+                        if (!gorselUrl.isNullOrEmpty()) {
+                            val indirilenKelime = Kelime(
+                                "id",
+                                kullaniciAdi,
+                                kelimeIng.trim(),
+                                kelimeTur.trim(),
+                                cumle1,
+                                cumle2,
+                                gorselUrl
+                            )
+                            kelimelerListesi.add(indirilenKelime)
                         }
-                        kelimelerListesi.sortBy { it.kelimeIng?.lowercase() }
-                        recyclerViewAdapter.updateFullList(kelimelerListesi)
-
+                    } catch (ex: Exception) {
+                        Toast.makeText(this, "Veri okunurken hata oluştu: ${ex.message}", Toast.LENGTH_SHORT).show()
                     }
                 }
+
+                kelimelerListesi.sortBy { it.kelimeIng?.lowercase() }
+                recyclerViewAdapter.updateFullList(kelimelerListesi)
             }
         }
     }
 
+    private fun kelimeDetaylari(kelime: Kelime) {
+        val view = layoutInflater.inflate(R.layout.detaylar_dialog, null).apply {
+            findViewById<TextView>(R.id.ingilizceKelime).text = kelime.kelimeIng
+            findViewById<TextView>(R.id.turkceKarsilik).text = kelime.kelimeTur
+            findViewById<TextView>(R.id.cumleText1).text = kelime.birinciCumle
+            findViewById<TextView>(R.id.cumleText2).text = kelime.ikinciCumle
 
-    fun kelimeDetaylari(kelime: Kelime) {
-        val inflater = layoutInflater
-        val view = inflater.inflate(R.layout.detaylar_dialog, null)
-
-        val ingilizceKelimeTextView = view.findViewById<TextView>(R.id.ingilizceKelime)
-        val turkceKarsilikTextView = view.findViewById<TextView>(R.id.turkceKarsilik)
-        val cumleText1TextView = view.findViewById<TextView>(R.id.cumleText1)
-        val cumleText2TextView = view.findViewById<TextView>(R.id.cumleText2)
-        val kelimeImageView = view.findViewById<ImageView>(R.id.kelimeResim)
-
-        ingilizceKelimeTextView.text = kelime.kelimeIng
-        turkceKarsilikTextView.text = kelime.kelimeTur
-        cumleText1TextView.text = kelime.birinciCumle
-        cumleText2TextView.text = kelime.ikinciCumle
-        val radius=50
-        val margin=0
-
-        if (!kelime.gorselUrl.isNullOrEmpty()) {
-            Picasso.get()
-                .load(kelime.gorselUrl)
-                .placeholder(R.drawable.gallery_icon)
-                .error(R.drawable.false_ico)
-                .transform(RoundedCornersTransformation(radius, margin))
-                .into(kelimeImageView)
-        } else {
-            kelimeImageView.setImageResource(R.drawable.add_circle)
+            val kelimeImageView = findViewById<ImageView>(R.id.kelimeResim)
+            if (!kelime.gorselUrl.isNullOrEmpty()) {
+                Picasso.get()
+                    .load(kelime.gorselUrl)
+                    .placeholder(R.drawable.gallery_icon)
+                    .error(R.drawable.false_ico)
+                    .transform(RoundedCornersTransformation(50, 0))
+                    .into(kelimeImageView)
+            } else {
+                kelimeImageView.setImageResource(R.drawable.add_circle)
+            }
         }
-        val builder = androidx.appcompat.app.AlertDialog.Builder(this)
-        builder.setView(view)
 
-        val dialog = builder.create()
-        dialog.window?.setBackgroundDrawable(android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT))
-        dialog.show()
+        androidx.appcompat.app.AlertDialog.Builder(this)
+            .setView(view)
+            .create()
+            .apply {
+                window?.setBackgroundDrawableResource(android.R.color.transparent)
+                show()
+            }
     }
 
-    fun backImageClick2(view: View){
-        bagla(HomePageActivity::class.java,false)
+    fun backImageClick2(view: View) {
+        bagla(HomePageActivity::class.java, false)
     }
-
-
 }

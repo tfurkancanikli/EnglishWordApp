@@ -5,16 +5,54 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/acik_mor2"
+    android:background="@color/indigo_500"
     tools:context=".ViewPages.QuizPageActivity">
 
+
+    <!-- Başlık Çubuğu - Daha modern bir görünüm -->
+    <LinearLayout
+        android:id="@+id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        android:elevation="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+
+            android:contentDescription="Geri"
+            android:onClick="backImageClick"
+            android:src="@drawable/back"
+            android:tint="@color/indigo_500" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Quiz"
+            android:textColor="@color/indigo_500"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="100dp"
         android:orientation="vertical"
-        android:padding="16dp"
 
+        android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,8 +75,9 @@
             android:id="@+id/kullaniciCevap"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="60dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="40dp"
             android:background="@drawable/drawbleradius"
             android:hint="İngilizce kelimeyi yazın"
             android:inputType="text"
@@ -166,6 +205,84 @@
             app:srcCompat="@drawable/baseline_send_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <RelativeLayout
+        android:id="@+id/MenuLayout"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@color/white"
+        android:elevation="8dp"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <ImageView
+                android:id="@+id/home"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="goToHomeClick"
+                android:padding="8dp"
+                android:src="@drawable/baseline_home_24"
+                app:tint="@color/indigo_500"/>
+
+            <ImageView
+                android:id="@+id/profile"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="goToProfileClick"
+                android:padding="8dp"
+                app:srcCompat="@drawable/baseline_person_24"
+                app:tint="@color/indigo_500"
+                />
+
+            <ImageView
+                android:id="@+id/wordle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="goToGameClick"
+                android:padding="8dp"
+                app:srcCompat="@drawable/baseline_videogame_asset_24"
+                app:tint="@color/indigo_500"
+
+                />
+
+            <ImageView
+                android:id="@+id/sozluk"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="goToWordsClick"
+                android:padding="8dp"
+                app:srcCompat="@drawable/baseline_menu_book_24"
+                app:tint="@color/indigo_500"
+
+                />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!-- Floating Action Button - Daha belirgin hale getirme -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:onClick="goToWordAddClick"
+        android:src="@drawable/baseline_add_24"
+        app:backgroundTint="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/MenuLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:elevation="8dp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
