@@ -57,6 +57,19 @@ class HomePageActivity : BaseCompact() {
         loadRecentWrongWords()
 
 
+        binding.yanlisCevaplarRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val menuLayout = findViewById<View>(R.id.MenuLayout)
+
+                if (dy > 10) {
+                    menuLayout.animate().translationY(menuLayout.height.toFloat()).setDuration(150)
+                } else if (dy < -10) {
+                    menuLayout.animate().translationY(0f).setDuration(150)
+                }
+            }
+        })
+
     }
 
     private fun showLeaderBoardBottomSheet() {
