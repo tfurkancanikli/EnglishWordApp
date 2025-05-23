@@ -1,12 +1,21 @@
 package com.anlarsinsoftware.englishwordsapp.Model
 
+import com.google.firebase.firestore.PropertyName
+
 class Kelime {
 
 
     var kelimeId: String = ""
     var kullaniciAdi: String = ""
+
+    @get:PropertyName("ingilizceKelime")
+    @set:PropertyName("ingilizceKelime")
     var kelimeIng: String = ""
+
+    @get:PropertyName("turkceKarsiligi")
+    @set:PropertyName("turkceKarsiligi")
     var kelimeTur: String = ""
+
     var birinciCumle: String = ""
     var ikinciCumle: String = ""
     var gorselUrl: String? = null
@@ -14,10 +23,8 @@ class Kelime {
     var dogruSayisi: Int = 0
     var sonDogruMs: Long = 0L
 
-    // Boş constructor — Firebase için gerekli
     constructor()
 
-    // Dolu constructor — elle oluşturmak için kolaylık
     constructor(
         kelimeId: String,
         kullaniciAdi: String,

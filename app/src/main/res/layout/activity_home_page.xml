@@ -47,7 +47,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="500dp">
 
 
             <LinearLayout
@@ -206,6 +206,18 @@
 
                 </ViewFlipper>
             </LinearLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/yanlisCevaplarRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="32dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
 
             <HorizontalScrollView
                 android:id="@+id/homeScrollView"
@@ -387,23 +399,25 @@
 
             </HorizontalScrollView>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/yanlisCevapCard"
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:backgroundTint="@color/gray_200"
-                android:padding="25dp"
-                app:cardCornerRadius="25dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/drawbleradius"
+                android:drawableLeft="@drawable/baseline_menu_24"
+                android:gravity="center_horizontal|center_vertical"
+                android:padding="4dp"
+                android:text="son yanlış yapılan kelimeler"
+                android:textAlignment="center"
+                android:textColor="@color/indigo_500"
+                android:textSize="24sp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/homeScrollView">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/yanlisCevaplarRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </androidx.cardview.widget.CardView>
+                app:layout_constraintTop_toBottomOf="@+id/homeScrollView" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

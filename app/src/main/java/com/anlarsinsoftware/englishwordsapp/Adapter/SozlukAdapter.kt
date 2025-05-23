@@ -11,7 +11,6 @@ class SozlukAdapter(
     kelimeListesi: List<Kelime>,
     private val onItemClickListener: (Kelime) -> Unit
 ) : RecyclerView.Adapter<SozlukAdapter.KelimeHolder>() {
-
     private val fullList = mutableListOf<Kelime>().apply { addAll(kelimeListesi) }
     private val filteredList = mutableListOf<Kelime>().apply { addAll(kelimeListesi) }
 

@@ -5,9 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_blue_900"
+    android:background="@color/indigo_500"
     tools:context=".ViewPages.RaporPage">
-
 
 
     <LinearLayout
@@ -61,7 +60,7 @@
             android:id="@+id/reportLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/light_blue_900"
+            android:background="@color/indigo_500"
             android:gravity="center_horizontal"
             android:orientation="vertical"
             android:padding="16dp">
@@ -71,7 +70,7 @@
                 android:id="@+id/textName2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:text="Kullanıcı Adı"
                 android:textColor="@color/white"
                 android:textSize="24sp"
@@ -80,25 +79,29 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/profileImage2" />
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/profileImage2"
-                android:layout_width="132dp"
-                android:layout_height="120dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/radius_mavi"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="32dp"
                 android:contentDescription="Profil Resmi"
                 android:scaleType="centerCrop"
-                android:src="@drawable/baseline_person_24"
+                android:src="@drawable/male_user"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintHorizontal_bias="0.524"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Circle"
+                app:strokeColor="@color/white"
+                app:strokeWidth="4dp" />
 
             <TextView
                 android:id="@+id/tTarih"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 android:background="@drawable/radius_mavi"
                 android:padding="16dp"
                 android:text="En Son Yanlış Yapılan Tarih: Bilinmiyor"
@@ -113,7 +116,9 @@
                 android:id="@+id/oOran"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 android:background="@drawable/radius_mavi"
                 android:padding="16dp"
                 android:text="Başarı Oranı: 0%"
@@ -128,7 +133,9 @@
                 android:id="@+id/yYanlis"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 android:background="@drawable/radius_mavi"
                 android:padding="16dp"
                 android:text=" Yanlış Sayısı: 0"
@@ -143,7 +150,9 @@
                 android:id="@+id/dDogru"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="288dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="64dp"
+                android:layout_marginEnd="8dp"
                 android:background="@drawable/radius_mavi"
                 android:padding="16dp"
                 android:text="Doğru Sayısı: 0"
@@ -152,36 +161,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="İŞTE ÇÖZMÜŞ OLDUĞUN TESTLER'İN SONUÇLARI "
-                android:textColor="@color/lightGrey"
-                android:textColorLink="#F0F0F0"
-                android:textSize="16sp"
-                android:textStyle="italic"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textName2" />
 
-            <ImageView
-                android:id="@+id/imageView12"
-                android:layout_width="38dp"
-                android:layout_height="35dp"
-                android:tint="@color/black"
-                app:layout_constraintBottom_toTopOf="@+id/dDogru"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView4"
-                app:layout_constraintVertical_bias="0.5"
-                app:srcCompat="@drawable/baseline_arrow_drop_down_24" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
@@ -191,7 +172,7 @@
         android:layout_width="0dp"
         android:layout_height="51dp"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginBottom="26dp"
+        android:layout_marginBottom="24dp"
         android:backgroundTint="#4CAF50"
         android:elevation="4dp"
         android:onClick="pdfOlustur"

@@ -201,17 +201,5 @@
     </RelativeLayout>
 
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:onClick="goToWordAddClick"
-        android:src="@drawable/baseline_add_24"
-        app:backgroundTint="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/MenuLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:elevation="8dp"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

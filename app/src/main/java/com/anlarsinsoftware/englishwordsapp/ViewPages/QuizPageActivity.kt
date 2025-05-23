@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.anlarsinsoftware.englishwordsapp.Util.bagla
 import com.anlarsinsoftware.englishwordsapp.Model.Kelime
 import com.anlarsinsoftware.englishwordsapp.R
+import com.anlarsinsoftware.englishwordsapp.Util.BaseCompact
 import com.anlarsinsoftware.englishwordsapp.databinding.ActivityQuizPageBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
@@ -24,7 +25,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import java.util.Date
 
-class QuizPageActivity : AppCompatActivity() {
+class QuizPageActivity : BaseCompact() {
     private lateinit var binding: ActivityQuizPageBinding
 
     private lateinit var auth: FirebaseAuth
@@ -66,7 +67,7 @@ class QuizPageActivity : AppCompatActivity() {
                     val sonTarih = doc.getTimestamp("sonDogruTarih")?.toDate() ?: continue
                     val kelimeId = doc.id
 
-                    if (asama >= 6) continue // 🔒 6. aşamaya ulaşmış kelimeyi tamamen dışla
+                    if (asama >= 6) continue
 
                     val gerekenGun = zamanAraliklari.getOrNull(asama - 1) ?: 999
                     val gerekenMs = TimeUnit.DAYS.toMillis(gerekenGun.toLong())
@@ -221,7 +222,6 @@ class QuizPageActivity : AppCompatActivity() {
 
             if (dogruBildi) {
                 if (farkMs >= gerekenMs) {
-                    // Süresi dolmuş, seviye atla
                     val yeniAsama = if (oncekiAsama < 6) oncekiAsama + 1 else 6
                     kelimeRef.set(
                         mapOf(
@@ -251,7 +251,6 @@ class QuizPageActivity : AppCompatActivity() {
                         )
                     }
                 } else {
-                    // Süresi dolmamışsa sayaç artsın ama seviye sabit
                     kelimeRef.set(
                         mapOf(
                             "asama" to oncekiAsama,
@@ -264,7 +263,6 @@ class QuizPageActivity : AppCompatActivity() {
                     )
                 }
             } else {
-                // Yanlışsa tamamen sıfırla
                 kelimeRef.set(
                     mapOf(
                         "asama" to 1,
@@ -324,7 +322,34 @@ class QuizPageActivity : AppCompatActivity() {
                 }
         }
     }
-    fun goToWordAddClick(view: View) {
-        bagla(WordAddPage::class.java, false)
+    override fun onBackPressed() {
+        if (currentIndex < quizKelimeListesi.size) {
+            AlertDialog.Builder(this)
+                .setTitle("Quiz Bitmedi")
+                .setMessage("Quiz henüz tamamlanmadı. Çıkmak istediğinize emin misiniz?")
+                .setPositiveButton("Evet") { _, _ ->
+                    super.onBackPressed()
+                }
+                .setNegativeButton("Hayır", null)
+                .show()
+        } else {
+            super.onBackPressed()
+        }
+    }
+
+    fun backImageClick(view: View){
+
+        if (currentIndex < quizKelimeListesi.size) {
+            AlertDialog.Builder(this)
+                .setTitle("Quiz Bitmedi")
+                .setMessage("Quiz henüz tamamlanmadı. Çıkmak istediğinize emin misiniz?")
+                .setPositiveButton("Evet") { _, _ ->
+                   goToHomeClick(view)
+                }
+                .setNegativeButton("Hayır", null)
+                .show()
+        } else {
+            goToHomeClick(view)
+        }
     }
 }

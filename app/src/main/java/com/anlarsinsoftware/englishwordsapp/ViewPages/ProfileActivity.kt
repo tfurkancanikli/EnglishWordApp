@@ -20,6 +20,7 @@ import com.anlarsinsoftware.englishwordsapp.Util.BaseCompact
 import com.anlarsinsoftware.englishwordsapp.Entrance.SignInActivity
 import com.anlarsinsoftware.englishwordsapp.Util.bagla
 import com.anlarsinsoftware.englishwordsapp.R
+import com.anlarsinsoftware.englishwordsapp.Util.email_intent
 import com.anlarsinsoftware.englishwordsapp.databinding.ActivityProfileBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -94,6 +95,8 @@ class ProfileActivity : BaseCompact() {
         val adminGirisi = popupView.findViewById<TextView>(R.id.admin_entrance)
         val profilDuzenle = popupView.findViewById<TextView>(R.id.profil_edit)
         val cikisYap=popupView.findViewById<TextView>(R.id.exit_btn)
+        val feedback=popupView.findViewById<TextView>(R.id.feedback)
+
 
 
         adminGirisi.setOnClickListener {
@@ -130,6 +133,14 @@ class ProfileActivity : BaseCompact() {
             alertDialog.show()
 
             popupWindow.dismiss()
+        }
+
+        feedback.setOnClickListener{
+            try {
+                startActivity(Intent.createChooser(email_intent, "Mail uygulaması seçiniz"))
+            } catch (e: Exception) {
+                Toast.makeText(this, "Mail uygulaması bulunamadı", Toast.LENGTH_SHORT).show()
+            }
         }
 
         profilDuzenle.setOnClickListener {
