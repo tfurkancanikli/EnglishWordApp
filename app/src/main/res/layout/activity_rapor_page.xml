@@ -207,7 +207,7 @@
         android:id="@+id/MenuLayout"
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:background="@color/white"
+        android:background="@drawable/bottomsheetnav_radius"
         android:elevation="8dp"
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -13,6 +13,7 @@ import com.anlarsinsoftware.englishwordsapp.Util.BaseCompact
 import com.anlarsinsoftware.englishwordsapp.Util.bagla
 import com.anlarsinsoftware.englishwordsapp.R
 import com.anlarsinsoftware.englishwordsapp.databinding.ActivityHomePageBinding
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -37,22 +38,44 @@ class HomePageActivity : BaseCompact() {
         auth= Firebase.auth
 
        slideFun()
-
-        leaderBoardRecyclerView = findViewById(R.id.leaderBoardRecyclerView)
-        leaderBoardRecyclerView.layoutManager = LinearLayoutManager(this)
-        userAdapter = UserAdapter(userList)
-        leaderBoardRecyclerView.adapter = userAdapter
-
-// Başlangıçta görünmez
-        leaderBoardRecyclerView.visibility = View.GONE
-
         binding.leaderBoard.setOnClickListener{
-            loadLeaderboard()
-            Toast.makeText(this,"TIKLANDI_BOARD",Toast.LENGTH_SHORT).show()
+            showLeaderBoardBottomSheet()
         }
 
+    }
 
+    private fun showLeaderBoardBottomSheet() {
+        val bottomSheetView = layoutInflater.inflate(R.layout.leaderboard_bottom_sheet, null)
+        val dialog = BottomSheetDialog(this)
+        dialog.setContentView(bottomSheetView)
 
+        val recyclerView = bottomSheetView.findViewById<RecyclerView>(R.id.leaderBoardRecyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        val bottomSheetAdapter = UserAdapter(userList)
+        recyclerView.adapter = bottomSheetAdapter
+
+        // Firebase'den verileri çek
+        db.collection("kullanicilar")
+            .orderBy("dogruSayisi", Query.Direction.DESCENDING)
+            .get()
+            .addOnSuccessListener { result ->
+                userList.clear()
+                for (doc in result) {
+                    val kullanici = User(
+                        ad = doc.getString("kullaniciAdi") ?: "",
+                        dogruSayisi = doc.getLong("dogruSayisi")?.toInt() ?: 0,
+                        oran = doc.getString("basariOrani") ?: "0%",
+                        profilUrl = doc.getString("profilFotoUrl") ?: ""
+                    )
+                    userList.add(kullanici)
+                }
+                bottomSheetAdapter.notifyDataSetChanged()
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Liderlik verileri alınamadı", Toast.LENGTH_SHORT).show()
+            }
+
+        dialog.show()
     }
 
 
@@ -64,6 +87,9 @@ class HomePageActivity : BaseCompact() {
             .placeholder(R.drawable.gallery_icon).into(imageView)
 
     }
+
+
+
     fun slideFun(){
 
         val firstFlipImageUrl ="https://firebasestorage.googleapis.com/v0/b/englishwordapp-7fb3b.firebasestorage.app/o/homeScrolPhotos%2FkelimeEkleyin.png?alt=media&token=e8d54213-41cc-44ec-86f8-efe206144133"

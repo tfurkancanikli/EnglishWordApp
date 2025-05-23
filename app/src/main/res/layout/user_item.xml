@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:padding="12dp"
     android:layout_width="match_parent"
@@ -9,9 +8,9 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
+        android:id="@+id/card_item"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:backgroundTint="@color/white"
+        android:backgroundTint="#C3F0F6"
         app:cardCornerRadius="25dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout

@@ -181,8 +181,6 @@ class Sozluk : BaseCompact() {
                         }
                     }
             }
-
-
         }
 
         androidx.appcompat.app.AlertDialog.Builder(this)

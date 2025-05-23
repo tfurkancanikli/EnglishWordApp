@@ -8,21 +8,28 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <ImageView
-        android:id="@+id/imageView10"
+    <TextView
+        android:id="@+id/siralamaTablo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/baseline_arrow_drop_down_24" />
+        android:textSize="24sp"
+        android:textColor="@color/indigo_500"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:text="Sıralama Tablosu"
+        android:padding="5dp"
+          />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/leaderBoardRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="300dp" />
 
     <Button
-        android:id="@+id/confirmButton"
+        android:id="@+id/siraniBulButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:enabled="false"
-        android:text="5 Kelimeyi Onayla" />
+        android:backgroundTint="@color/indigo_500"
+        android:layout_margin="5dp"
+        android:text= "Sıranı bul" />
 </LinearLayout>

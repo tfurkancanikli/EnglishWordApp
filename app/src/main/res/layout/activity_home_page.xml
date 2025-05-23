@@ -12,33 +12,28 @@
     <LinearLayout
         android:id="@+id/titleBar"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
-        android:gravity="center_vertical"
+        android:elevation="4dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:orientation="horizontal"
-        android:padding="16dp"
+        android:gravity="center_vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/logo"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:backgroundTint="@color/white"
-            android:src="@drawable/logo_eng" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:fontFamily="@font/alex_brush"
             android:gravity="center"
+            android:fontFamily="@font/alex_brush"
             android:text="Penlingu"
-            android:textColor="@color/black"
-            android:textSize="28sp"
+            android:textColor="@color/indigo_500"
+            android:textSize="30sp"
             android:textStyle="bold" />
+
 
     </LinearLayout>
 
@@ -392,23 +387,23 @@
 
             </HorizontalScrollView>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/leaderBoardRecyclerView"
-                android:layout_width="match_parent"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/yanlisCevapCard"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:visibility="gone"
+                android:layout_marginTop="32dp"
+                android:backgroundTint="@color/gray_200"
+                android:padding="25dp"
+                app:cardCornerRadius="25dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/homeScrollView"></androidx.recyclerview.widget.RecyclerView>
+                app:layout_constraintTop_toBottomOf="@+id/homeScrollView">
 
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="wrap_content"
-                android:layout_height="80dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/leaderBoardRecyclerView" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/yanlisCevaplarRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
@@ -416,7 +411,7 @@
         android:id="@+id/MenuLayout"
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:background="@color/white"
+        android:background="@drawable/bottomsheetnav_radius"
         android:elevation="8dp"
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -476,19 +471,4 @@
                 />
         </LinearLayout>
     </RelativeLayout>
-
-    <!-- Floating Action Button - Daha belirgin hale getirme -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:onClick="goToWordAddClick"
-        android:src="@drawable/baseline_add_24"
-        app:backgroundTint="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/MenuLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:elevation="8dp"/>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

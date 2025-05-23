@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.anlarsinsoftware.englishwordsapp.Model.User
@@ -16,6 +17,7 @@ class UserAdapter(private val userList: List<User>) : RecyclerView.Adapter<UserA
         val adText: TextView = itemView.findViewById(R.id.adText)
         val puanText: TextView = itemView.findViewById(R.id.puanText)
         val rankText : TextView=itemView.findViewById(R.id.rankText)
+        val card : CardView=itemView.findViewById(R.id.card_item)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
@@ -25,35 +27,49 @@ class UserAdapter(private val userList: List<User>) : RecyclerView.Adapter<UserA
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val user = userList[position]
+        val adText = holder.adText
+        val puanTextView=holder.puanText
+        val cardItem = holder.card
 
 
-        holder.adText.text = user.ad
-        holder.puanText.text = "Doğru: ${user.dogruSayisi}"
+
+        adText.text = user.ad
+        puanTextView.text = "Doğru: ${user.dogruSayisi}"
+        val ranktext= holder.rankText
 
 
-        // Sıra numarası kısmı
+
         when (position) {
             0 -> {
                 val icon = ContextCompat.getDrawable(holder.itemView.context, R.drawable.birincilik)
                 icon?.setBounds(0, 0, icon.intrinsicWidth, icon.intrinsicHeight)
-                holder.rankText.setCompoundDrawables(icon, null, null, null)
-                holder.rankText.text = "" // Yazı yok, sadece ikon
+                ranktext.setCompoundDrawables(icon, null, null, null)
+                ranktext.text = ""
+                cardItem.backgroundTintList =
+                    ContextCompat.getColorStateList(holder.itemView.context, R.color.light_blue_900)
+                adText.setTextColor(ContextCompat.getColorStateList(holder.itemView.context,R.color.ikincilik))
+                puanTextView.setTextColor(ContextCompat.getColorStateList(holder.itemView.context,R.color.ikincilik))
+
             }
             1 -> {
                 val icon = ContextCompat.getDrawable(holder.itemView.context, R.drawable.ikincilik)
                 icon?.setBounds(0, 0, icon.intrinsicWidth, icon.intrinsicHeight)
-                holder.rankText.setCompoundDrawables(icon, null, null, null)
-                holder.rankText.text = "" // Yazı yok, sadece ikon
+                ranktext.setCompoundDrawables(icon, null, null, null)
+                ranktext.text = ""
+                cardItem.backgroundTintList =
+                    ContextCompat.getColorStateList(holder.itemView.context, R.color.light_blue_600)
             }
             2 -> {
                 val icon = ContextCompat.getDrawable(holder.itemView.context, R.drawable.ucunculuk)
                 icon?.setBounds(0, 0, icon.intrinsicWidth, icon.intrinsicHeight)
-                holder.rankText.setCompoundDrawables(icon, null, null, null)
-                holder.rankText.text = "" // Yazı yok, sadece ikon
+                ranktext.setCompoundDrawables(icon, null, null, null)
+                ranktext.text = ""
+                cardItem.backgroundTintList =
+                    ContextCompat.getColorStateList(holder.itemView.context, R.color.light_blue_A200)
             }
             else -> {
-                holder.rankText.setCompoundDrawables(null, null, null, null)
-                holder.rankText.text = "${position + 1}."
+                ranktext.setCompoundDrawables(null, null, null, null)
+                ranktext.text = "${position + 1}."
             }
         }
 

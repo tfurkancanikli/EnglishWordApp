@@ -1,12 +1,14 @@
 package com.anlarsinsoftware.englishwordsapp.ViewPages
 
 import KelimeSecimAdapter
+import android.content.res.Resources.Theme
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
 import com.anlarsinsoftware.englishwordsapp.Model.Kelime
 import com.anlarsinsoftware.englishwordsapp.Util.OPEN_ROUTER_API_KEY
 import com.anlarsinsoftware.englishwordsapp.Util.replicateAPI_KEY
@@ -47,6 +49,7 @@ class PromptPage : AppCompatActivity() {
                     promptKelimeleri = secilenIngilizceKelimeler.joinToString(", ")
                 }
                 bottomSheet.show(supportFragmentManager, "KelimeSecBottomSheet")
+
             }
         }
 
@@ -72,6 +75,7 @@ class PromptPage : AppCompatActivity() {
             }
         }
     }
+
 
     // Doğru sayacı 0'dan büyük kelimeleri çek
     private fun fetchDogruKelimeler(onResult: (List<Kelime>) -> Unit) {

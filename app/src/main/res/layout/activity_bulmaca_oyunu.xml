@@ -100,6 +100,8 @@
         android:orientation="vertical"
         android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/baslikAlani">
 
 
@@ -130,9 +132,8 @@
             android:layout_marginBottom="24dp"
             android:background="@drawable/grid_background"
             android:columnCount="5"
-            android:rowCount="6"
-            android:padding="4dp"/>
-
+            android:padding="4dp"
+            android:rowCount="6" />
 
 
         <LinearLayout
@@ -171,11 +172,12 @@
 
         </LinearLayout>
     </LinearLayout>
+
     <RelativeLayout
         android:id="@+id/MenuLayout"
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:background="@color/white"
+        android:background="@drawable/bottomsheetnav_radius"
         android:elevation="8dp"
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -197,7 +199,7 @@
                 android:onClick="goToHomeClick"
                 android:padding="8dp"
                 android:src="@drawable/baseline_home_24"
-                app:tint="@color/indigo_500"/>
+                app:tint="@color/indigo_500" />
 
             <ImageView
                 android:id="@+id/profile"
@@ -207,7 +209,7 @@
                 android:onClick="goToProfileClick"
                 android:padding="8dp"
                 app:srcCompat="@drawable/baseline_person_24"
-                app:tint="@color/indigo_500"/>
+                app:tint="@color/indigo_500" />
 
             <ImageView
                 android:id="@+id/wordle"
@@ -230,8 +232,7 @@
                 android:onClick="goToWordsClick"
                 android:padding="8dp"
                 app:srcCompat="@drawable/baseline_menu_book_24"
-                app:tint="@color/indigo_500"
-                />
+                app:tint="@color/indigo_500" />
         </LinearLayout>
     </RelativeLayout>
 

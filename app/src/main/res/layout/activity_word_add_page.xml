@@ -61,7 +61,6 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="18sp"
-
         app:backgroundTint="@color/teal_700"
         app:cornerRadius="12dp"
         app:elevation="4dp"
@@ -75,14 +74,14 @@
         android:id="@+id/constraintLayout2"
         android:layout_width="389dp"
         android:layout_height="533dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:padding="15dp"
         app:layout_constraintBottom_toTopOf="@+id/kelimeEkleBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/titleBar">
+        app:layout_constraintTop_toBottomOf="@+id/titleBar">
 
         <EditText
             android:id="@+id/turkceKarsilikEdit"
@@ -154,6 +153,7 @@
             android:id="@+id/gorselEkleBtn"
             android:layout_width="268dp"
             android:layout_height="219dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/drawbleradius"
             android:onClick="gorselEkle"
             android:padding="10dp"
@@ -178,7 +178,7 @@
         android:id="@+id/MenuLayout"
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:background="@color/white"
+        android:background="@drawable/bottomsheetnav_radius"
         android:elevation="8dp"
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -200,7 +200,7 @@
                 android:onClick="goToHomeClick"
                 android:padding="8dp"
                 android:src="@drawable/baseline_home_24"
-                app:tint="@color/indigo_500"/>
+                app:tint="@color/indigo_500" />
 
             <ImageView
                 android:id="@+id/profile"
@@ -210,8 +210,7 @@
                 android:onClick="goToProfileClick"
                 android:padding="8dp"
                 app:srcCompat="@drawable/baseline_person_24"
-                app:tint="@color/indigo_500"
-                />
+                app:tint="@color/indigo_500" />
 
             <ImageView
                 android:id="@+id/wordle"
