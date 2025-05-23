@@ -2,16 +2,21 @@ package com.anlarsinsoftware.englishwordsapp.ViewPages
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.anlarsinsoftware.englishwordsapp.Adapter.SonYanlisKelimeAdapter
 import com.anlarsinsoftware.englishwordsapp.Adapter.UserAdapter
+import com.anlarsinsoftware.englishwordsapp.Model.Kelime
 import com.anlarsinsoftware.englishwordsapp.Model.User
 import com.anlarsinsoftware.englishwordsapp.Util.BaseCompact
 import com.anlarsinsoftware.englishwordsapp.Util.bagla
 import com.anlarsinsoftware.englishwordsapp.R
+import com.anlarsinsoftware.englishwordsapp.Util.email_intent
 import com.anlarsinsoftware.englishwordsapp.databinding.ActivityHomePageBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.Firebase
@@ -28,8 +33,11 @@ class HomePageActivity : BaseCompact() {
     private lateinit var binding : ActivityHomePageBinding
     private lateinit var leaderBoardRecyclerView: RecyclerView
     private lateinit var userAdapter: UserAdapter
+    private lateinit var sonYanlisAdapter: SonYanlisKelimeAdapter
+    private val sonYanlisList = mutableListOf<Kelime>()
     private val userList = mutableListOf<User>()
     private val db = FirebaseFirestore.getInstance()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +49,13 @@ class HomePageActivity : BaseCompact() {
         binding.leaderBoard.setOnClickListener{
             showLeaderBoardBottomSheet()
         }
+
+        binding.yanlisCevaplarRecyclerView.layoutManager = LinearLayoutManager(this)
+        sonYanlisAdapter = SonYanlisKelimeAdapter(sonYanlisList)
+        binding.yanlisCevaplarRecyclerView.adapter = sonYanlisAdapter
+
+        loadRecentWrongWords()
+
 
     }
 
@@ -77,6 +92,47 @@ class HomePageActivity : BaseCompact() {
 
         dialog.show()
     }
+
+    private fun loadRecentWrongWords() {
+        val uid = auth.currentUser?.uid ?: return
+        db.collection("kullaniciKelimeleri")
+            .document(uid)
+            .collection("kelimeler")
+            .whereEqualTo("asama", 1)
+            .orderBy("sonDogruTarih", Query.Direction.DESCENDING)
+            .limit(20)
+            .get()
+            .addOnSuccessListener { documents ->
+                sonYanlisList.clear()
+                var counter = documents.size()
+                if (counter == 0) {
+
+                    sonYanlisAdapter.notifyDataSetChanged()
+                    return@addOnSuccessListener
+                }
+
+                for (doc in documents) {
+                    val kelimeId = doc.id
+                    db.collection("kelimeler")
+                        .document(kelimeId)
+                        .get()
+                        .addOnSuccessListener { kelimeDoc ->
+                            val kelime = kelimeDoc.toObject(Kelime::class.java)
+                            binding.textView6.visibility=View.VISIBLE
+
+                            if (kelime != null) {
+
+                                sonYanlisList.add(kelime)
+                            }
+                            counter--
+                            if (counter == 0) {
+                                sonYanlisAdapter.notifyDataSetChanged()
+                            }
+                        }
+                }
+            }
+    }
+
 
 
     fun picassoFun(url:String,imageView:ImageView){
@@ -122,14 +178,9 @@ class HomePageActivity : BaseCompact() {
         quizPageClick(view)
     }
     fun thirdCardImageClick(view: View){
-        val intent = Intent(Intent.ACTION_SEND).apply {
-            type = "message/rfc822"
-            putExtra(Intent.EXTRA_EMAIL, arrayOf("mahmutconger@gmail.com"))
-            putExtra(Intent.EXTRA_SUBJECT, "Geri Bildirim")
-            putExtra(Intent.EXTRA_TEXT, "Uygulama hakkında geri bildiriminizi buraya yazabilirsiniz.")
-        }
+
         try {
-            startActivity(Intent.createChooser(intent, "Mail uygulaması seçiniz"))
+            startActivity(Intent.createChooser(email_intent, "Mail uygulaması seçiniz"))
         } catch (e: Exception) {
             Toast.makeText(this, "Mail uygulaması bulunamadı", Toast.LENGTH_SHORT).show()
         }
