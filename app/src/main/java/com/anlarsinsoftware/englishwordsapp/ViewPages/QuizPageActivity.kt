@@ -337,7 +337,7 @@ class QuizPageActivity : BaseCompact() {
         }
     }
 
-    fun backImageClick(view: View){
+    override fun backImageClick(view: View){
 
         if (currentIndex < quizKelimeListesi.size) {
             AlertDialog.Builder(this)

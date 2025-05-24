@@ -10,6 +10,8 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
+import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +20,7 @@ import androidx.fragment.app.DialogFragment
 import com.anlarsinsoftware.englishwordsapp.Entrance.SignInActivity
 import com.anlarsinsoftware.englishwordsapp.Model.Kelime
 import com.anlarsinsoftware.englishwordsapp.R
+import com.anlarsinsoftware.englishwordsapp.Util.BaseCompact
 import com.anlarsinsoftware.englishwordsapp.Util.OPEN_ROUTER_API_KEY
 import com.anlarsinsoftware.englishwordsapp.Util.bagla
 import com.anlarsinsoftware.englishwordsapp.Util.replicateAPI_KEY
@@ -26,6 +29,9 @@ import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.mlkit.nl.translate.TranslateLanguage
+import com.google.mlkit.nl.translate.Translation
+import com.google.mlkit.nl.translate.TranslatorOptions
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
 import okhttp3.*
@@ -34,7 +40,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import java.io.IOException
 
-class PromptPage : AppCompatActivity() {
+class PromptPage : BaseCompact() {
 
     private lateinit var binding: ActivityPromptPageBinding
     private lateinit var adapter: KelimeSecimAdapter
@@ -42,6 +48,7 @@ class PromptPage : AppCompatActivity() {
     private lateinit var secilenIngilizceKelimeler: List<String>
     private lateinit var promptKelimeleri: String
     private lateinit var promptImageCreate :String
+    private lateinit var olusanHikaye:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,16 +59,36 @@ class PromptPage : AppCompatActivity() {
             setupRecyclerView(kelimeler)
         }
 
+        val btnCevir = findViewById<ImageView>(R.id.translate)
+        val txtIngilizce = findViewById<TextView>(R.id.storyText)
+        val txtTurkce = findViewById<TextView>(R.id.storyText)
+
+        btnCevir.setOnClickListener {
+            val metin = txtIngilizce.text.toString()
+            ceviriYap(metin,
+                onResult = { ceviri ->
+                    txtTurkce.text = ceviri
+                },
+                onError = { hata ->
+                    Toast.makeText(this, hata, Toast.LENGTH_SHORT).show()
+                }
+            )
+            btnCevir.visibility=View.GONE
+            binding.translate2.visibility=View.VISIBLE
+        }
+
+
 
         binding.secButton.setOnClickListener {
             fetchDogruKelimeler { kelimeler ->
                 val bottomSheet = KelimeSecBottomSheet(kelimeler) { secilenKelimeler ->
                     secilenIngilizceKelimeler = secilenKelimeler.map { it.kelimeIng }
                     promptKelimeleri = secilenIngilizceKelimeler.joinToString(", ")
+
                 }
                 bottomSheet.show(supportFragmentManager, "KelimeSecBottomSheet")
-
             }
+            binding.button2.visibility=View.VISIBLE
         }
 
         binding.button2.setOnClickListener {
@@ -73,6 +100,7 @@ class PromptPage : AppCompatActivity() {
                         binding.storyText.visibility = View.VISIBLE
                         binding.translate.visibility=View.VISIBLE
                         binding.storyText.text = story
+                         olusanHikaye=story
                         promptImageCreate = "Create a meaningful image inspired by these words $story"
                         generateImageFromStory(promptImageCreate)
                         binding.progressBar.visibility = View.GONE
@@ -86,12 +114,14 @@ class PromptPage : AppCompatActivity() {
                 Toast.makeText(this, "Lütfen önce 5 kelime seçin.", Toast.LENGTH_SHORT).show()
             }
         }
+        binding.translate2.setOnClickListener{
+            findViewById<TextView>(R.id.storyText).text=olusanHikaye
+            btnCevir.visibility=View.VISIBLE
+            binding.translate2.visibility=View.INVISIBLE
+        }
 
         textBasmaOlayi()
 
-        binding.translate.setOnClickListener{
-            Toast.makeText(this,"Yakında translate özelliği gelecek!",Toast.LENGTH_SHORT).show()
-        }
 
     }
     fun textBasmaOlayi(){
@@ -109,6 +139,30 @@ class PromptPage : AppCompatActivity() {
             }
             true
         }
+    }
+
+    fun ceviriYap(metin: String, onResult: (String) -> Unit, onError: (String) -> Unit) {
+        val options = TranslatorOptions.Builder()
+            .setSourceLanguage(TranslateLanguage.ENGLISH)
+            .setTargetLanguage(TranslateLanguage.TURKISH)
+            .build()
+
+        val translator = Translation.getClient(options)
+
+        // Model indir (ilk kullanımda gerekli)
+        translator.downloadModelIfNeeded()
+            .addOnSuccessListener {
+                translator.translate(metin)
+                    .addOnSuccessListener { ceviri ->
+                        onResult(ceviri)
+                    }
+                    .addOnFailureListener { e ->
+                        onError("Çeviri hatası: ${e.localizedMessage}")
+                    }
+            }
+            .addOnFailureListener { e ->
+                onError("Model indirilemedi: ${e.localizedMessage}")
+            }
     }
 
 
@@ -147,6 +201,7 @@ class PromptPage : AppCompatActivity() {
         adapter = KelimeSecimAdapter(kelimeler) { selected ->
             selectedWords = selected
             binding.secButton.isEnabled = selected.size == 5
+
         }
     }
 
@@ -246,6 +301,7 @@ class PromptPage : AppCompatActivity() {
                         .placeholder(R.drawable.gallery_icon)
                         .into(binding.imageView11)
                     binding.imageView11.visibility = View.VISIBLE
+                    binding.penai.visibility=View.VISIBLE
                 }
         }
 }

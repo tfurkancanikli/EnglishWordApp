@@ -30,5 +30,8 @@ open class BaseCompact : AppCompatActivity() {
     fun goToProfileClick(view: View) {
         bagla(ProfileActivity::class.java,false)
     }
+    open fun backImageClick(view: View){
+        bagla(HomePageActivity::class.java,true)
+    }
 
 }

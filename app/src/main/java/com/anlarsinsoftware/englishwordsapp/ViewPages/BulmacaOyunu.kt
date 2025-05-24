@@ -67,9 +67,6 @@ class BulmacaOyunu : BaseCompact() {
         }
     }
 
-    fun backImageClick(view: View){
-        bagla(HomePageActivity::class.java,false)
-    }
     private fun kelimeleriYukle() {
         yuklemeGostergesi.visibility = View.VISIBLE
         geriBildirimAlani.text = "Kelimeler yükleniyor..."

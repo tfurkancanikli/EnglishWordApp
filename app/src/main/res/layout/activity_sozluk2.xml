@@ -39,7 +39,7 @@
             android:layout_marginStart="16dp"
             android:text="Sözlük"
             android:textColor="@color/indigo_500"
-            android:textSize="20sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView17"

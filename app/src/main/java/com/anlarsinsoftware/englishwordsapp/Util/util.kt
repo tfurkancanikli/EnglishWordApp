@@ -1,7 +1,7 @@
 package com.anlarsinsoftware.englishwordsapp.Util
 
 import android.content.Intent
-import android.widget.Toast
+
 
 val replicateAPI_KEY = ""
 val OPEN_ROUTER_API_KEY = ""

@@ -71,6 +71,7 @@ dependencies {
     implementation("com.airbnb.android:lottie:6.3.0")
     implementation ("com.google.code.gson:gson:2.8.9")
     implementation ("com.google.android.gms:play-services-auth:21.0.0")
+    implementation ("com.google.mlkit:translate:17.0.1")
     val retrofitVersion = "2.3.0"
 //retrofit
     implementation ("com.squareup.retrofit2:retrofit:$retrofitVersion")
