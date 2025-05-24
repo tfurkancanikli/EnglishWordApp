@@ -53,6 +53,7 @@
         android:background="@drawable/drawbleradius"
         android:drawableStart="@drawable/turkiye"
         android:fontFamily="@font/alice"
+        android:gravity="center"
         android:text="Kelime Karsiligi"
         android:textAlignment="center"
         android:textColor="@color/black"
@@ -72,6 +73,7 @@
         android:background="@drawable/drawbleradius"
         android:drawableStart="@drawable/english"
         android:fontFamily="@font/alice"
+        android:gravity="center"
         android:text="Ingilizce Kelime"
         android:textAlignment="center"
         android:textColor="@color/black"
@@ -80,6 +82,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:id="@+id/cumle1_edit"
@@ -105,10 +108,10 @@
         android:id="@+id/btnDuzenle"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="8dp"
         android:tint="#E49520"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/cumleText2"
+        app:layout_constraintEnd_toStartOf="@+id/close"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/baseline_edit_square_24" />
 
     <ImageView
@@ -117,8 +120,17 @@
         android:layout_height="35dp"
         android:layout_marginEnd="8dp"
         android:tint="#FE0000"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnDuzenle"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/baseline_delete_24" />
+
+    <ImageView
+        android:id="@+id/close"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="@+id/ingilizceKelimeEdit"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/baseline_close_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

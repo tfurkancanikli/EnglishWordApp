@@ -2,14 +2,19 @@ package com.anlarsinsoftware.englishwordsapp.ViewPages
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.speech.tts.TextToSpeech
+import android.speech.tts.UtteranceProgressListener
 import android.view.View
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.airbnb.lottie.LottieAnimationView
 import com.anlarsinsoftware.englishwordsapp.Adapter.SozlukAdapter
+import com.anlarsinsoftware.englishwordsapp.Entrance.SignInActivity
 import com.anlarsinsoftware.englishwordsapp.Util.BaseCompact
 import com.anlarsinsoftware.englishwordsapp.Model.Kelime
 import com.anlarsinsoftware.englishwordsapp.R
@@ -21,14 +26,16 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
+import java.util.Locale
 
-class Sozluk : BaseCompact() {
+class Sozluk : BaseCompact(),TextToSpeech.OnInitListener {
 
     private val db = Firebase.firestore
     private var kelimelerListesi = ArrayList<Kelime>()
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivitySozluk2Binding
     private lateinit var recyclerViewAdapter: SozlukAdapter
+    private lateinit var tts: TextToSpeech
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +46,12 @@ class Sozluk : BaseCompact() {
         setupRecyclerView()
         setupSearchView()
         getDataFire()
+
+
+        tts = TextToSpeech(this,this)
+
     }
+
 
     private fun setupRecyclerView() {
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
@@ -50,7 +62,6 @@ class Sozluk : BaseCompact() {
     }
 
     private fun setupSearchView() {
-        // Customize SearchView appearance
         val searchIcon = binding.sozlukSearch.findViewById<ImageView>(androidx.appcompat.R.id.search_mag_icon)
         searchIcon.setColorFilter(resources.getColor(R.color.indigo_500))
 
@@ -116,81 +127,99 @@ class Sozluk : BaseCompact() {
 
 
     private fun kelimeDetaylari(kelime: Kelime) {
-        val view = layoutInflater.inflate(R.layout.detaylar_dialog, null).apply {
-            findViewById<TextView>(R.id.ingilizceKelimeEdit).text = kelime.kelimeIng
-            findViewById<TextView>(R.id.turkceKarsilikEdit).text = kelime.kelimeTur
-            findViewById<TextView>(R.id.cumle1_edit).text = kelime.birinciCumle
-            findViewById<TextView>(R.id.cumleText2).text = kelime.ikinciCumle
+        val view = layoutInflater.inflate(R.layout.detaylar_dialog, null)
+        val close = view.findViewById<ImageView>(R.id.close)
 
-            val kelimeImageView = findViewById<ImageView>(R.id.kelimeResim)
-            if (!kelime.gorselUrl.isNullOrEmpty()) {
-                Picasso.get()
-                    .load(kelime.gorselUrl)
-                    .placeholder(R.drawable.gallery_icon)
-                    .error(R.drawable.false_ico)
-                    .transform(RoundedCornersTransformation(50, 0))
-                    .into(kelimeImageView)
-            } else {
-                kelimeImageView.setImageResource(R.drawable.add_circle)
-            }
+        val alertDialog = AlertDialog.Builder(this)
+            .setView(view)
+            .create()
 
-            val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
-            val db = Firebase.firestore
+        close.setOnClickListener {
+            alertDialog.dismiss()
+        }
 
-           val duzenlebtn= findViewById<ImageView>(R.id.btnDuzenle)
-            val silbtn=findViewById<ImageView>(R.id.btnSil)
-            if (currentUserId != null) {
-                db.collection("kullanicilar").document(currentUserId).get()
-                    .addOnSuccessListener { document ->
-                        val isAdmin = document.getBoolean("isAdmin") ?: false
-                        if (isAdmin) {
-                           silbtn .setOnClickListener {
+        val kelimeIng = view.findViewById<TextView>(R.id.ingilizceKelimeEdit)
+        val kelimeTur = view.findViewById<TextView>(R.id.turkceKarsilikEdit)
+        val cumle1 = view.findViewById<TextView>(R.id.cumle1_edit)
+        val cumle2 = view.findViewById<TextView>(R.id.cumleText2)
+        val kelimeImageView = view.findViewById<ImageView>(R.id.kelimeResim)
 
-                                val alertDialog = AlertDialog.Builder(this.context)
-                                alertDialog.setTitle("Silmek İşlemi")
-                                alertDialog.setMessage("Silmek istediğinden emin misin?")
-                                alertDialog.setPositiveButton("Sil") { dialog, _ ->
+        kelimeIng.text = kelime.kelimeIng
+        kelimeTur.text = kelime.kelimeTur
+        cumle1.text = kelime.birinciCumle
+        cumle2.text = kelime.ikinciCumle
+
+        if (!kelime.gorselUrl.isNullOrEmpty()) {
+            Picasso.get()
+                .load(kelime.gorselUrl)
+                .placeholder(R.drawable.gallery_icon)
+                .error(R.drawable.false_ico)
+                .transform(RoundedCornersTransformation(50, 0))
+                .into(kelimeImageView)
+        } else {
+            kelimeImageView.setImageResource(R.drawable.add_circle)
+        }
+
+       kelimeIng.setOnClickListener {
+            if (::tts.isInitialized) tts.speak(kelime.kelimeIng, TextToSpeech.QUEUE_FLUSH, null, null)
+
+        }
+        cumle1.setOnClickListener {
+            if (::tts.isInitialized) tts.speak(kelime.birinciCumle, TextToSpeech.QUEUE_FLUSH, null, null)
+        }
+        cumle2.setOnClickListener {
+            if (::tts.isInitialized) tts.speak(kelime.ikinciCumle, TextToSpeech.QUEUE_FLUSH, null, null)
+        }
+
+
+        val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
+        val db = Firebase.firestore
+        val silbtn = view.findViewById<ImageView>(R.id.btnSil)
+        val duzenlebtn = view.findViewById<ImageView>(R.id.btnDuzenle)
+
+        if (currentUserId != null) {
+            db.collection("kullanicilar").document(currentUserId).get()
+                .addOnSuccessListener { document ->
+                    val isAdmin = document.getBoolean("isAdmin") ?: false
+                    if (isAdmin) {
+                        silbtn.setOnClickListener {
+                            AlertDialog.Builder(this)
+                                .setTitle("Silmek İşlemi")
+                                .setMessage("Silmek istediğinden emin misin?")
+                                .setPositiveButton("Sil") { dialog, _ ->
                                     kelimeSil(kelime)
                                     dialog.dismiss()
                                 }
-                                alertDialog.setNegativeButton("İptal") { dialog, _ ->
+                                .setNegativeButton("İptal") { dialog, _ ->
                                     dialog.dismiss()
                                 }
-                                alertDialog.show()
-                            }
+                                .show()
+                        }
 
-                            duzenlebtn.setOnClickListener {
-
-                                val alertDialog = AlertDialog.Builder(this.context)
-                                alertDialog.setTitle("Düzenleme İşlemi")
-                                alertDialog.setMessage("Düzenlemek istediğinden emin misin?")
-                                alertDialog.setPositiveButton("Düzenle") { dialog, _ ->
+                        duzenlebtn.setOnClickListener {
+                            AlertDialog.Builder(this)
+                                .setTitle("Düzenleme İşlemi")
+                                .setMessage("Düzenlemek istediğinden emin misin?")
+                                .setPositiveButton("Düzenle") { dialog, _ ->
                                     kelimeDuzenle(kelime)
                                     dialog.dismiss()
                                 }
-                                alertDialog.setNegativeButton("İptal") { dialog, _ ->
+                                .setNegativeButton("İptal") { dialog, _ ->
                                     dialog.dismiss()
                                 }
-                                alertDialog.show()
-
-
-                            }
-                        } else {
-                            silbtn.visibility=View.GONE
-                            duzenlebtn.visibility=View.GONE
+                                .show()
                         }
+                    } else {
+                        silbtn.visibility = View.GONE
+                        duzenlebtn.visibility = View.GONE
                     }
-            }
+                }
         }
 
-        androidx.appcompat.app.AlertDialog.Builder(this)
-            .setView(view)
-            .create()
-            .apply {
-                window?.setBackgroundDrawableResource(android.R.color.transparent)
-                show()
-            }
+        alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        alertDialog.show()
     }
+
     private fun kelimeSil(kelime: Kelime) {
         // Firestore'da kelimeyi sil (id'yi kullanmalısın, örnek sabit "id" değil)
         db.collection("kelimeler")
@@ -272,5 +301,19 @@ class Sozluk : BaseCompact() {
 
     fun backImageClick2(view: View) {
         bagla(HomePageActivity::class.java, false)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (::tts.isInitialized) {
+            tts.stop()
+            tts.shutdown()
+        }
+    }
+
+    override fun onInit(status: Int) {
+        if (status == TextToSpeech.SUCCESS) {
+            tts.language = Locale.UK // ya da Locale.US
+        }
     }
 }
