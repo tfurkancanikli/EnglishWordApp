@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -14,6 +15,10 @@ import com.anlarsinsoftware.englishwordsapp.Model.Kelime
 import com.anlarsinsoftware.englishwordsapp.R
 import com.anlarsinsoftware.englishwordsapp.Util.BaseCompact
 import com.anlarsinsoftware.englishwordsapp.databinding.ActivityQuizPageBinding
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.chip.Chip
+import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.ktx.firestore
@@ -40,6 +45,9 @@ class QuizPageActivity : BaseCompact() {
         super.onCreate(savedInstanceState)
         binding = ActivityQuizPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.settingsButton.setOnClickListener {
+            showSettingsBottomSheet()
+        }
         binding.hakText.text = "1 / 10"
 
 
@@ -49,7 +57,63 @@ class QuizPageActivity : BaseCompact() {
         }
     }
 
-    private fun getKullaniciyaOzelKelimeler() {
+    private fun showSettingsBottomSheet() {
+        val bottomSheetView = layoutInflater.inflate(R.layout.bottom_sheet_quiz_settings, null)
+        val bottomSheet = BottomSheetDialog(this).apply {
+            setContentView(bottomSheetView)
+            behavior.peekHeight = 1000
+            window?.setBackgroundDrawableResource(android.R.color.transparent)
+        }
+        bottomSheet.show()
+
+        val sliderTotal = bottomSheetView.findViewById<Slider>(R.id.sliderTotalWords).apply {
+            valueFrom = 10f
+            valueTo = 100f
+            stepSize = 5f
+            value = 10f
+        }
+
+        val sliderNew = bottomSheetView.findViewById<Slider>(R.id.sliderNewWords).apply {
+            valueFrom = 0f
+            valueTo = 50f
+            stepSize = 1f
+            value = 0f
+        }
+
+        bottomSheetView.findViewById<MaterialButton>(R.id.saveSettingsButton).setOnClickListener {
+            val totalWords = sliderTotal.value.toInt().coerceAtMost(100) // Max 100
+            val newWords = sliderNew.value.toInt().coerceAtMost(50) // Max 50
+
+
+            val adjustedNewWords = newWords.coerceAtMost(totalWords)
+
+            restartQuizWithNewSettings(totalWords, adjustedNewWords)
+            bottomSheet.dismiss()
+
+            Toast.makeText(
+                this,
+                "Quiz ayarları güncellendi:\nToplam $totalWords kelime (${adjustedNewWords} yeni)",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+    private fun restartQuizWithNewSettings(totalWords: Int, newWords: Int) {
+
+        val validatedTotalWords = totalWords.coerceIn(10, 100)
+        val validatedNewWords = newWords.coerceIn(0, 50).coerceAtMost(validatedTotalWords)
+
+
+        currentIndex = 0
+        dogruSayisi = 0
+        yanlisSayisi = 0
+        binding.dogruSayisiTv.text = "0"
+        binding.yanlisSayisiTv.text = "0"
+
+
+        getKullaniciyaOzelKelimeler(validatedTotalWords, validatedNewWords)
+    }
+
+    private fun getKullaniciyaOzelKelimeler(totalWords: Int = 10, newWords: Int = 0) {
         val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
         val db = Firebase.firestore
 
@@ -77,7 +141,7 @@ class QuizPageActivity : BaseCompact() {
                         ozelKelimeler.add(kelimeId)
                     }
                 }
-                getQuizWords(ozelKelimeler)
+                getQuizWords(ozelKelimeler, totalWords, newWords)
             }
     }
 
@@ -280,8 +344,15 @@ class QuizPageActivity : BaseCompact() {
 
 
 
-    private fun getQuizWords(suresiDolanKelimeler: List<String>) {
-        val maksimumSoruSayisi = 10
+    private fun getQuizWords(
+        suresiDolanKelimeler: List<String>,
+        totalWordsCount: Int = 10,
+        newWordsCount: Int = 0
+    ) {
+
+        val totalWords = totalWordsCount.coerceIn(10, 100)
+        val newWords = newWordsCount.coerceIn(0, 50).coerceAtMost(totalWords)
+
         val db = Firebase.firestore
         val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
@@ -289,13 +360,12 @@ class QuizPageActivity : BaseCompact() {
             val tumKelimeler = snapshot.documents
             val quizKelimeListesi = mutableListOf<Kelime>()
 
-            val secilenSuresiDolanlar = suresiDolanKelimeler.take(maksimumSoruSayisi).mapNotNull { id ->
-                val doc = tumKelimeler.find { it.id == id }
-                doc?.toKelime(doc.id)
-            }.toMutableList()
+
+            val secilenSuresiDolanlar = suresiDolanKelimeler
+                .take(totalWords)
+                .mapNotNull { id -> tumKelimeler.find { it.id == id }?.toKelime(id) }
 
             quizKelimeListesi.addAll(secilenSuresiDolanlar)
-
 
             db.collection("kullaniciKelimeleri")
                 .document(uid)
@@ -304,20 +374,32 @@ class QuizPageActivity : BaseCompact() {
                 .addOnSuccessListener { kullaniciSnapshot ->
                     val kullaniciKelimeIdSet = kullaniciSnapshot.documents.map { it.id }.toSet()
 
-                    val kalanKadarKelime = maksimumSoruSayisi - quizKelimeListesi.size
-                    if (kalanKadarKelime > 0) {
-                        val secilebilecekYeniKelimeler = tumKelimeler
+
+                    if (newWords > 0) {
+                        val yeniKelimeler = tumKelimeler
                             .filter { it.id !in kullaniciKelimeIdSet }
+                            .shuffled()
+                            .take(newWords)
+                            .mapNotNull { it.toKelime(it.id) }
+
+                        quizKelimeListesi.addAll(yeniKelimeler)
+                    }
+
+
+                    val kalanKadarKelime = totalWords - quizKelimeListesi.size
+                    if (kalanKadarKelime > 0) {
+                        val ekKelimeListesi = tumKelimeler
+                            .filter { it.id in kullaniciKelimeIdSet }
+                            .filter { it.id !in suresiDolanKelimeler }
                             .shuffled()
                             .take(kalanKadarKelime)
                             .mapNotNull { it.toKelime(it.id) }
 
-                        quizKelimeListesi.addAll(secilebilecekYeniKelimeler)
+                        quizKelimeListesi.addAll(ekKelimeListesi)
                     }
 
-                    quizKelimeListesi.shuffle()
 
-                    this.quizKelimeListesi = quizKelimeListesi
+                    this.quizKelimeListesi = quizKelimeListesi.shuffled().take(totalWords)
                     gorselVeSoruGoster()
                 }
         }

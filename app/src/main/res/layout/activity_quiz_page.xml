@@ -9,7 +9,7 @@
     tools:context=".ViewPages.QuizPageActivity">
 
 
-    <!-- Başlık Çubuğu - Daha modern bir görünüm -->
+
     <LinearLayout
         android:id="@+id/titleBar"
         android:layout_width="match_parent"
@@ -44,6 +44,16 @@
             android:textColor="@color/indigo_500"
             android:textSize="20sp"
             android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/settingsButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Ayarlar"
+            android:src="@drawable/ic_settings"
+            android:tint="@color/indigo_500" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
