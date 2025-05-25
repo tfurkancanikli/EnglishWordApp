@@ -28,6 +28,14 @@
     <color name="gray_600">#757575</color>
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
+    <color name="green_light">#88E788</color>
+    <color name="red_light">#FF474C</color>
+    <color name="green_dark">#06402B</color>
+    <color name="red_dark">#950606</color>
+    <color name="grey_light">#D3D3D3</color>
+    <color name="purple_500">#9C27B0</color>
+    <color name="purple_300">#BA68C8</color>
+    <color name="purple_700">#7B1FA2</color>
 
 
 
