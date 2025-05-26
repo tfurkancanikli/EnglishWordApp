@@ -56,6 +56,26 @@ class QuizPageActivity : BaseCompact() {
         getKullaniciyaOzelKelimeler()
     }
 
+    private fun kelimeKaydetKarsilasilan(kelimeId: String, kelimeIng: String) {
+        val kullanici = auth.currentUser ?: return
+        val db = Firebase.firestore
+
+        val kelimeData = hashMapOf(
+            "kelimeId" to kelimeId,
+            "ingilizceKelime" to kelimeIng,
+            "tarih" to Timestamp.now()
+        )
+
+        db.collection("kullanici_karsilasilan_kelimeler")
+            .document(kullanici.uid)
+            .collection("kelimeler")
+            .document(kelimeId)
+            .set(kelimeData)
+            .addOnFailureListener { hata ->
+                Log.e("Quiz", "Karşılaşılan kelime kaydedilemedi", hata)
+            }
+    }
+
     private fun setupUI() {
         binding.apply {
             toolbar.setNavigationOnClickListener { onBackPressed() }
@@ -67,7 +87,6 @@ class QuizPageActivity : BaseCompact() {
             resultFeedback.visibility = View.GONE
 
             dogrulaButton.setOnClickListener { dogrulaCevap() }
-
 
             kullaniciCevap.setOnEditorActionListener { _, _, _ ->
                 dogrulaCevap()
@@ -181,6 +200,7 @@ class QuizPageActivity : BaseCompact() {
         }
 
         val kelime = quizKelimeListesi[currentIndex]
+        kelimeKaydetKarsilasilan(kelime.kelimeId, kelime.kelimeIng)
         binding.apply {
             loadingOverlay.visibility = View.VISIBLE
             kelimeImage.visibility = View.INVISIBLE
