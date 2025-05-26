@@ -35,8 +35,11 @@ class QuizPageActivity : BaseCompact() {
     private var dogruSayisi = 0
     private var yanlisSayisi = 0
     private val zamanAraliklari = listOf(1, 7, 30, 90, 180, 365)
+    private var isFirstLaunch = true
+    private var defaultTotalWords = 10
+    private var defaultNewWords = 0
 
-    // Renkler
+
     private val colorCorrect = Color.parseColor("#4CAF50") // Yeşil
     private val colorWrong = Color.parseColor("#F44336")   // Kırmızı
     private val colorPrimary = Color.parseColor("#3F51B5") // mavi
@@ -48,6 +51,7 @@ class QuizPageActivity : BaseCompact() {
         auth = FirebaseAuth.getInstance()
 
         setupUI()
+        showSettingsBottomSheet(true)
         getKullaniciyaOzelKelimeler()
     }
 
@@ -71,38 +75,57 @@ class QuizPageActivity : BaseCompact() {
         }
     }
 
-    private fun showSettingsBottomSheet() {
+    private fun showSettingsBottomSheet(isInitial: Boolean = false) {
         val bottomSheetView = layoutInflater.inflate(R.layout.bottom_sheet_quiz_settings, null)
         val bottomSheet = BottomSheetDialog(this).apply {
             setContentView(bottomSheetView)
             behavior.peekHeight = 1000
             window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+
+            if (isInitial) {
+                setCancelable(false)
+                setCanceledOnTouchOutside(false)
+            }
         }
 
         with(bottomSheetView) {
-            findViewById<Slider>(R.id.sliderTotalWords).apply {
+            val totalSlider = findViewById<Slider>(R.id.sliderTotalWords).apply {
                 valueFrom = 10f
                 valueTo = 100f
                 stepSize = 5f
-                value = 10f
+                value = defaultTotalWords.toFloat()
             }
 
-            findViewById<Slider>(R.id.sliderNewWords).apply {
+            val newWordsSlider = findViewById<Slider>(R.id.sliderNewWords).apply {
                 valueFrom = 0f
                 valueTo = 50f
                 stepSize = 1f
-                value = 0f
+                value = defaultNewWords.toFloat()
+
+
+                totalSlider.addOnChangeListener { _, value, _ ->
+                    valueTo = value
+                    if (this.value > value) {
+                        this.value = value
+                    }
+                }
             }
 
             findViewById<MaterialButton>(R.id.saveSettingsButton).setOnClickListener {
-                val totalWords = findViewById<Slider>(R.id.sliderTotalWords).value.toInt()
-                val newWords = findViewById<Slider>(R.id.sliderNewWords).value.toInt()
+                defaultTotalWords = totalSlider.value.toInt()
+                defaultNewWords = newWordsSlider.value.toInt()
 
-                restartQuizWithNewSettings(totalWords, newWords)
+                if (isInitial) {
+                    isFirstLaunch = false
+                    getKullaniciyaOzelKelimeler(defaultTotalWords, defaultNewWords)
+                } else {
+                    restartQuizWithNewSettings(defaultTotalWords, defaultNewWords)
+                }
+
                 bottomSheet.dismiss()
-
                 Snackbar.make(binding.root,
-                    "Quiz ayarları güncellendi: $totalWords kelime (${newWords} yeni)",
+                    "Quiz ayarları güncellendi: $defaultTotalWords kelime (${defaultNewWords} yeni)",
                     Snackbar.LENGTH_LONG)
                     .setBackgroundTint(colorPrimary)
                     .show()
@@ -111,6 +134,7 @@ class QuizPageActivity : BaseCompact() {
 
         bottomSheet.show()
     }
+
 
     private fun restartQuizWithNewSettings(totalWords: Int, newWords: Int) {
         currentIndex = 0
@@ -230,7 +254,7 @@ class QuizPageActivity : BaseCompact() {
         binding.apply {
             resultFeedback.apply {
                 text = if (isCorrect) {
-                    "Doğru! 🎉"
+                    "Doğru!"
                 } else {
                     "Yanlış! Doğru cevap: $correctAnswer"
                 }
