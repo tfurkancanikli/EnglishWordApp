@@ -1,233 +1,263 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/indigo_500"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
     tools:context=".ViewPages.QuizPageActivity">
 
 
-
-    <LinearLayout
-        android:id="@+id/titleBar"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/white"
-        android:elevation="4dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content"
+        android:background="@color/gray_200"
+        android:elevation="8dp">
 
-        <ImageButton
-            android:id="@+id/backButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/baseline_arrow_back_ios_new_24"
+            app:navigationIconTint="@color/indigo_500"
+            app:title="Quiz"
+            app:titleTextAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            app:titleTextColor="@color/indigo_500">
 
-            android:contentDescription="Geri"
-            android:onClick="backImageClick"
-            android:src="@drawable/back"
-            android:tint="@color/indigo_500" />
+            <ImageButton
+                android:id="@+id/settingsButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="12dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Ayarlar"
+                android:src="@drawable/ic_settings"
+                app:tint="@color/indigo_500" />
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Quiz"
-            android:textColor="@color/indigo_500"
-            android:textSize="20sp"
-            android:textStyle="bold" />
 
-        <ImageButton
-            android:id="@+id/settingsButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="8dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Ayarlar"
-            android:src="@drawable/ic_settings"
-            android:tint="@color/indigo_500" />
-    </LinearLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="100dp"
-        android:orientation="vertical"
+        android:background="@color/indigo_500"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        android:padding="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
-
-        <ImageView
-            android:id="@+id/kelimeImage"
-            android:layout_width="258dp"
-            android:layout_height="249dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="32dp"
-            android:padding="10dp"
-            android:scaleType="fitCenter"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/hakText" />
-
-        <EditText
-            android:id="@+id/kullaniciCevap"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="40dp"
-            android:background="@drawable/drawbleradius"
-            android:hint="İngilizce kelimeyi yazın"
-            android:inputType="text"
-            android:padding="10sp"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/quizTurkce" />
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <TextView
-            android:id="@+id/quizTurkce"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/cardview_copy"
-            android:padding="10sp"
-            android:text="TURKCE KARSILIK"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/kelimeImage" />
-
-        <TextView
-            android:id="@+id/hakText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/cardview_copy"
-            android:text="1/10"
-            android:textAlignment="center"
-            android:textColor="#4CAF50"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardViewTrue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
-            android:visibility="gone"
-            app:cardCornerRadius="25dp"
-            app:layout_constraintEnd_toStartOf="@+id/cardViewFlase"
-            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="51dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="24dp"
                 android:gravity="center"
-                android:padding="5dp">
+                android:orientation="horizontal"
+                android:weightSum="2">
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/check_icon" />
 
-                <TextView
-                    android:id="@+id/dogruSayisiTv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textSize="32sp"></TextView>
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardViewTrue"
+                    android:layout_width="1dp"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/green_light"
+                    app:cardCornerRadius="150dp"
+                    app:strokeColor="@color/green_dark"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/check_icon" />
+
+                        <TextView
+                            android:id="@+id/dogruSayisiTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="0"
+                            android:textColor="@color/green_dark"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardViewFlase"
+                    android:layout_width="1dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/red_light"
+                    app:cardCornerRadius="150dp"
+                    app:strokeColor="@color/red_dark"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/false_ico" />
+
+                        <TextView
+                            android:id="@+id/yanlisSayisiTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="0"
+                            android:textColor="@color/red_dark"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardViewFlase"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
-            android:visibility="gone"
-            app:cardCornerRadius="25dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <LinearLayout
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/progressIndicator"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="8dp"
+                android:layout_marginBottom="16dp"
+                app:indicatorColor="@color/deep_orange_500"
+                app:trackColor="@color/grey_light" />
+
+
+            <TextView
+                android:id="@+id/hakText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_rounded_purple"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:text="1/10"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/resultFeedback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_rounded_result"
                 android:gravity="center"
-                android:padding="5dp">
+                android:padding="12dp"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp"
+                app:strokeColor="@color/grey_light"
+                app:strokeWidth="1dp">
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/false_ico" />
+                    android:id="@+id/kelimeImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="172dp"
+                    android:background="@color/lightGrey"
+                    android:contentDescription="Soru resmi"
+                    android:scaleType="fitCenter"
+                    tools:src="@drawable/gallery_icon" />
 
                 <TextView
-                    android:id="@+id/yanlisSayisiTv"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/quizTurkce"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textSize="32sp"></TextView>
-            </LinearLayout>
+                    android:layout_marginTop="170dp"
+                    android:background="@color/gray_200"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:text="Türkçe Kelime"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.card.MaterialCardView>
 
-        </androidx.cardview.widget.CardView>
 
-        <ProgressBar
-            android:id="@+id/progressBar2"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="104dp"
-            android:layout_height="90dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:hint="İngilizce karşılığını yazın"
+                app:boxCornerRadiusBottomEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxStrokeColor="@color/gray_200"
+                app:hintTextColor="@color/gray_200"
+                app:startIconTint="@color/purple_500">
 
-        <ImageView
-            android:id="@+id/dogrulaButton"
-            android:layout_width="44dp"
-            android:layout_height="43dp"
-            app:layout_constraintBottom_toBottomOf="@+id/kullaniciCevap"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/kullaniciCevap"
-            app:layout_constraintTop_toTopOf="@+id/kullaniciCevap"
-            app:srcCompat="@drawable/baseline_send_24" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/kullaniciCevap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionDone"
+                    android:inputType="textWebEditText"
+                    android:textColor="@color/gray_200"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/dogrulaButton"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="Doğrula"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:backgroundTint="@color/gray_200"
+                app:cornerRadius="50dp"
+                app:icon="@drawable/baseline_send_24"
+                app:iconGravity="end"
+                app:iconTint="@color/black"
+                app:rippleColor="@color/teal_700" />
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
 
     <RelativeLayout
         android:id="@+id/MenuLayout"
         android:layout_width="match_parent"
         android:layout_height="64dp"
+        android:layout_gravity="bottom"
         android:background="@drawable/bottomsheetnav_radius"
         android:elevation="8dp"
-        android:padding="8dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
+        android:padding="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -263,9 +293,7 @@
                 android:onClick="goToGameClick"
                 android:padding="8dp"
                 app:srcCompat="@drawable/baseline_videogame_asset_24"
-                app:tint="@color/indigo_500"
-
-                />
+                app:tint="@color/indigo_500" />
 
             <ImageView
                 android:id="@+id/sozluk"
@@ -275,12 +303,20 @@
                 android:onClick="goToWordsClick"
                 android:padding="8dp"
                 app:srcCompat="@drawable/baseline_menu_book_24"
-                app:tint="@color/indigo_500"
-
-                />
+                app:tint="@color/indigo_500" />
         </LinearLayout>
     </RelativeLayout>
+    <FrameLayout
+        android:id="@+id/loadingOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:visibility="gone">
 
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/white" />
+    </FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
