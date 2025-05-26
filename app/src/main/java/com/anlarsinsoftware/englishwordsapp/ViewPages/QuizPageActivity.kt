@@ -3,6 +3,7 @@ package com.anlarsinsoftware.englishwordsapp.ViewPages
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -145,7 +146,7 @@ class QuizPageActivity : BaseCompact() {
         binding.progressIndicator.progress = 0
         getKullaniciyaOzelKelimeler(totalWords, newWords)
     }
-    private fun getKullaniciyaOzelKelimeler(totalWords: Int = 10, newWords: Int = 0) {
+    private fun getKullaniciyaOzelKelimeler(totalWords: Int = 10, newWords: Int = 5) {
         val uid = auth.currentUser?.uid ?: return
         val db = Firebase.firestore
 
@@ -160,6 +161,7 @@ class QuizPageActivity : BaseCompact() {
                     if (asama >= 6) return@filter false
 
                     val sonTarih = doc.getTimestamp("sonDogruTarih")?.toDate() ?: Date(0)
+                    Log.d("QuizPageActivityTarih", "sonTarih: $sonTarih + name : ${doc.getString("Kelime")}")
                     val gerekenGun = zamanAraliklari.getOrNull(asama - 1) ?: 999
                     val gerekenMs = TimeUnit.DAYS.toMillis(gerekenGun.toLong())
                     val farkMs = now - sonTarih.time
@@ -372,7 +374,7 @@ class QuizPageActivity : BaseCompact() {
         newWordsCount: Int = 0
     ) {
         val totalWords = totalWordsCount.coerceIn(10, 100)
-        val newWords = newWordsCount.coerceIn(0, 50).coerceAtMost(totalWords)
+        var newWords = newWordsCount.coerceIn(0, 50).coerceAtMost(totalWords)
 
         val db = Firebase.firestore
         val uid = auth.currentUser?.uid ?: return
@@ -389,6 +391,12 @@ class QuizPageActivity : BaseCompact() {
 
             quizKelimeListesi.addAll(secilenSuresiDolanlar)
 
+
+            if (suresiDolanKelimeler.isEmpty()) {
+
+                Toast.makeText(this, "Süresi dolmuş kelimeniz bulunamadı. Quiz yeni kelimelerle dolduruldu.", Toast.LENGTH_SHORT).show()
+                newWords = totalWords
+            }
 
             db.collection("kullaniciKelimeleri")
                 .document(uid)
@@ -407,17 +415,15 @@ class QuizPageActivity : BaseCompact() {
                         quizKelimeListesi.addAll(yeniKelimeler)
                     }
 
-
                     val kalanKadarKelime = totalWords - quizKelimeListesi.size
                     if (kalanKadarKelime > 0) {
-                        val ekKelimeListesi = tumKelimeler
-                            .filter { it.id in kullaniciKelimeIdSet }
-                            .filter { it.id !in suresiDolanKelimeler }
+                        val ekYeniKelimeler = tumKelimeler
+                            .filter { it.id !in kullaniciKelimeIdSet }
                             .shuffled()
                             .take(kalanKadarKelime)
                             .mapNotNull { it.toKelime(it.id) }
 
-                        quizKelimeListesi.addAll(ekKelimeListesi)
+                        quizKelimeListesi.addAll(ekYeniKelimeler)
                     }
 
                     this.quizKelimeListesi = quizKelimeListesi.shuffled().take(totalWords)
@@ -425,6 +431,7 @@ class QuizPageActivity : BaseCompact() {
                 }
         }
     }
+
 
     override fun onBackPressed() {
         if (currentIndex < quizKelimeListesi.size) {
@@ -438,7 +445,6 @@ class QuizPageActivity : BaseCompact() {
             super.onBackPressed()
         }
     }
-
     override fun backImageClick(view: View) {
         onBackPressed()
     }

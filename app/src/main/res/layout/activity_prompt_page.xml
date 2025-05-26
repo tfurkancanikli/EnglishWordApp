@@ -22,10 +22,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageButton
+        <ImageView
             android:id="@+id/backButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Geri"
             android:onClick="backImageClick"
@@ -96,7 +96,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:backgroundTint="#387E3B"
-        android:text="PenAI' başlat"
+        android:text="PenAI başlat"
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/MenuLayout"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -158,8 +158,8 @@
     <RelativeLayout
         android:id="@+id/MenuLayout"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:background="@drawable/bottomsheetnav_radius"
+        android:layout_height="60dp"
+        android:background="#FFFFFF"
         android:elevation="8dp"
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -170,8 +170,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:weightSum="4">
+            android:layout_alignParentTop="true"
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/home"
