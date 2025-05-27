@@ -1,4 +1,5 @@
 package com.anlarsinsoftware.englishwordsapp.ViewPages
+
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
@@ -17,13 +18,18 @@ import androidx.core.content.ContextCompat
 import com.anlarsinsoftware.englishwordsapp.R
 import com.anlarsinsoftware.englishwordsapp.Util.BaseCompact
 import com.anlarsinsoftware.englishwordsapp.Util.bagla
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.*
 
 class BulmacaOyunu : BaseCompact() {
     private val veritabani = Firebase.firestore
+    private val kullanici = Firebase.auth.currentUser
     private var kelimeListesi: MutableList<String> = mutableListOf()
+    private var ogrenilmisKelimeListesi: MutableList<String> = mutableListOf()
+    private var karsilasilanKelimeListesi: MutableList<String> = mutableListOf()
     private var gizliKelime = ""
     private var mevcutSatir = 0
     private var skor = 0
@@ -38,6 +44,17 @@ class BulmacaOyunu : BaseCompact() {
     private lateinit var tahminButonu: Button
     private lateinit var geriBildirimAlani: TextView
     private lateinit var yuklemeGostergesi: ProgressBar
+    private lateinit var settingsButton: ImageButton
+
+    private enum class KelimeKaynagi {
+        TUM_KELIMELER,
+        OGRENILMIS_KELIMELER,
+        KARSILASILAN_KELIMELER
+    }
+    private var kelimeKaynagi = KelimeKaynagi.TUM_KELIMELER
+
+
+    private var useLearnedWordsOnly = false
     private val dogruRenk: Int by lazy { ContextCompat.getColor(this, R.color.teal_700) }
     private val yanlisYerdeRenk: Int by lazy { ContextCompat.getColor(this, R.color.amber_500) }
     private val yanlisRenk: Int by lazy { ContextCompat.getColor(this, R.color.black_overlay) }
@@ -54,8 +71,13 @@ class BulmacaOyunu : BaseCompact() {
         skorGostergesi = findViewById(R.id.skorGosterge)
         hakGostergesi = findViewById(R.id.hakGosterge)
         ipucuButonu = findViewById(R.id.ipucuBtn)
+        settingsButton = findViewById(R.id.settingsButton)
+
         izgarayiOlustur()
         kelimeleriYukle()
+        ogrenilmisKelimeleriYukle()
+        karsilasilanKelimeleriYukle()
+
         tahminButonu.setOnClickListener {
             tahminYap()
         }
@@ -65,6 +87,104 @@ class BulmacaOyunu : BaseCompact() {
         ipucuButonu.setOnClickListener {
             ipucuGoster()
         }
+        settingsButton.setOnClickListener {
+            ayarlariGoster()
+        }
+    }
+
+    private fun ayarlariGoster() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_settings, null)
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .create()
+
+        val wordSourceGroup = dialogView.findViewById<RadioGroup>(R.id.wordSourceGroup)
+        val saveButton = dialogView.findViewById<Button>(R.id.saveSettingsButton)
+
+
+        when (kelimeKaynagi) {
+            KelimeKaynagi.TUM_KELIMELER -> wordSourceGroup.check(R.id.allWordsOption)
+            KelimeKaynagi.OGRENILMIS_KELIMELER -> wordSourceGroup.check(R.id.learnedWordsOption)
+            KelimeKaynagi.KARSILASILAN_KELIMELER -> wordSourceGroup.check(R.id.seenWordsOption)
+        }
+
+        saveButton.setOnClickListener {
+            kelimeKaynagi = when (wordSourceGroup.checkedRadioButtonId) {
+                R.id.learnedWordsOption -> KelimeKaynagi.OGRENILMIS_KELIMELER
+                R.id.seenWordsOption -> KelimeKaynagi.KARSILASILAN_KELIMELER
+                else -> KelimeKaynagi.TUM_KELIMELER
+            }
+            dialog.dismiss()
+            yeniOyunBaslat()
+        }
+
+        dialog.show()
+    }
+
+    private fun karsilasilanKelimeleriYukle() {
+        if (kullanici == null) return
+
+        veritabani.collection("kullanici_karsilasilan_kelimeler")
+            .document(kullanici.uid)
+            .collection("kelimeler")
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                karsilasilanKelimeListesi.clear()
+                for (document in querySnapshot.documents) {
+                    val kelime = document.getString("ingilizceKelime")?.uppercase(Locale.ENGLISH)
+                    if (kelime != null && kelime.length == 5) {
+                        karsilasilanKelimeListesi.add(kelime)
+                    }
+                }
+                Log.d("Bulmaca", "Karşılaşılan kelimeler yüklendi: ${karsilasilanKelimeListesi.size} adet")
+            }
+            .addOnFailureListener { hata ->
+                Log.e("Bulmaca", "Karşılaşılan kelimeler yüklenirken hata", hata)
+            }
+    }
+
+    private fun kelimeEkleKarsilasilan(kelime: String) {
+        if (kullanici == null || karsilasilanKelimeListesi.contains(kelime)) return
+
+        karsilasilanKelimeListesi.add(kelime)
+
+        veritabani.collection("kullanici_karsilasilan_kelimeler")
+            .document(kullanici.uid)
+            .update("kelimeler", FieldValue.arrayUnion(kelime))
+            .addOnFailureListener { hata ->
+                Log.e("Bulmaca", "Karşılaşılan kelime eklenirken hata", hata)
+            }
+    }
+
+    private fun ogrenilmisKelimeleriYukle() {
+
+        veritabani.collection("ogrenilmis_kelimeler")
+            .get()
+            .addOnSuccessListener { sonuc ->
+                ogrenilmisKelimeListesi.clear()
+                for (belge in sonuc.documents) {
+                    val kelime = belge.getString("ingilizceKelime")?.trim()?.uppercase(Locale.ENGLISH)
+                    if (kelime != null && kelime.length == 5) {
+                        ogrenilmisKelimeListesi.add(kelime)
+                    }
+                }
+                Log.d("Bulmaca", "Öğrenilmiş kelimeler yüklendi: ${ogrenilmisKelimeListesi.size} adet")
+            }
+            .addOnFailureListener { hata ->
+                Log.e("Bulmaca", "Öğrenilmiş kelimeler yüklenirken hata", hata)
+            }
+    }
+    private fun kelimeEkleOgrenilmis(kelime: String) {
+        if (kullanici == null || ogrenilmisKelimeListesi.contains(kelime)) return
+
+        ogrenilmisKelimeListesi.add(kelime)
+
+        veritabani.collection("kullanici_ogrenilmis_kelimeler")
+            .document(kullanici.uid)
+            .update("kelimeler", FieldValue.arrayUnion(kelime))
+            .addOnFailureListener { hata ->
+                Log.e("Bulmaca", "Öğrenilmiş kelime eklenirken hata", hata)
+            }
     }
 
     private fun kelimeleriYukle() {
@@ -72,47 +192,76 @@ class BulmacaOyunu : BaseCompact() {
         geriBildirimAlani.text = "Kelimeler yükleniyor..."
         tahminButonu.isEnabled = false
 
-        veritabani.collection("kelimeler")
-            .get()
-            .addOnSuccessListener { sonuc ->
-                kelimeListesi.clear()
-
-                try {
-                    for (belge in sonuc.documents) {
-                        val kelime = belge.getString("ingilizceKelime")?.trim()?.uppercase(Locale.ENGLISH)
-                        if (kelime != null && kelime.length == 5) {
-                            kelimeListesi.add(kelime)
-                        }
-                    }
-
-                    if (kelimeListesi.isNotEmpty()) {
-                        gizliKelime = kelimeListesi.random()
-                        Log.d("Bulmaca", "Gizli kelime: $gizliKelime")
-                        geriBildirimAlani.text = "Hazır! İlk tahminini yap"
-                        tahminButonu.isEnabled = true
-                        hakGostergesi.text = "Hak: 0/6"
-                    } else {
-                        geriBildirimAlani.text = "Uygun kelime bulunamadı!"
-                    }
-                } catch (hata: Exception) {
-                    Log.e("Bulmaca", "Kelime yükleme hatası", hata)
-                    geriBildirimAlani.text = "Hata: ${hata.localizedMessage}"
-                } finally {
+        when (kelimeKaynagi) {
+            KelimeKaynagi.OGRENILMIS_KELIMELER -> {
+                if (ogrenilmisKelimeListesi.isNotEmpty()) {
+                    kelimeListesi.clear()
+                    kelimeListesi.addAll(ogrenilmisKelimeListesi)
+                    kelimeYuklemeTamamlandi()
+                } else {
+                    geriBildirimAlani.text = "Öğrenilmiş kelime bulunamadı!"
                     yuklemeGostergesi.visibility = View.GONE
                 }
             }
-            .addOnFailureListener { hata ->
-                Log.e("Bulmaca", "Veritabanı hatası", hata)
-                yuklemeGostergesi.visibility = View.GONE
-                geriBildirimAlani.text = "Veritabanı hatası:Kelimeler çekilmiyor"
-
-                Toast.makeText(
-                    this@BulmacaOyunu,
-                    "İnternet bağlantınızı kontrol edin ve tekrar deneyin.",
-                    Toast.LENGTH_LONG
-                ).show()
+            KelimeKaynagi.KARSILASILAN_KELIMELER -> {
+                if (karsilasilanKelimeListesi.isNotEmpty()) {
+                    kelimeListesi.clear()
+                    kelimeListesi.addAll(karsilasilanKelimeListesi)
+                    kelimeYuklemeTamamlandi()
+                } else {
+                    geriBildirimAlani.text = "Henüz quiz'de karşılaştığınız kelime bulunamadı!"
+                    yuklemeGostergesi.visibility = View.GONE
+                }
             }
+            KelimeKaynagi.TUM_KELIMELER -> {
+                veritabani.collection("kelimeler")
+                    .get()
+                    .addOnSuccessListener { sonuc ->
+                        kelimeListesi.clear()
+                        try {
+                            for (belge in sonuc.documents) {
+                                val kelime = belge.getString("ingilizceKelime")?.trim()?.uppercase(Locale.ENGLISH)
+                                if (kelime != null && kelime.length == 5) {
+                                    kelimeListesi.add(kelime)
+                                }
+                            }
+                            kelimeYuklemeTamamlandi()
+                        } catch (hata: Exception) {
+                            Log.e("Bulmaca", "Kelime yükleme hatası", hata)
+                            geriBildirimAlani.text = "Hata: ${hata.localizedMessage}"
+                            yuklemeGostergesi.visibility = View.GONE
+                        }
+                    }
+                    .addOnFailureListener { hata ->
+                        Log.e("Bulmaca", "Veritabanı hatası", hata)
+                        yuklemeGostergesi.visibility = View.GONE
+                        geriBildirimAlani.text = "Veritabanı hatası: Kelimeler çekilmiyor"
+                        Toast.makeText(
+                            this@BulmacaOyunu,
+                            "İnternet bağlantınızı kontrol edin ve tekrar deneyin.",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+            }
+        }
     }
+    private fun kelimeYuklemeTamamlandi() {
+        if (kelimeListesi.isNotEmpty()) {
+            gizliKelime = kelimeListesi.random()
+            Log.d("Bulmaca", "Gizli kelime: $gizliKelime")
+            geriBildirimAlani.text = "Hazır! İlk tahminini yap"
+            tahminButonu.isEnabled = true
+            hakGostergesi.text = "Hak: 0/6"
+        } else {
+            geriBildirimAlani.text = if (useLearnedWordsOnly) {
+                "Öğrenilmiş 5 harfli kelime bulunamadı!"
+            } else {
+                "Uygun kelime bulunamadı!"
+            }
+        }
+        yuklemeGostergesi.visibility = View.GONE
+    }
+
 
     private fun yeniOyunBaslat() {
 
@@ -226,12 +375,17 @@ class BulmacaOyunu : BaseCompact() {
             return
         }
 
+
+        kelimeEkleKarsilasilan(tahmin)
+
         kullanilanHak++
         hakGostergesi.text = "Hak: $kullanilanHak/6"
 
         satirIcinGeriBildirimVer(mevcutSatir, tahmin, gizliKelime)
 
         if (tahmin == gizliKelime) {
+
+            kelimeEkleOgrenilmis(gizliKelime)
 
             skor++
             oynananOyunSayisi++
@@ -241,18 +395,15 @@ class BulmacaOyunu : BaseCompact() {
             hucreler[mevcutSatir].forEach { it.isEnabled = false }
             kazanimAnimasyonuGoster()
         } else {
-
             hucreler[mevcutSatir].forEach { it.isEnabled = false }
 
             mevcutSatir++
             if (mevcutSatir == 6) {
-
                 oynananOyunSayisi++
                 skorGostergesi.text = "Skor: $skor/$oynananOyunSayisi"
                 geriBildirimAlani.text = "Maalesef! Doğru kelime: $gizliKelime"
                 tahminButonu.isEnabled = false
             } else {
-
                 for (sutun in 0 until 5) {
                     hucreler[mevcutSatir][sutun].isEnabled = true
                 }
