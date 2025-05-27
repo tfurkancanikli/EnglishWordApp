@@ -1,6 +1,7 @@
 package com.anlarsinsoftware.englishwordsapp.Model
 
 import com.google.firebase.firestore.PropertyName
+import java.util.Date
 
 class Kelime {
 
@@ -22,8 +23,11 @@ class Kelime {
     var docId: String = ""
     var dogruSayisi: Int = 0
     var sonDogruMs: Long = 0L
+    var asama: Int = 0
+    var sonDogruTarih: Date? = null
 
     constructor()
+
 
     constructor(
         kelimeId: String,

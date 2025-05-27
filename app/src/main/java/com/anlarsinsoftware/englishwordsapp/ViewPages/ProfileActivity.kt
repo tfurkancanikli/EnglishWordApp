@@ -1,5 +1,6 @@
 package com.anlarsinsoftware.englishwordsapp.ViewPages
 
+import ProfilePagerAdapter
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
@@ -22,6 +23,7 @@ import com.anlarsinsoftware.englishwordsapp.Util.bagla
 import com.anlarsinsoftware.englishwordsapp.R
 import com.anlarsinsoftware.englishwordsapp.Util.email_intent
 import com.anlarsinsoftware.englishwordsapp.databinding.ActivityProfileBinding
+import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.userProfileChangeRequest
@@ -36,7 +38,7 @@ class ProfileActivity : BaseCompact() {
     private lateinit var profileImage: ImageView
     private lateinit var textName: TextView
     private lateinit var textEmail: TextView
-    private lateinit var btnConnectReport: Button
+    private lateinit var btnConnectReport: ImageView
     private lateinit var binding: ActivityProfileBinding
     private val storageRef = FirebaseStorage.getInstance().reference
     private var selectedImageUri: Uri? = null
@@ -70,6 +72,17 @@ class ProfileActivity : BaseCompact() {
             bagla(RaporPage::class.java, false)
             Toast.makeText(this, "Raporlama sistemine bağlanılıyor...", Toast.LENGTH_SHORT).show()
         }
+
+        val pagerAdapter = ProfilePagerAdapter(this)
+        binding.viewPager.adapter = pagerAdapter
+
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+            tab.text = when (position) {
+                0 -> "Quiz Kelimeleri"
+                1 -> "Öğrenilenler"
+                else -> ""
+            }
+        }.attach()
 
     }
     fun exitClick(view: View) {
