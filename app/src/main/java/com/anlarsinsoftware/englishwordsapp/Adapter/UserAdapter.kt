@@ -46,7 +46,7 @@ class UserAdapter(private val userList: List<User>) : RecyclerView.Adapter<UserA
                 ranktext.setCompoundDrawables(icon, null, null, null)
                 ranktext.text = ""
                 cardItem.backgroundTintList =
-                    ContextCompat.getColorStateList(holder.itemView.context, R.color.light_blue_900)
+                   ContextCompat.getColorStateList(holder.itemView.context, R.color.light_blue_900)
                 adText.setTextColor(ContextCompat.getColorStateList(holder.itemView.context,R.color.ikincilik))
                 puanTextView.setTextColor(ContextCompat.getColorStateList(holder.itemView.context,R.color.ikincilik))
 
@@ -70,7 +70,11 @@ class UserAdapter(private val userList: List<User>) : RecyclerView.Adapter<UserA
             else -> {
                 ranktext.setCompoundDrawables(null, null, null, null)
                 ranktext.text = "${position + 1}."
+                cardItem.backgroundTintList = ContextCompat.getColorStateList(holder.itemView.context, R.color.ucunculuk)
+                adText.setTextColor(ContextCompat.getColorStateList(holder.itemView.context, R.color.black))
+                puanTextView.setTextColor(ContextCompat.getColorStateList(holder.itemView.context, R.color.black))
             }
+
         }
 
     }

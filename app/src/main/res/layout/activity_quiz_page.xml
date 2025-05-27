@@ -13,18 +13,18 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/gray_200"
+        android:background="@color/black"
         android:elevation="8dp">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="50dp"
             app:navigationIcon="@drawable/baseline_arrow_back_ios_new_24"
-            app:navigationIconTint="@color/indigo_500"
+            app:navigationIconTint="@color/whiteBase"
             app:title="Quiz"
             app:titleTextAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-            app:titleTextColor="@color/indigo_500">
+            app:titleTextColor="@color/whiteBase">
 
             <ImageButton
                 android:id="@+id/settingsButton"
@@ -35,7 +35,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Ayarlar"
                 android:src="@drawable/ic_settings"
-                app:tint="@color/indigo_500" />
+                app:tint="@color/whiteBase" />
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -44,7 +44,7 @@
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/indigo_500"
+        android:background="@color/DarkGray"
         android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -184,21 +184,21 @@
                     android:id="@+id/kelimeImage"
                     android:layout_width="match_parent"
                     android:layout_height="172dp"
-                    android:background="@color/lightGrey"
+                    android:background="@color/black"
                     android:contentDescription="Soru resmi"
                     android:scaleType="fitCenter"
-                    tools:src="@drawable/gallery_icon" />
+                    tools:src="@drawable/baseline_add_24" />
 
                 <TextView
                     android:id="@+id/quizTurkce"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="170dp"
-                    android:background="@color/gray_200"
+                    android:background="@color/black"
                     android:gravity="center"
                     android:padding="12dp"
                     android:text="Türkçe Kelime"
-                    android:textColor="@color/black"
+                    android:textColor="@color/whiteBase"
                     android:textSize="20sp"
                     android:textStyle="bold" />
             </com.google.android.material.card.MaterialCardView>
@@ -211,6 +211,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:hint="İngilizce karşılığını yazın"
+                android:textColorHint="@color/white"
                 app:boxCornerRadiusBottomEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"
@@ -225,7 +226,8 @@
                     android:layout_height="wrap_content"
                     android:imeOptions="actionDone"
                     android:inputType="textWebEditText"
-                    android:textColor="@color/gray_200"
+                    android:textColor="@color/whiteBase"
+                    android:backgroundTint="@color/black"
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -255,7 +257,7 @@
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:layout_gravity="bottom"
-        android:background="@drawable/bottomsheetnav_radius"
+        android:background="@color/black"
         android:elevation="8dp"
         android:padding="8dp">
 
@@ -273,7 +275,7 @@
                 android:onClick="goToHomeClick"
                 android:padding="8dp"
                 android:src="@drawable/baseline_home_24"
-                app:tint="@color/indigo_500" />
+                app:tint="@color/whiteBase" />
 
             <ImageView
                 android:id="@+id/profile"
@@ -283,7 +285,7 @@
                 android:onClick="goToProfileClick"
                 android:padding="8dp"
                 app:srcCompat="@drawable/baseline_person_24"
-                app:tint="@color/indigo_500" />
+                app:tint="@color/LightGray" />
 
             <ImageView
                 android:id="@+id/wordle"
@@ -293,7 +295,7 @@
                 android:onClick="goToGameClick"
                 android:padding="8dp"
                 app:srcCompat="@drawable/baseline_videogame_asset_24"
-                app:tint="@color/indigo_500" />
+                app:tint="@color/LightGray" />
 
             <ImageView
                 android:id="@+id/sozluk"
@@ -303,7 +305,7 @@
                 android:onClick="goToWordsClick"
                 android:padding="8dp"
                 app:srcCompat="@drawable/baseline_menu_book_24"
-                app:tint="@color/indigo_500" />
+                app:tint="@color/LightGray" />
         </LinearLayout>
     </RelativeLayout>
     <FrameLayout

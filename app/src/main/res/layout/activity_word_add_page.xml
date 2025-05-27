@@ -5,15 +5,15 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/indigo_500"
+    android:background="@color/DarkGray"
     tools:context=".ViewPages.WordAddPage">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/titleBar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/white"
+        android:layout_height="60dp"
+        android:background="@color/black"
         android:elevation="4dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -31,7 +31,7 @@
             android:contentDescription="Geri"
             android:onClick="backImageClick"
             android:src="@drawable/baseline_arrow_back_ios_new_24"
-            android:tint="@color/indigo_500"
+            android:tint="@color/whiteBase"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -42,7 +42,7 @@
             android:layout_marginStart="16dp"
             android:gravity="center"
             android:text="Kelime Ekle"
-            android:textColor="@color/indigo_500"
+            android:textColor="@color/whiteBase"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -50,7 +50,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.513" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
     <com.google.android.material.button.MaterialButton
@@ -95,11 +94,13 @@
             android:layout_height="50dp"
             android:layout_marginTop="12dp"
             android:background="@drawable/drawbleradius"
+            android:backgroundTint="@color/black"
             android:ems="10"
             android:hint="Türkçe karşılığını giriniz."
             android:inputType="text"
             android:paddingLeft="15dp"
-            android:textColor="@color/black"
+            android:textColor="@color/whiteBase"
+            android:textColorHint="@color/Gray700"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -111,12 +112,14 @@
             android:layout_height="50dp"
             android:layout_marginTop="12dp"
             android:background="@drawable/drawbleradius"
+            android:backgroundTint="@color/black"
             android:ems="10"
             android:hint="Kelimeyi kullanarak cümle kurunuz"
             android:inputType="text"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:textColor="@color/black"
+            android:textColor="@color/whiteBase"
+            android:textColorHint="@color/Gray700"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -128,11 +131,13 @@
             android:layout_height="50dp"
             android:layout_marginTop="32dp"
             android:background="@drawable/drawbleradius"
+            android:backgroundTint="@color/black"
             android:ems="10"
             android:hint="İngilizce kelime giriniz."
             android:inputType="text"
             android:paddingLeft="15dp"
-            android:textColor="@color/black"
+            android:textColor="@color/whiteBase"
+            android:textColorHint="@color/Gray700"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -144,12 +149,14 @@
             android:layout_height="50dp"
             android:layout_marginTop="12dp"
             android:background="@drawable/drawbleradius"
+            android:backgroundTint="@color/black"
             android:ems="10"
             android:hint="Kelimeyi kullanarak cümle kurunuz"
             android:inputType="text"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:textColor="@color/black"
+            android:textColor="@color/whiteBase"
+            android:textColorHint="@color/Gray700"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -161,8 +168,10 @@
             android:layout_height="219dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/drawbleradius"
+            android:backgroundTint="@color/black"
             android:onClick="gorselEkle"
             android:padding="10dp"
+            android:tint="@color/whiteBase"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -184,7 +193,7 @@
         android:id="@+id/MenuLayout"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="#ffffff"
+        android:background="@color/black"
         android:elevation="8dp"
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -206,7 +215,7 @@
                 android:onClick="goToHomeClick"
                 android:padding="8dp"
                 android:src="@drawable/baseline_home_24"
-                app:tint="@color/indigo_500" />
+                app:tint="@color/Gray700" />
 
             <ImageView
                 android:id="@+id/profile"
@@ -216,7 +225,7 @@
                 android:onClick="goToProfileClick"
                 android:padding="8dp"
                 app:srcCompat="@drawable/baseline_person_24"
-                app:tint="@color/indigo_500" />
+                app:tint="@color/Gray700" />
 
             <ImageView
                 android:id="@+id/wordle"
@@ -226,7 +235,7 @@
                 android:onClick="goToGameClick"
                 android:padding="8dp"
                 app:srcCompat="@drawable/baseline_videogame_asset_24"
-                app:tint="@color/indigo_500"
+                app:tint="@color/Gray700"
 
                 />
 
@@ -238,12 +247,11 @@
                 android:onClick="goToWordsClick"
                 android:padding="8dp"
                 app:srcCompat="@drawable/baseline_menu_book_24"
-                app:tint="@color/indigo_500"
+                app:tint="@color/whiteBase"
 
                 />
         </LinearLayout>
     </RelativeLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,20 +5,20 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/indigo_500"
+    android:background="@color/DarkGray"
     tools:context=".ViewPages.HomePageActivity">
 
 
     <LinearLayout
         android:id="@+id/titleBar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/white"
+        android:layout_height="50dp"
+        android:background="@color/black"
         android:elevation="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -26,10 +26,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:fontFamily="@font/alex_brush"
+            android:gravity="center"
             android:text="Penlingu"
-            android:textColor="@color/indigo_500"
+            android:textColor="@color/whiteBase"
             android:textSize="30sp"
             android:textStyle="bold" />
 
@@ -77,8 +77,9 @@
                             android:id="@+id/firstCardSliderImage"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@color/white"
-                            android:onClick="firstCardImageClick"></ImageView>
+                            android:scaleType="centerCrop"
+                            android:background="@color/black"
+                            android:onClick="firstCardImageClick"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -88,16 +89,16 @@
 
                             <TextView
                                 android:id="@+id/firstCardText"
+
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-
                                 android:background="@drawable/gecis"
-                                android:fontFamily="@font/acme"
+                                android:fontFamily="@font/k2d_extrabold"
                                 android:text="Görsel Açıklaması"
                                 android:textAlignment="center"
                                 android:textColor="@color/black"
                                 android:textSize="15sp"
-                                android:textStyle="bold"></TextView>
+                                android:textStyle="bold" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -111,26 +112,27 @@
                             android:id="@+id/secondCardSliderImage"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@color/white"
-                            android:onClick="secondCardImageClick"></ImageView>
+                            android:background="@color/black"
+                            android:scaleType="centerCrop"
+                            android:onClick="secondCardImageClick"/>
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:gravity="bottom">
 
                             <TextView
                                 android:id="@+id/secondCardText"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/gecis"
-                                android:fontFamily="@font/acme"
+                                android:fontFamily="@font/k2d_extrabold"
                                 android:text="Görsel Açıklaması"
+                                android:textAlignment="center"
                                 android:textColor="@color/black"
                                 android:textSize="15sp"
-
-                                android:textStyle="bold"></TextView>
+                                android:textStyle="bold"/>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -144,27 +146,27 @@
                             android:id="@+id/thirdCardSliderImage"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@color/white"
-                            android:onClick="thirdCardImageClick"></ImageView>
+                            android:scaleType="centerCrop"
+                            android:background="@color/black"
+                            android:onClick="thirdCardImageClick"/>
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:gravity="bottom">
 
                             <TextView
                                 android:id="@+id/thirdCardText"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/gecis"
-                                android:fontFamily="@font/acme"
+                                android:fontFamily="@font/k2d_extrabold"
                                 android:text="Görsel Açıklaması"
+                                android:textAlignment="center"
                                 android:textColor="@color/black"
                                 android:textSize="15sp"
-                                android:textStyle="bold"
-
-                                ></TextView>
+                                android:textStyle="bold"/>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -178,27 +180,27 @@
                             android:id="@+id/fourCardSliderImage"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@color/white"
-                            android:onClick="fourCardImageClick"></ImageView>
+                            android:scaleType="centerCrop"
+                            android:background="@color/black"
+                            android:onClick="fourCardImageClick"/>
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:gravity="bottom">
 
                             <TextView
                                 android:id="@+id/fourCardText"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/gecis"
-                                android:fontFamily="@font/acme"
+                                android:fontFamily="@font/k2d_extrabold"
                                 android:text="Görsel Açıklaması"
+                                android:textAlignment="center"
                                 android:textColor="@color/black"
                                 android:textSize="15sp"
-                                android:textStyle="bold"
-
-                                ></TextView>
+                                android:textStyle="bold"/>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -211,11 +213,8 @@
                 android:id="@+id/yanlisCevaplarRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="32dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView6" />
+                app:layout_constraintTop_toBottomOf="@+id/homeScrollView" />
 
 
             <HorizontalScrollView
@@ -238,7 +237,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
-                        android:backgroundTint="@color/white"
+                        android:backgroundTint="#000000"
                         android:onClick="quizPageClick"
                         app:cardCornerRadius="15dp">
 
@@ -248,12 +247,13 @@
 
                             <ImageView
                                 android:id="@+id/imageView2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="75dp"
+                                android:layout_height="75dp"
                                 android:layout_marginStart="8dp"
                                 android:layout_marginTop="8dp"
                                 android:layout_marginEnd="8dp"
                                 android:src="@drawable/test100"
+                                android:tint="@color/whiteBase"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -261,10 +261,12 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/k2d_semibold"
                                 android:paddingVertical="2dp"
                                 android:text="Quiz"
-                                android:textColor="@color/black"
-                                android:textSize="14sp"
+                                android:textColor="@color/whiteBase"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -276,7 +278,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
-                        android:backgroundTint="@color/white"
+                        android:backgroundTint="@color/black"
                         android:onClick="yapayZekaClick"
                         app:cardCornerRadius="15dp">
 
@@ -285,13 +287,14 @@
                             android:layout_height="wrap_content">
 
                             <ImageView
-                                android:id="@+id/imageView3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:id="@+id/yapayZeka"
+                                android:layout_width="75dp"
+                                android:layout_height="75dp"
                                 android:layout_marginStart="8dp"
                                 android:layout_marginTop="8dp"
                                 android:layout_marginEnd="8dp"
                                 android:src="@drawable/ai100"
+                                android:tint="@color/whiteBase"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -299,25 +302,25 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingHorizontal="4dp"
+                                android:fontFamily="@font/k2d_semibold"
                                 android:paddingVertical="2dp"
-                                android:text="Yapay Zeka"
-                                android:textColor="@color/black"
-                                android:textSize="14sp"
+                                android:text="PenAI"
+                                android:textColor="@color/whiteBase"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+                                app:layout_constraintTop_toBottomOf="@+id/yapayZeka" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.cardview.widget.CardView>
 
 
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/leaderBoard"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
-                        android:backgroundTint="@color/white"
+                        android:backgroundTint="@color/black"
                         android:onClick="leaderBoardClick"
                         app:cardCornerRadius="15dp">
 
@@ -326,14 +329,14 @@
                             android:layout_height="wrap_content">
 
                             <ImageView
-                                android:id="@+id/imageView4"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:id="@+id/leaderBoard"
+                                android:layout_width="75dp"
+                                android:layout_height="75dp"
                                 android:layout_marginStart="8dp"
                                 android:layout_marginTop="8dp"
                                 android:layout_marginEnd="8dp"
-                                android:paddingHorizontal="2dp"
                                 android:src="@drawable/comp100"
+                                android:tint="@color/whiteBase"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -341,15 +344,16 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingHorizontal="4dp"
+                                android:fontFamily="@font/k2d_semibold"
                                 android:paddingVertical="2dp"
                                 android:text="Sıralama"
-                                android:textColor="@color/black"
-                                android:textSize="14sp"
+                                android:textColor="@color/whiteBase"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+                                app:layout_constraintTop_toBottomOf="@+id/leaderBoard" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -357,7 +361,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
-                        android:backgroundTint="@color/white"
+                        android:backgroundTint="@color/black"
                         android:onClick="raporPageClick"
                         app:cardCornerRadius="15dp">
 
@@ -366,13 +370,14 @@
                             android:layout_height="wrap_content">
 
                             <ImageView
-                                android:id="@+id/imageView5"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:id="@+id/raporImage"
+                                android:layout_width="75dp"
+                                android:layout_height="75dp"
                                 android:layout_marginStart="8dp"
                                 android:layout_marginTop="8dp"
                                 android:layout_marginEnd="8dp"
                                 android:src="@drawable/report100"
+                                android:tint="@color/whiteBase"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -380,15 +385,57 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingHorizontal="4dp"
+                                android:fontFamily="@font/k2d_semibold"
                                 android:paddingVertical="2dp"
-                                android:text="Raporlarım"
-                                android:textColor="@color/black"
-                                android:textSize="14sp"
+                                android:text="Rapor"
+                                android:textColor="@color/whiteBase"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+                                app:layout_constraintTop_toBottomOf="@+id/raporImage" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:backgroundTint="@color/black"
+                        android:onClick="gamePageClick"
+                        app:cardCornerRadius="15dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/bulmacaOyunu"
+                                android:layout_width="75dp"
+                                android:layout_height="75dp"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:src="@drawable/puzzle100"
+                                android:tint="@color/whiteBase"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/k2d_semibold"
+                                android:paddingVertical="2dp"
+                                android:text="Bulmaca"
+                                android:textColor="@color/whiteBase"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/bulmacaOyunu" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -398,33 +445,14 @@
 
             </HorizontalScrollView>
 
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="24dp"
-                android:background="@drawable/drawbleradius"
-                android:drawableLeft="@drawable/baseline_menu_24"
-                android:gravity="center_horizontal|center_vertical"
-                android:padding="4dp"
-                android:text="son yanlış yapılan kelimeler"
-                android:textAlignment="center"
-                android:textColor="@color/indigo_500"
-                android:textSize="24sp"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/homeScrollView" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
     <RelativeLayout
         android:id="@+id/MenuLayout"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:background="@drawable/bottomsheetnav_radius"
+        android:layout_height="60dp"
+        android:background="@color/black"
         android:elevation="8dp"
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -446,7 +474,7 @@
                 android:onClick="goToHomeClick"
                 android:padding="8dp"
                 android:src="@drawable/baseline_home_24"
-                app:tint="@color/black"/>
+                app:tint="@color/whiteBase" />
 
             <ImageView
                 android:id="@+id/profile"
@@ -456,8 +484,7 @@
                 android:onClick="goToProfileClick"
                 android:padding="8dp"
                 app:srcCompat="@drawable/baseline_person_24"
-                app:tint="@color/indigo_500"
-                />
+                app:tint="@color/LightGray" />
 
             <ImageView
                 android:id="@+id/wordle"
@@ -467,7 +494,7 @@
                 android:onClick="goToGameClick"
                 android:padding="8dp"
                 app:srcCompat="@drawable/baseline_videogame_asset_24"
-                app:tint="@color/indigo_500"
+                app:tint="@color/LightGray"
 
                 />
 
@@ -479,7 +506,7 @@
                 android:onClick="goToWordsClick"
                 android:padding="8dp"
                 app:srcCompat="@drawable/baseline_menu_book_24"
-                app:tint="@color/indigo_500"
+                app:tint="@color/LightGray"
 
                 />
         </LinearLayout>

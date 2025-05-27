@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/textbackground"
-    android:padding="15dp"
-    >
+    android:background="@drawable/cardview_copy"
+    android:padding="15dp">
 
     <TextView
         android:id="@+id/dogruSayisi_tv"
@@ -28,8 +27,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/drawbleradius"
-        android:text="0"
         android:padding="8dp"
+        android:text="0"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="20sp"
@@ -43,8 +42,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/drawbleradius"
-        android:text="0"
         android:padding="8dp"
+        android:text="0"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="20sp"
@@ -57,8 +56,9 @@
         android:id="@+id/aciklama_tv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="28dp"
         android:background="@drawable/drawbleradius"
+        android:backgroundTint="@color/whiteBase"
         android:padding="8dp"
         android:text="Açıklama"
         android:textAlignment="center"
@@ -66,6 +66,7 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/yanlisSayisi_tv" />
 
@@ -74,6 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:background="@drawable/cardview_copy"
         android:text="Anasayfa"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

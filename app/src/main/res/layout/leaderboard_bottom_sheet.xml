@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bottomsheetnav_radius"
+    android:backgroundTint="@color/black"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -12,13 +13,12 @@
         android:id="@+id/siralamaTablo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:textColor="@color/indigo_500"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:text="Sıralama Tablosu"
         android:padding="5dp"
-          />
+        android:text="Sıralama Tablosu"
+        android:textAlignment="center"
+        android:textColor="@color/indigo_500"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/leaderBoardRecyclerView"
@@ -29,7 +29,7 @@
         android:id="@+id/siraniBulButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/indigo_500"
         android:layout_margin="5dp"
-        android:text= "Sıranı bul" />
+        android:backgroundTint="@color/indigo_500"
+        android:text="Sıranı bul" />
 </LinearLayout>

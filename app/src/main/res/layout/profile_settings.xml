@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:background="@drawable/popup_background"
+    android:backgroundTint="@color/black"
     android:padding="12dp"
     android:layout_margin="8dp"
     android:layout_width="wrap_content"
@@ -12,10 +13,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableStart="@drawable/baseline_edit_square_24"
-        android:drawableTint="@color/indigo_500"
         android:padding="8dp"
+        android:drawableTint="@color/whiteBase"
+        android:textColor="@color/whiteBase"
         android:text="  Profili Düzenle"
-        android:textColor="@color/black"
+
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -24,10 +26,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableStart="@drawable/baseline_exit_to_app_24"
-        android:drawableTint="@color/indigo_500"
+        android:drawableTint="@color/whiteBase"
+        android:textColor="@color/whiteBase"
         android:padding="8dp"
         android:text="  Çıkış Yap"
-        android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -36,10 +38,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableStart="@drawable/baseline_admin_panel_settings_24"
-        android:drawableTint="@color/indigo_500"
+        android:drawableTint="@color/whiteBase"
+        android:textColor="@color/whiteBase"
         android:padding="8dp"
         android:text="  Admin Girişi"
-        android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -48,10 +50,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableStart="@drawable/baseline_feedback_24"
-        android:drawableTint="@color/indigo_500"
+        android:drawableTint="@color/whiteBase"
+        android:textColor="@color/whiteBase"
         android:padding="8dp"
         android:text="  Geri Bildirim"
-        android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold" />
 

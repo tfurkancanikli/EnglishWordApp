@@ -221,9 +221,8 @@ class Sozluk : BaseCompact(),TextToSpeech.OnInitListener {
     }
 
     private fun kelimeSil(kelime: Kelime) {
-        // Firestore'da kelimeyi sil (id'yi kullanmalısın, örnek sabit "id" değil)
         db.collection("kelimeler")
-            .whereEqualTo("ingilizceKelime", kelime.kelimeIng) // daha iyi: gerçek id alanı
+            .whereEqualTo("ingilizceKelime", kelime.kelimeIng)
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {

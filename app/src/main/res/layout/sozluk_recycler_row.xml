@@ -23,6 +23,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/black"
             android:padding="5dp">
 
             <TextView
@@ -30,13 +31,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:layout_marginTop="8dp"
+                android:fontFamily="@font/k2d_semibold"
                 android:paddingLeft="10sp"
                 android:paddingRight="10sp"
                 android:text="IngilizceKelimemiz"
                 android:textAlignment="textStart"
-                android:textColor="@color/black"
-                android:textSize="24sp"
+                android:textColor="@color/whiteBase"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tv_basHarf"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -45,10 +46,11 @@
                 android:id="@+id/tv_kelimeTur"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/k2d_semibold"
                 android:text="Türkçe Karşılık"
-                android:textColor="#303030"
-                android:textSize="18sp"
+                android:textColor="@color/LightGray"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tv_basHarf"
                 app:layout_constraintTop_toBottomOf="@+id/tv_kelimeIng" />
@@ -58,8 +60,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="16dp"
+                android:fontFamily="@font/k2d_semibold"
                 android:text="A"
-                android:textColor="@color/black"
+                android:textColor="@color/whiteBase"
                 android:textSize="32sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

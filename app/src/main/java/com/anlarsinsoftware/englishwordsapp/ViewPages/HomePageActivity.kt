@@ -2,10 +2,8 @@ package com.anlarsinsoftware.englishwordsapp.ViewPages
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -119,7 +117,6 @@ class HomePageActivity : BaseCompact() {
                 sonYanlisList.clear()
                 var counter = documents.size()
                 if (counter == 0) {
-
                     sonYanlisAdapter.notifyDataSetChanged()
                     return@addOnSuccessListener
                 }
@@ -131,10 +128,8 @@ class HomePageActivity : BaseCompact() {
                         .get()
                         .addOnSuccessListener { kelimeDoc ->
                             val kelime = kelimeDoc.toObject(Kelime::class.java)
-                            binding.textView6.visibility=View.VISIBLE
 
                             if (kelime != null) {
-
                                 sonYanlisList.add(kelime)
                             }
                             counter--
@@ -255,6 +250,7 @@ class HomePageActivity : BaseCompact() {
                     Toast.makeText(this, "Liderlik verileri alınamadı", Toast.LENGTH_SHORT).show()
                 }
         }
+    fun gamePageClick(view: View){bagla(BulmacaOyunu::class.java,false)}
 
 
 

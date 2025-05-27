@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/acik_mor2"
+    android:background="@color/DarkGray"
     tools:context=".Entrance.RegisterActivity">
 
     <TextView
@@ -13,6 +13,7 @@
         android:layout_width="340dp"
         android:layout_height="340dp"
         android:background="@drawable/cardview_copy"
+        android:backgroundTint="#000000"
         app:layout_constraintBottom_toTopOf="@+id/imageView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,6 +23,7 @@
         android:id="@+id/imageView3"
         android:layout_width="0dp"
         android:layout_height="276dp"
+        android:tint="#000000"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -123,6 +125,7 @@
         android:layout_width="61dp"
         android:layout_height="58dp"
         android:onClick="backToSign"
+        android:tint="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView"
         app:srcCompat="@drawable/baseline_arrow_back_ios_new_24" />
@@ -145,8 +148,8 @@
         android:background="@drawable/drawbleradius"
         android:gravity="center"
         android:onClick="kayitolClick"
-        android:textColor="@color/black"
         android:text="Kayıt Ol"
+        android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/imageView5"

@@ -2,8 +2,6 @@ package com.anlarsinsoftware.englishwordsapp.Util
 
 import android.content.Intent
 
-
-val replicateAPI_KEY = ""
 val OPEN_ROUTER_API_KEY = ""
 
 val email_intent = Intent(Intent.ACTION_SEND).apply {

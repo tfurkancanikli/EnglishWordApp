@@ -5,14 +5,15 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/acik_mor2"
+    android:background="@color/DarkGray"
     tools:context=".Entrance.SignInActivity">
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="340dp"
-        android:layout_height="175dp"
+        android:layout_width="370dp"
+        android:layout_height="181dp"
         android:background="@drawable/cardview_copy"
+        android:backgroundTint="#000000"
         app:layout_constraintBottom_toTopOf="@+id/startText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
@@ -23,6 +24,7 @@
         android:id="@+id/imageView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:tint="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -74,8 +76,8 @@
         android:drawablePadding="8dp"
         android:ems="10"
         android:hint="Şifrenizi Giriniz."
-        android:padding="10sp"
         android:inputType="textPassword"
+        android:padding="10sp"
         android:textColor="@color/black"
         android:textColorHint="#676565"
         app:layout_constraintEnd_toEndOf="parent"
@@ -105,6 +107,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/imageView4"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/google" />
+
     <TextView
         android:id="@+id/sifreReset"
         android:layout_width="wrap_content"
@@ -126,6 +129,7 @@
         android:layout_height="40dp"
         android:layout_marginBottom="40dp"
         android:background="@drawable/textbackground"
+        android:backgroundTint="#FFFFFF"
         android:gravity="center"
         android:onClick="startTextClick"
         android:text="Giriş Yap"

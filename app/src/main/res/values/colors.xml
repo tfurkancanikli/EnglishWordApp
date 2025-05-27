@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
+    <color name="whiteBase">#FFFEFE</color>
+    <color name="DarkGray">#1E1E1E</color>
+    <color name="LightGray">#5D5D5D</color>
+    <color name="Gray700">#FF454545</color>
     <color name="white">#f7f2ed</color>
     <color name="orange">#ff5f1f</color>
     <color name="orangeMid">#fecdc0</color>
@@ -10,6 +14,7 @@
     <color name="light_blue_600">#FF039BE5</color>
     <color name="light_blue_900">#FF01579B</color>
     <color name="light_blue_A200">#FF40C4FF</color>
+    <color name="ucunculuk">#B2E6FD</color>
     <color name="light_blue_A400">#FF00B0FF</color>
     <color name="black_overlay">#66000000</color>
     <color name="koyu_mor">#2F1D50</color>
