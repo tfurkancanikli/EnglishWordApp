@@ -378,14 +378,14 @@ class QuizPageActivity : BaseCompact() {
         kelimeRef.get().addOnSuccessListener { doc ->
             val now = Date().time
             val oncekiAsama = (doc.getLong("asama") ?: 1).toInt()
-            val sonTarih = doc.getTimestamp("sonDogruTarih")?.toDate() ?: Date(0)
-            val farkMs = now - sonTarih.time
+            val sonDogruTarih = doc.getTimestamp("sonDogruTarih")?.toDate() ?: Date(0)
+            val farkMs = now - sonDogruTarih.time
             val gerekenGun = zamanAraliklari.getOrNull(oncekiAsama - 1) ?: 999
             val gerekenMs = TimeUnit.DAYS.toMillis(gerekenGun.toLong())
 
             val updates = mutableMapOf<String, Any>(
                 "sonDogruTarih" to Timestamp.now(),
-                "kullaniciAdi" to (auth.currentUser?.displayName ?: ""),
+                "kullaniciAdi" to (auth.currentUser?.displayName ?: "") as String,
                 "Kelime" to kelime.kelimeIng
             )
 
@@ -412,11 +412,12 @@ class QuizPageActivity : BaseCompact() {
             } else {
                 updates.apply {
                     put("asama", 1)
+                    put("dogruSayac", 0)
                     put("yanlisSayac", (doc.getLong("yanlisSayac") ?: 0) + 1)
                 }
             }
 
-            kelimeRef.update(updates as Map<String, Any>)
+            kelimeRef.set(updates)
         }
     }
 

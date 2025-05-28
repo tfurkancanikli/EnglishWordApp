@@ -99,18 +99,16 @@ class ProfileActivity : BaseCompact() {
             popupView,
             ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT,
-            true
+            true // focusable
         )
 
         popupWindow.elevation = 10f
 
-
+        // Tıklama olayları
         val adminGirisi = popupView.findViewById<TextView>(R.id.admin_entrance)
         val profilDuzenle = popupView.findViewById<TextView>(R.id.profil_edit)
         val cikisYap=popupView.findViewById<TextView>(R.id.exit_btn)
         val feedback=popupView.findViewById<TextView>(R.id.feedback)
-
-
 
 
 
@@ -158,8 +156,9 @@ class ProfileActivity : BaseCompact() {
             }
         }
 
+
         profilDuzenle.setOnClickListener {
-            bagla(ProfileEditActivity::class.java, false)
+
             popupWindow.dismiss()
         }
         cikisYap.setOnClickListener{
