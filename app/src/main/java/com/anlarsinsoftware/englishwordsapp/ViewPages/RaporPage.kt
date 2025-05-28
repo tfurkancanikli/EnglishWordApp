@@ -66,7 +66,7 @@ class RaporPage : BaseCompact() {
             }
         }
     }
-    //Giriş yapan kullanıcı verilerini alır
+
     private fun kullaniciVerileriniYukle(kullaniciId: String) {
         veritabani.collection("kullaniciKelimeleri")
             .document(kullaniciId)
@@ -93,7 +93,7 @@ class RaporPage : BaseCompact() {
                 Log.e("RaporSayfasi", "Kelime listesi alınamadı", hata)
             }
     }
-    //Verileri hesaplar
+
     private fun istatistikleriHesapla(belgeler: QuerySnapshot) {
         var toplamDogruSayisi = 0
         var toplamYanlisSayisi= 0
@@ -110,7 +110,7 @@ class RaporPage : BaseCompact() {
         }
 
         dogruSayisi = toplamDogruSayisi
-        //Yanlış sayısı daha az veri açısından toplamdan doğru sayısının çıkarılmasıyla bulunur.
+
         yanlisSayisi = toplamYanlisSayisi
 
         basariOrani = if (toplamKelimeSayisi > 0) {
@@ -120,7 +120,6 @@ class RaporPage : BaseCompact() {
             "0%"
         }
 
-        //BURAYA
 
         sonDogruTarihi = enSonDogruTarih?.let {
             SimpleDateFormat("dd MMMM yyyy HH:mm", Locale("tr")).format(it)
@@ -188,7 +187,7 @@ class RaporPage : BaseCompact() {
         cizim.textSize = 16f
         cizim.isFakeBoldText = false
         cizim.textAlign = android.graphics.Paint.Align.LEFT
-        //Görüntülenecek verilerin listelenmesi.
+
         val bilgiler = listOf(
             "Kullanıcı: $kullaniciAdi",
             "Toplam Kelime: $toplamKelimeSayisi",
@@ -213,7 +212,7 @@ class RaporPage : BaseCompact() {
 
         val dosyaAdi = "Ingilizce_Kelime_Raporu_${SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())}.pdf"
         val dosya = File(getExternalFilesDir(null), dosyaAdi)
-        // Try-catch ile hata yakalama algoritmasının kurulması.
+
         try {
             FileOutputStream(dosya).use { cikti ->
                 pdfDokumani.writeTo(cikti)

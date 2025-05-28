@@ -2,9 +2,14 @@ package com.anlarsinsoftware.englishwordsapp.ViewPages
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.GestureDetector
+import android.view.MotionEvent
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.view.GestureDetectorCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.anlarsinsoftware.englishwordsapp.Adapter.SonYanlisKelimeAdapter
@@ -35,6 +40,8 @@ class HomePageActivity : BaseCompact() {
     private val sonYanlisList = mutableListOf<Kelime>()
     private val userList = mutableListOf<User>()
     private val db = FirebaseFirestore.getInstance()
+    private lateinit var gestureDetector: GestureDetectorCompat
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,9 +67,9 @@ class HomePageActivity : BaseCompact() {
                 super.onScrolled(recyclerView, dx, dy)
                 val menuLayout = findViewById<View>(R.id.MenuLayout)
 
-                if (dy > 10) {
+                if (dy > 15) {
                     menuLayout.animate().translationY(menuLayout.height.toFloat()).setDuration(150)
-                } else if (dy < -10) {
+                } else if (dy < -15) {
                     menuLayout.animate().translationY(0f).setDuration(150)
                 }
             }
@@ -122,6 +129,7 @@ class HomePageActivity : BaseCompact() {
                 }
 
                 for (doc in documents) {
+                    val tarih = doc.getTimestamp("sonDogruTarih")?.toDate()
                     val kelimeId = doc.id
                     db.collection("kelimeler")
                         .document(kelimeId)
@@ -130,6 +138,7 @@ class HomePageActivity : BaseCompact() {
                             val kelime = kelimeDoc.toObject(Kelime::class.java)
 
                             if (kelime != null) {
+                                kelime.sonDogruTarih = tarih
                                 sonYanlisList.add(kelime)
                             }
                             counter--
@@ -154,31 +163,48 @@ class HomePageActivity : BaseCompact() {
 
 
 
-    fun slideFun(){
 
-        val firstFlipImageUrl ="https://firebasestorage.googleapis.com/v0/b/englishwordapp-7fb3b.firebasestorage.app/o/homeScrolPhotos%2FkelimeEkleyin.png?alt=media&token=e8d54213-41cc-44ec-86f8-efe206144133"
-        picassoFun(firstFlipImageUrl,binding.firstCardSliderImage)
+    fun slideFun() {
+        val firstFlipImageUrl = "https://firebasestorage.googleapis.com/v0/b/englishwordapp-7fb3b.firebasestorage.app/o/homeScrolPhotos%2FkelimeEkleyin.png?alt=media&token=e8d54213-41cc-44ec-86f8-efe206144133"
+        picassoFun(firstFlipImageUrl, binding.firstCardSliderImage)
 
-        val secondFlipImageUrl="https://firebasestorage.googleapis.com/v0/b/englishwordapp-7fb3b.firebasestorage.app/o/homeScrolPhotos%2Fsorularabakin.png?alt=media&token=82afeeeb-7de0-4b1f-b54c-21a9f884cfcd"
-        picassoFun(secondFlipImageUrl,binding.secondCardSliderImage)
+        val secondFlipImageUrl = "https://firebasestorage.googleapis.com/v0/b/englishwordapp-7fb3b.firebasestorage.app/o/homeScrolPhotos%2Fsorularabakin.png?alt=media&token=82afeeeb-7de0-4b1f-b54c-21a9f884cfcd"
+        picassoFun(secondFlipImageUrl, binding.secondCardSliderImage)
 
-        val thirdFlipImageUrl="https://firebasestorage.googleapis.com/v0/b/englishwordapp-7fb3b.firebasestorage.app/o/homeScrolPhotos%2FFeedback.png?alt=media&token=ad003234-c474-4cde-bd66-c0af584c8c54"
-        picassoFun(thirdFlipImageUrl,binding.thirdCardSliderImage)
+        val thirdFlipImageUrl = "https://firebasestorage.googleapis.com/v0/b/englishwordapp-7fb3b.firebasestorage.app/o/homeScrolPhotos%2FFeedback.png?alt=media&token=ad003234-c474-4cde-bd66-c0af584c8c54"
+        picassoFun(thirdFlipImageUrl, binding.thirdCardSliderImage)
 
-        val fourFlipImageUrl="https://firebasestorage.googleapis.com/v0/b/englishwordapp-7fb3b.firebasestorage.app/o/homeScrolPhotos%2Fyapay.png?alt=media&token=922d8a96-cdeb-4e77-ab3a-950049d72c94"
-        picassoFun(fourFlipImageUrl,binding.fourCardSliderImage)
+        val fourFlipImageUrl = "https://firebasestorage.googleapis.com/v0/b/englishwordapp-7fb3b.firebasestorage.app/o/homeScrolPhotos%2Fyapay.png?alt=media&token=922d8a96-cdeb-4e77-ab3a-950049d72c94"
+        picassoFun(fourFlipImageUrl, binding.fourCardSliderImage)
 
-
-        var vFlipper=binding.viewFlipper
+        val vFlipper = binding.viewFlipper
         vFlipper.setAutoStart(true)
         vFlipper.setFlipInterval(3500)
         vFlipper.startFlipping()
-        binding.firstCardText.text="YENİ KELİMELER EKLEMEK İSTERMİSİN?"
-        binding.secondCardText.text="QUİZ İLE KENDİNİ TEST ETMEYE HAZIRMISIN?"
-        binding.thirdCardText.text="BİZE GERİ BİLDİRİM GÖNDERİN"
-        binding.fourCardText.text="Yapay Zekayı Kullanın"
 
+        binding.firstCardText.text = "YENİ KELİMELER EKLEMEK İSTERMİSİN?"
+        binding.secondCardText.text = "QUİZ İLE KENDİNİ TEST ETMEYE HAZIRMISIN?"
+        binding.thirdCardText.text = "BİZE GERİ BİLDİRİM GÖNDERİN"
+        binding.fourCardText.text = "YAPAY ZEKAYI KULLANIN 'PenAI'"
+
+        binding.btnNext.setOnClickListener {
+            vFlipper.inAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_in_right)
+            vFlipper.outAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_out_left)
+            vFlipper.showNext()
+            vFlipper.stopFlipping()
+            vFlipper.postDelayed({ vFlipper.startFlipping() }, 4000)
+        }
+
+        binding.btnPrevious.setOnClickListener {
+            vFlipper.inAnimation = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left)
+            vFlipper.outAnimation = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right)
+            vFlipper.showPrevious()
+            vFlipper.stopFlipping()
+            vFlipper.postDelayed({ vFlipper.startFlipping() }, 4000)
+        }
     }
+
+
     fun firstCardImageClick(view: View){
        bagla(WordAddPage::class.java,false)
     }

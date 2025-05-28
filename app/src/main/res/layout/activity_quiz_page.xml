@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/black"
     android:fitsSystemWindows="true"
     tools:context=".ViewPages.QuizPageActivity">
 
@@ -13,7 +13,7 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/gray_200"
+        android:background="@color/black"
         android:elevation="8dp">
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -21,10 +21,10 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/baseline_arrow_back_ios_new_24"
-            app:navigationIconTint="@color/indigo_500"
+            app:navigationIconTint="@color/whiteBase"
             app:title="Quiz"
             app:titleTextAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-            app:titleTextColor="@color/indigo_500">
+            app:titleTextColor="@color/whiteBase">
 
             <ImageButton
                 android:id="@+id/settingsButton"
@@ -35,7 +35,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Ayarlar"
                 android:src="@drawable/ic_settings"
-                app:tint="@color/indigo_500" />
+                app:tint="@color/whiteBase" />
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -44,7 +44,7 @@
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/indigo_500"
+        android:background="@color/DarkGray"
         android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -71,10 +71,12 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/previousButton"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:cropToPadding="false"
+                    android:paddingVertical="5dp"
                     android:src="@drawable/ic_previous"
                     android:text="Önceki"
                     android:textColor="@color/white" />
@@ -93,14 +95,14 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
-                <ImageButton
+                <ImageView
 
                     android:id="@+id/nextButton"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:paddingVertical="5dp"
                     android:src="@drawable/ic_next"
-                    android:text="Sonraki"
-                    android:textColor="@color/white" />
+                    android:text="Sonraki" />
 
             </LinearLayout>
 
@@ -117,7 +119,7 @@
                     android:id="@+id/kelimeImage"
                     android:layout_width="match_parent"
                     android:layout_height="172dp"
-                    android:background="@color/lightGrey"
+                    android:background="@color/black"
                     android:contentDescription="Soru resmi"
                     android:scaleType="fitCenter"
                     tools:src="@drawable/gallery_icon" />
@@ -144,21 +146,34 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:hint="İngilizce karşılığını yazın"
+                android:textColorHint="@color/LightGray"
+                app:boxBackgroundColor="@color/whiteBase"
                 app:boxCornerRadiusBottomEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"
                 app:boxCornerRadiusTopStart="12dp"
                 app:boxStrokeColor="@color/amber_500"
-                app:hintTextColor="@color/black"
-                app:startIconTint="@color/birincilik">
+                app:counterTextColor="@color/LightGray"
+                app:cursorColor="#2196F3"
+                app:helperTextTextColor="@color/whiteBase"
+                app:hintTextColor="@color/LightGray"
+                app:passwordToggleTint="@color/whiteBase"
+                app:placeholderTextColor="@color/whiteBase"
+                app:prefixTextColor="@color/whiteBase"
+                app:startIconTint="@color/birincilik"
+                app:suffixTextColor="@color/LightGray">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/kullaniciCevap"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/whiteBase"
                     android:imeOptions="actionDone|flagNavigateNext"
                     android:inputType="textWebEditText"
-                    android:textColor="@color/black"
+                    android:textColor="@color/whiteBase"
+                    android:textColorHighlight="#6E6E6E"
+                    android:textColorHint="#8F8F8F"
+                    android:textColorLink="#737373"
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -174,7 +189,6 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:cornerRadius="50dp"
-                app:icon="@drawable/baseline_send_24"
                 app:iconGravity="end"
                 app:iconTint="@color/black"
                 app:rippleColor="@color/teal_700" />
@@ -201,62 +215,6 @@
     </androidx.core.widget.NestedScrollView>
 
 
-    <RelativeLayout
-        android:id="@+id/MenuLayout"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:layout_gravity="bottom"
-        android:background="@drawable/bottomsheetnav_radius"
-        android:elevation="8dp"
-        android:padding="8dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:weightSum="4">
-
-            <ImageView
-                android:id="@+id/home"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:onClick="goToHomeClick"
-                android:padding="8dp"
-                android:src="@drawable/baseline_home_24"
-                app:tint="@color/indigo_500" />
-
-            <ImageView
-                android:id="@+id/profile"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:onClick="goToProfileClick"
-                android:padding="8dp"
-                app:srcCompat="@drawable/baseline_person_24"
-                app:tint="@color/indigo_500" />
-
-            <ImageView
-                android:id="@+id/wordle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:onClick="goToGameClick"
-                android:padding="8dp"
-                app:srcCompat="@drawable/baseline_videogame_asset_24"
-                app:tint="@color/indigo_500" />
-
-            <ImageView
-                android:id="@+id/sozluk"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:onClick="goToWordsClick"
-                android:padding="8dp"
-                app:srcCompat="@drawable/baseline_menu_book_24"
-                app:tint="@color/indigo_500" />
-        </LinearLayout>
-    </RelativeLayout>
     <FrameLayout
         android:id="@+id/loadingOverlay"
         android:layout_width="match_parent"
@@ -271,4 +229,5 @@
             android:layout_gravity="center"
             android:indeterminateTint="@color/white" />
     </FrameLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
