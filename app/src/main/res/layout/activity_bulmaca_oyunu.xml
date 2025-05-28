@@ -55,7 +55,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Ayarlar"
             android:src="@drawable/ic_settings"
-            android:tint="@color/indigo_500"
+            android:tint="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -150,6 +150,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             android:background="@drawable/grid_background"
+            android:backgroundTint="@color/black"
             android:columnCount="5"
             android:padding="4dp"
             android:rowCount="6" />

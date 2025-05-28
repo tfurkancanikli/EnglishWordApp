@@ -4,16 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="24dp"
-    android:background="@drawable/bottomsheetnav_radius"
-    android:backgroundTint="@color/black">
+    android:padding="30dp"
+    android:background="@drawable/bottomsheetnav_radius">
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Quiz Ayarları"
-        android:textColor="@color/whiteBase"
+        android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_marginBottom="24dp"/>
@@ -23,10 +22,8 @@
         style="@style/TextAppearance.MaterialComponents.Subtitle1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:text="Toplam Kelime Sayısı (Max 100)"
-        android:textColor="#FFFFFF"
-        android:textColorHint="@color/LightGray" />
+        android:layout_marginBottom="8dp"/>
 
     <com.google.android.material.slider.Slider
         android:id="@+id/sliderTotalWords"
@@ -45,11 +42,9 @@
         style="@style/TextAppearance.MaterialComponents.Subtitle1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="8dp"
         android:text="Yeni Kelime Sayısı (Max 50)"
-        android:textColor="#FFFFFF"
-        android:textColorHint="@color/LightGray" />
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="8dp"/>
 
     <com.google.android.material.slider.Slider
         android:id="@+id/sliderNewWords"
@@ -67,12 +62,13 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/saveSettingsButton"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="match_parent"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="3dp"
         android:text="KAYDET"
         android:textColor="@color/white"
-        app:backgroundTint="@color/indigo_500"
+        app:backgroundTint="@color/gray_900"
         app:icon="@drawable/correct100"
         app:iconTint="@color/white" />
 </LinearLayout>
