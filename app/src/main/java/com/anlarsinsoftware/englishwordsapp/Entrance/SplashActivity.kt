@@ -17,8 +17,10 @@ class SplashActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_splash)
         Handler(Looper.getMainLooper()).postDelayed({
-        bagla(SignInActivity::class.java,true)},2525)
-
+            val intent = Intent(this, OnboardingActivity::class.java)
+            startActivity(intent)
+            finish()
+        },2525)
         cacheDir.deleteRecursively()
 
     }

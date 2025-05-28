@@ -85,10 +85,6 @@ class ProfileActivity : BaseCompact() {
         }.attach()
 
     }
-    fun exitClick(view: View) {
-
-    }
-
     fun setting(view: View) {
         showSettingsPopup(view,this)
     }
@@ -158,7 +154,7 @@ class ProfileActivity : BaseCompact() {
 
 
         profilDuzenle.setOnClickListener {
-
+            bagla(ProfileEditActivity::class.java,false)
             popupWindow.dismiss()
         }
         cikisYap.setOnClickListener{

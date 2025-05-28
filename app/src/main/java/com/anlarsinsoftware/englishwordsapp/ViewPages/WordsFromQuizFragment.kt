@@ -74,7 +74,6 @@ class WordsFromQuizFragment : Fragment() {
                                     val view=layoutInflater.inflate(R.layout.item_quiz_words,null)
                                     val text=view.findViewById<TextView>(R.id.kelimeAsama)
                                     text.text="Öğrenildi."
-
                                 }else  {
                                     kelime.asama = asama
                                 }

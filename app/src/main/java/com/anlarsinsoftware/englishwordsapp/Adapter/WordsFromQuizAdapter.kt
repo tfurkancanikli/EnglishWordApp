@@ -46,7 +46,7 @@ class WordsFromQuizAdapter(private val kelimeList: List<Kelime>) :
         if (kelime.asama >= 6) {
             holder.asama.text = "Öğrenildi."
         } else {
-            holder.asama.text = kelime.asama.toString()
+            holder.asama.text = "${kelime.asama}. Asama"
         }
 
         kelime.sonDogruTarih?.let {

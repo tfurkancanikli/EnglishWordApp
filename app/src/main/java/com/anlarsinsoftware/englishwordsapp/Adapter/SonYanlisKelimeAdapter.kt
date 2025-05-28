@@ -10,6 +10,8 @@ import com.anlarsinsoftware.englishwordsapp.Model.Kelime
 import com.anlarsinsoftware.englishwordsapp.R
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class SonYanlisKelimeAdapter(private val kelimeList: List<Kelime>) :
     RecyclerView.Adapter<SonYanlisKelimeAdapter.KelimeViewHolder>() {
@@ -18,6 +20,7 @@ class SonYanlisKelimeAdapter(private val kelimeList: List<Kelime>) :
         val kelime_image: ImageView = view.findViewById(R.id.kelime_Yimage)
         val turkce: TextView = view.findViewById(R.id.kelime_Ytur)
         val inglizce: TextView = view.findViewById(R.id.kelime_Ying)
+        val yanlis_tarihi: TextView = view.findViewById(R.id.yanlisTarihi)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): KelimeViewHolder {
@@ -42,6 +45,10 @@ class SonYanlisKelimeAdapter(private val kelimeList: List<Kelime>) :
 
         holder.inglizce.text=kelime.kelimeIng
         holder.turkce.text = kelime.kelimeTur
+        kelime.sonDogruTarih?.let {
+            val formatter = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+            holder.yanlis_tarihi.text = "${formatter.format(it)} tarihinde yanlış yapıldı."
+        }
 
     }
 

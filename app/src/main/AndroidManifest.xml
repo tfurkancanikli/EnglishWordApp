@@ -16,10 +16,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EnglishWordsApp"
         tools:targetApi="31">
-        <activity
-            android:name=".ViewPages.ProfileEditActivity"
-            android:exported="false" />
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.anlarsinsoftware.englishwordsapp.provider"
@@ -32,65 +28,77 @@
 
         <activity
             android:name=".ViewPages.PromptPage"
-            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|smallestScreenSize"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ViewPages.QuizPageActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|smallestScreenSize"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ViewPages.ProfileActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|smallestScreenSize"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ViewPages.RaporPage"
-            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|smallestScreenSize"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ViewPages.BulmacaOyunu"
-            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|smallestScreenSize"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ViewPages.Sozluk"
-            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|smallestScreenSize"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.EnglishWordsApp" />
+            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|smallestScreenSize"/>
+        <activity
+            android:name=".Entrance.OnboardingActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|smallestScreenSize"/>
+        <activity
+            android:name=".ViewPages.QuizPageActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|smallestScreenSize"/>
+
+        <activity
+            android:name=".ViewPages.ProfileEditActivity"
+            android:exported="false"
+            />
+        <activity
+            android:name=".ViewPages.ProfileActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|smallestScreenSize"/>
+        <activity
+            android:name=".ViewPages.RaporPage"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|smallestScreenSize"/>
+        <activity
+            android:name=".ViewPages.BulmacaOyunu"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|smallestScreenSize"/>
+        <activity
+            android:name=".ViewPages.Sozluk"
+            android:exported="false"
+            android:theme="@style/Theme.EnglishWordsApp"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|smallestScreenSize"/>
         <activity
             android:name=".ViewPages.WordAddPage"
-            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|smallestScreenSize"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|smallestScreenSize"/>
         <activity
             android:name=".ViewPages.HomePageActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|smallestScreenSize"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|smallestScreenSize"/>
         <activity
             android:name=".Entrance.RegisterActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|smallestScreenSize"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|smallestScreenSize"/>
         <activity
             android:name=".Entrance.SignInActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|smallestScreenSize"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|smallestScreenSize"
+        />
         <activity
             android:name=".Entrance.SplashActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|smallestScreenSize"
             android:exported="true"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|smallestScreenSize">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
 
         <meta-data
