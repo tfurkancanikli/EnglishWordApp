@@ -23,7 +23,6 @@ import com.anlarsinsoftware.englishwordsapp.R
 import com.anlarsinsoftware.englishwordsapp.Util.BaseCompact
 import com.anlarsinsoftware.englishwordsapp.Util.OPEN_ROUTER_API_KEY
 import com.anlarsinsoftware.englishwordsapp.Util.bagla
-import com.anlarsinsoftware.englishwordsapp.Util.replicateAPI_KEY
 import com.anlarsinsoftware.englishwordsapp.databinding.ActivityPromptPageBinding
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
@@ -49,6 +48,7 @@ class PromptPage : BaseCompact() {
     private lateinit var promptKelimeleri: String
     private lateinit var promptImageCreate :String
     private lateinit var olusanHikaye:String
+    val OPEN_ROUTER_API_KEY = "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"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,7 +100,7 @@ class PromptPage : BaseCompact() {
                         binding.storyText.visibility = View.VISIBLE
                         binding.translate.visibility=View.VISIBLE
                         binding.storyText.text = story
-                         olusanHikaye=story
+                        olusanHikaye=story
                         promptImageCreate = "Create a meaningful image inspired by these words $story"
                         generateImageFromStory(promptImageCreate)
                         binding.progressBar.visibility = View.GONE
@@ -292,16 +292,16 @@ class PromptPage : BaseCompact() {
     }
 
 
-        private fun generateImageFromStory(prompt:String) {
-            val imageUrl = "https://image.pollinations.ai/prompt/$prompt"
-                runOnUiThread {
-                    Picasso.get()
-                        .load(imageUrl)
-                        .transform(RoundedCornersTransformation(50, 0))
-                        .placeholder(R.drawable.gallery_icon)
-                        .into(binding.imageView11)
-                    binding.imageView11.visibility = View.VISIBLE
-                    binding.penai.visibility=View.VISIBLE
-                }
+    private fun generateImageFromStory(prompt:String) {
+        val imageUrl = "https://image.pollinations.ai/prompt/$prompt"
+        runOnUiThread {
+            Picasso.get()
+                .load(imageUrl)
+                .transform(RoundedCornersTransformation(50, 0))
+                .placeholder(R.drawable.gallery_icon)
+                .into(binding.imageView11)
+            binding.imageView11.visibility = View.VISIBLE
+            binding.penai.visibility=View.VISIBLE
         }
+    }
 }
