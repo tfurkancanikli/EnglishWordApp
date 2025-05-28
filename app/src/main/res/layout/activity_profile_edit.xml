@@ -32,11 +32,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/baseline_arrow_back_ios_new_24" />
+
             <TextView
                 android:id="@+id/toolbarTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:layout_marginLeft="100dp"
                 android:text="@string/profile_edit_title"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
@@ -73,15 +75,21 @@
                     android:contentDescription="@string/profile_image"
                     android:scaleType="centerCrop"
                     android:background="@color/DarkGray"/>
+
+
             </androidx.cardview.widget.CardView>
 
+
             <Button
-                android:backgroundTint="@color/black"
                 android:id="@+id/btnChangePhoto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:backgroundTint="@color/black"
                 android:text="@string/change_photo"
-                android:layout_marginBottom="24dp"/>
+                android:textColor="@color/whiteBase" />
+
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/inputLayoutName"
@@ -156,8 +164,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/black"
                 android:text="@string/save_changes"
-                android:backgroundTint="@color/black"/>
+                android:textColor="@color/whiteBase" />
 
             <ProgressBar
                 android:id="@+id/progressBar"
