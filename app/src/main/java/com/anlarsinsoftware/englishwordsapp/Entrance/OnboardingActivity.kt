@@ -1,5 +1,6 @@
 package com.anlarsinsoftware.englishwordsapp.Entrance
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -21,6 +22,7 @@ class OnboardingActivity : AppCompatActivity() {
     private lateinit var onboardingItems: List<OnboardingItem>
     private lateinit var adapter: OnboardingAdapter
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_onboarding)
@@ -32,7 +34,7 @@ class OnboardingActivity : AppCompatActivity() {
         }
 
         viewPager = findViewById(R.id.viewPager)
-        tabLayout = findViewById(R.id.tabindicator)
+        tabLayout = findViewById(R.id.tabindic)
         nextButton = findViewById(R.id.btnNext)
 
         onboardingItems = listOf(
